@@ -1,4 +1,4 @@
-FROM python:slim-bullseye
+FROM python:3.12.0a6-slim-bullseye
 
 # use bash shell.
 ENV SHELL=/bin/bash
@@ -44,7 +44,7 @@ RUN pip install --upgrade pip
 # Copy source files
 COPY . .
 
-# # Copy cli shortcuts for permanent use.
-# RUN cp ${workdir}/scripts/shortcuts.sh ${reldir}/.bashrc
+# Copy cli shortcuts for permanent use.
+RUN cp ${workdir}/scripts/shortcuts.sh ${reldir}/.bashrc
 
 
