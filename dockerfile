@@ -14,8 +14,6 @@ RUN apt-get update && \
     bash-completion \
     sudo \
     vim \
-    make \
-    curl \
     openssh-server
 
 # Start ssh client.
@@ -24,9 +22,6 @@ RUN service ssh start
 # Configure sudo for initialization tasks. 
 RUN echo "NRuser ALL=(ALL) NOPASSWD: /home/NRuser/flaskapp/scripts/init.sh" >> /etc/sudoers && \
     echo "NRuser ALL=(ALL) NOPASSWD: /bin/chown" >> etc/sudoers
-
-# D2 installation.
-RUN curl -fsSL https://d2lang.com/install.sh | sh -s --
 
 # Create and switch to non-Root User.
 RUN useradd --home-dir ${reldir} ${username}

@@ -9,8 +9,7 @@
 			"extensions": [
 				"ms-python.python",
 				"VisualStudioExptTeam.vscodeintellicode",
-				"KevinRose.vsc-python-indent",
-				"terrastruct.d2"
+				"KevinRose.vsc-python-indent"
 			]
 		}
 	},
