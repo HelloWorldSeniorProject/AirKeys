@@ -23,7 +23,7 @@ prep_scripts (){
 
     echo "Granting execute perms for all scripts in folder."
 
-    for script in ./scripts/*; do echo "Modifying $script " && chmod +x $script; done;
+    for script in ./scripts/*.sh; do echo "Modifying $script " && chmod +x $script && dos2unix $script; done;
     
     display_progress
 }

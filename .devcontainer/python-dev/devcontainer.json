@@ -1,7 +1,7 @@
 {
-    "name": "AirKeys",
+    "name": "AirKeys - Python Dev",
     "dockerComposeFile": "docker-compose.yml",
-    "service": "python",
+    "service": "python-dev",
     "shutdownAction": "stopCompose",
     "workspaceFolder": "/home/NRuser/airkeys/",
 	"customizations": {
@@ -13,5 +13,5 @@
 			]
 		}
 	},
-    "postCreateCommand": "dos2unix scripts/* && chmod +x scripts/init.sh && scripts/init.sh"
+    "postCreateCommand": "dos2unix scripts/init.sh && chmod +x scripts/init.sh && scripts/init.sh"
 }
