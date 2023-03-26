@@ -22,4 +22,6 @@ COPY ./documentation/ ${workdir}/documentation
 # Copy scripts 
 COPY ./scripts/d2_scripts ${workdir}/scripts
 
+# Copy cli shortcuts for permanent use.
+COPY ./scripts/shortcuts.sh ${reldir}/.bashrc
 

@@ -10,3 +10,7 @@ documentation="~/airkeys/documentaion"
 alias all="ls -al"
 alias rm="rm -i"
 alias rmf="rm -ri"
+
+
+# d2 documentaton-only
+alias diagram="${scripts}/create_diagram.sh"
