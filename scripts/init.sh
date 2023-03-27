@@ -6,7 +6,6 @@
 # refresh env variables.
 . ${HOME}/.bashrc
 
->>>>>>> develop
 task_list='grant_ownership prep_scripts install_dev_dependencies'
 tasks=$(echo "$task_list" | wc -w)
 completed=0
