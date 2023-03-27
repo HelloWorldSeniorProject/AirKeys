@@ -12,6 +12,5 @@ alias rm="rm -i"
 alias rmd="rm -ri"
 alias rmf="rm -f"
 
-
 # d2 documentaton-only
 alias diagram="${scripts}/create_diagram.sh"

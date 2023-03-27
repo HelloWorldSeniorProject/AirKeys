@@ -1,0 +1,7 @@
+version: "Dev 1.0"
+services:
+  python:
+    build: .
+    volumes:
+      - ./:/home/NRuser/airkeys/
+    command: sleep infinity
