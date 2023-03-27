@@ -1,0 +1,15 @@
+{
+    "name": "AirKeys - D2 Documentation",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "d2-documentation",
+    "shutdownAction": "stopCompose",
+    "workspaceFolder": "/root/airkeys/",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+                "terrastruct.d2"
+			]
+		}
+	},
+    "postCreateCommand": "dos2unix scripts/init.sh && chmod +x scripts/init.sh && scripts/init.sh"
+}

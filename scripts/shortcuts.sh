@@ -3,10 +3,14 @@
 # creates shortcuts for all users. Ran during container initialization.
 
 # location shortcuts
-scripts="~/airkeys/scripts"
-documentation="~/airkeys/documentaion"
+export scripts="${HOME}/airkeys/scripts"
+export documentation="${HOME}/airkeys/documentation"
 
 # command shortcuts
 alias all="ls -al"
 alias rm="rm -i"
-alias rmf="rm -ri"
+alias rmd="rm -ri"
+alias rmf="rm -f"
+
+# d2 documentaton-only
+alias diagram="${scripts}/create_diagram.sh"

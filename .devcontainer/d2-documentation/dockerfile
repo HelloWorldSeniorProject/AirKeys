@@ -1,0 +1,27 @@
+FROM mcr.microsoft.com/playwright:v1.32.0-focal
+
+# use bash shell.
+ENV SHELL=/bin/bash
+
+ARG workdir=/root/airkeys/
+
+RUN mkdir ${workdir}
+WORKDIR ${workdir}
+
+# Install necessary dependencies
+RUN apt-get update && \
+    apt-get --no-install-recommends -y install make \
+    dos2unix
+
+# Install D2
+RUN curl -fsSL https://d2lang.com/install.sh | sh -s --
+
+# Copy documentation files
+COPY ./documentation/ ${workdir}/documentation
+
+# Copy scripts 
+COPY ./scripts/d2_scripts ${workdir}/scripts
+
+# Copy cli shortcuts for permanent use.
+COPY ./scripts/shortcuts.sh /root/.bashrc
+

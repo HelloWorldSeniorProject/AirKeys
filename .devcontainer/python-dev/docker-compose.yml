@@ -1,0 +1,12 @@
+version: "Airkeys: 1.0.0"
+
+services:
+
+  # Python for development and testing.
+  python-dev:
+    build: 
+      context: ./../../
+      dockerfile: ./.devcontainer/python-dev/dockerfile
+    volumes:
+      - ./../../:/home/NRuser/airkeys/
+    command: sleep infinity

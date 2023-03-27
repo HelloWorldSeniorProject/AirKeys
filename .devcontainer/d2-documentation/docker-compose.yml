@@ -1,0 +1,13 @@
+version: "Airkeys-Documentation: 1.0.0"
+
+services:
+
+# The image running D2 and all related dependencies.
+  d2-documentation:
+    build: 
+      context: ./../../
+      dockerfile: ./.devcontainer/d2-documentation/dockerfile
+    volumes:
+      - ./../../documentation/:/root/airkeys/documentation
+      - ./../../scripts/d2_scripts/:/root/airkeys/scripts 
+    command: sleep infinity
