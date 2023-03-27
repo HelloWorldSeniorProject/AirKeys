@@ -54,16 +54,16 @@ convert_to_media () {
     # check if output filename and extension passed
     if [ -z "${output_file}" ]; then
         echo "Creating ${input_file%.*}.pdf"
-        d2 ${source_dir}/${input_file} ${output_dir}/${input_file%.*}.pdf
+        d2 --layout=elk --theme 4 ${source_dir}/${input_file} ${output_dir}/${input_file%.*}.pdf 
     else
         echo "Creating ${output_file}"
-        d2 ${source_dir}/${input_file} ${output_dir}/${output_file}
+        d2 --layout=elk --theme 4 ${source_dir}/${input_file} ${output_dir}/${output_file} 
     fi
     
 }
 
 interactive_mode () {
-    d2 --watch ${source_dir}/${input_file}
+    d2 --watch --layout=elk --theme 4 ${source_dir}/${input_file} 
 }
 
 convert_all() {
