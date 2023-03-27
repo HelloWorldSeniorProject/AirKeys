@@ -3,8 +3,8 @@
 # creates shortcuts for all users. Ran during container initialization.
 
 # location shortcuts
-scripts="~/airkeys/scripts"
-documentation="~/airkeys/documentaion"
+export scripts="${HOME}/airkeys/scripts"
+export documentation="${HOME}/airkeys/documentation"
 
 # command shortcuts
 alias all="ls -al"

@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# A collection of container initialization tasks. Includes 
+# permission changes.
+
+# refresh env variables.
+. ${HOME}/.bashrc
+
 task_list='prep_scripts'
 tasks=$(echo "$task_list" | wc -w)
 completed=0

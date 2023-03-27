@@ -3,6 +3,9 @@
 # A collection of container initialization tasks. Includes 
 # permission changes and installing dependencies.
 
+# refresh env variables.
+. ${HOME}/.bashrc
+
 task_list='grant_ownership prep_scripts install_dev_dependencies'
 tasks=$(echo "$task_list" | wc -w)
 completed=0
@@ -32,7 +35,7 @@ install_dev_dependencies () {
     echo "Installing dependencies"
 
     # if requirements file listing all python modules doesn't exist, create it.
-    if [ ! -e "requirements.txt" ]; then 
+    if ! [ -e "requirements.txt" ]; then 
         echo "No requirements document found. Creating: requirements.txt"
         pip3 freeze > requirements.txt 
     fi
