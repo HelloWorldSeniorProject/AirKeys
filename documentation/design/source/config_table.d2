@@ -1,0 +1,32 @@
+Config Table : {
+    shape: class
+
+    - state : "SystemState"
+    - keyboard : "Int"
+    - connection : "ConnectionType"
+    - device : "DeviceType"
+    - driver: "InputDriver"
+}
+
+SystemState : {
+
+    Off.shape : oval
+    Standby.shape : oval
+    Inactive.shape : oval
+    Active.shape : oval
+
+    Off -> Standby : Power on.
+
+    Standby -> Off : Power off.
+    Standby -> Active : Successful init tasks, ready to use.
+
+
+    Inactive -> Off : Power off.
+    Inactive -> Standby : Config changes or hw failure.
+    Inactive -> Active : User input, anytime.
+    
+    Active -> Off : Power off.
+    Active -> Standby : Config changes or hw failure.
+    Acitve -> Inactive : System idle >= sleep time.
+
+}
