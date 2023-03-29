@@ -14,3 +14,4 @@ alias rmf="rm -f"
 
 # d2 documentaton-only
 alias diagram="${scripts}/create_diagram.sh"
+alias update_deps="${scripts}/update_dependencies.sh"
