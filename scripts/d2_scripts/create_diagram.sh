@@ -9,7 +9,13 @@ input_file=''
 output_file=''
 interactive_mode=false
 
+# allow relative pathing for images/embedded media
+cd ${source_dir}
+
 usage() {
+
+    cd ${airkeys}
+
     # print as plain text in terminal up until keyword END
     cat << END
 WARNING: This command is only to be used within the documentation container. Use in other containers will result in error.
@@ -54,28 +60,28 @@ convert_to_media () {
     # check if output filename and extension passed
     if [ -z "${output_file}" ]; then
         echo "Creating ${input_file%.*}.pdf"
-        d2 --layout=elk --theme 4 ${source_dir}/${input_file} ${output_dir}/${input_file%.*}.pdf 
+        d2 --layout=elk --theme 4 ./${input_file} ${output_dir}/${input_file%.*}.pdf 
     else
         echo "Creating ${output_file}"
-        d2 --layout=elk --theme 4 ${source_dir}/${input_file} ${output_dir}/${output_file} 
+        d2 --layout=elk --theme 4 ./${input_file} ${output_dir}/${output_file} 
     fi
-    
 }
 
 interactive_mode () {
-    d2 --watch --layout=elk --theme 4 ${source_dir}/${input_file} 
+
+    d2 --watch --layout=elk --theme 4 ./${input_file} 
 }
 
 convert_all() {
     output_file=""
 
     # check if directory empy
-    if ! [ "$(ls -A ${source_dir})" ]; then
+    if ! [ "$(ls -A . )" ]; then
         echo "No files to convert"
         exit 0;
     fi
 
-    for source_file in ${source_dir}/*.d2 ; do 
+    for source_file in ./*.d2 ; do 
         input_file="${source_file##*/}"
         convert_to_media
     done
@@ -90,10 +96,10 @@ while getopts "hif:o:a" flag; do
         interactive_mode=true ;;
 
     f ) # provide the source file for functions. Must be supplied for conversion and interactive mode.
-        if [ -e ${source_dir}/${OPTARG} ] ; then
+        if [ -e ./${OPTARG} ] ; then
             input_file="${OPTARG}"
         else
-            echo $source_dir/${OPTARG}
+            echo ${source_dir}/${OPTARG}
             echo "Error: File does not exist."
             usage
         fi ;;
@@ -136,7 +142,8 @@ else
     else
         convert_to_media
     fi
-    
+
+    cd ${airkeys}
     exit 0;
 fi
 

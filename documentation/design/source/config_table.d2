@@ -2,14 +2,31 @@ Config Table : {
     shape: class
 
     - state : "SystemState"
-    - keyboard : "Int"
+    - keyboard : "KeyboardId"
     - connection : "ConnectionType"
     - device : "DeviceType"
     - driver: "InputDriver"
+
+    setState(SystemState state)
+    getState() : "SystemState"
+
+    setKeyboard(KeyboardId kb)
+    getKeyboard() : "KeyboardId"
+
+    setConnection(ConnectionType conn)
+    getConnection() : "ConnectionType"
+
+    setDevice(DeviceType device)
+    getDevice() : "DeviceType"
+
+    setDriver(InputDriver driver)
+    getDriver() : "InputDriver"
+
 }
 
 SystemState : {
 
+    # State defs w/ shapes
     Off.shape : oval
     Standby.shape : oval
     Inactive.shape : oval
@@ -27,6 +44,6 @@ SystemState : {
     
     Active -> Off : Power off.
     Active -> Standby : Config changes or hw failure.
-    Acitve -> Inactive : System idle >= sleep time.
+    Active -> Inactive : System idle >= sleep time.
 
 }
