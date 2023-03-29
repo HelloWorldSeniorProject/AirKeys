@@ -3,6 +3,7 @@
 # creates shortcuts for all users. Ran during container initialization.
 
 # location shortcuts
+export airkeys="${HOME}/airkeys"
 export scripts="${HOME}/airkeys/scripts"
 export documentation="${HOME}/airkeys/documentation"
 
