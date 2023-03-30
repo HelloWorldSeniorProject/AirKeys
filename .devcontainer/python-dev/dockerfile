@@ -29,15 +29,17 @@ RUN useradd --home-dir ${reldir} ${username}
 USER ${username}
 WORKDIR ${workdir}
 
+# Copy source files
+COPY . .
+
 # Create virtaul env.
 RUN python3 -m venv ${reldir}/env
 ENV PATH=${reldir}/env/bin:$PATH
-
 # Update Package Management
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
+# Install all python modules.
+RUN pip3 install -r config/requirements.txt
 
-# Copy source files
-COPY . .
 
 # Copy cli shortcuts for permanent use.
 RUN cp ${workdir}/scripts/shortcuts.sh ${reldir}/.bashrc
