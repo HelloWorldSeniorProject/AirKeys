@@ -14,7 +14,7 @@ cd ${source_dir}
 
 usage() {
 
-    cd -
+    back
 
     # print as plain text in terminal up until keyword END
     cat << END
@@ -143,7 +143,7 @@ else
         convert_to_media
     fi
 
-    cd -
+    back
     exit 0;
 fi
 

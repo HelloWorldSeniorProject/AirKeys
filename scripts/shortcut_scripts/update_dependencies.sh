@@ -8,12 +8,10 @@ update_python_deps () {
     echo "requirements.txt updated"
 }
 
-run() {
-    update_python_deps
-}
+
 
 echo "Updating requirements file(s)"
+update_python_deps
 
-run
 
 exit 0;

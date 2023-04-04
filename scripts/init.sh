@@ -26,7 +26,11 @@ prep_scripts() {
 
     echo "Granting execute perms for all scripts in folder."
 
-    for script in ${scripts}/*.sh; do echo "Modifying $script " && chmod +x $script && dos2unix $script; done;
+    # sys scripts
+    for script in ${scripts}/*.sh; do chmod +x $script && dos2unix $script; done;
+
+    # command scripts
+    for script in ${scripts}/shortcut_scripts/*.sh; do chmod +x $script && dos2unix $script; done;
 
     display_progress
 }
@@ -37,10 +41,10 @@ display_progress() {
 }
 
 
-run() {
-    # Run all tasks
-    for t in $task_list; do $t; done
-}
+
+# Run all tasks
+for t in $task_list; do $t; done
+
 
 echo "---------------------------------"
 echo "Startup script completed."
