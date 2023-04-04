@@ -15,11 +15,16 @@ alias rm="rm -i"
 alias rmd="rm -ri"
 alias rmf="rm -f"
 
-# d2 documentaton-only
-alias diagram="${scripts}/create_diagram.sh"
+# script shortcuts
 alias update_deps="${scripts}/shortcut_scripts/update_dependencies.sh"
 alias create_docs="${scripts}/shortcut_scripts/create_source_documentation.sh"
 alias commands="${scripts}/command_help.sh"
+
+# d2 documentaton-only
+alias diagram="${scripts}/create_diagram.sh"
+
+
+
 
 # usefule inline functions
 inline_funcs='back'
