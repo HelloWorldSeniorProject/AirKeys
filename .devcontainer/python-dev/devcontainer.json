@@ -9,7 +9,8 @@
 			"extensions": [
 				"ms-python.python",
 				"VisualStudioExptTeam.vscodeintellicode",
-				"KevinRose.vsc-python-indent"
+				"KevinRose.vsc-python-indent",
+				"ritwickdey.LiveServer"
 			]
 		}
 	},

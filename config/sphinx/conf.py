@@ -3,25 +3,25 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import sys, os
+import os, sys
 
-sys.path.insert(0, os.path.abspath("../../src"))
-
+src_code_path = os.path.abspath("../../src")
+sys.path.insert(0, src_code_path)
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'AirKeys'
-copyright = '2023, Hello World'
-author = 'Hello World'
+project = 'Airkeys'
+copyright = '2023, Hello World!'
+author = 'Hello World!'
 release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.viewcode", "sphinx.ext.todo", "sphinx.ext.napoleon"]
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.napoleon", "sphinx.ext.todo", "sphinx.ext.viewcode"]
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = []
 
 
 

@@ -14,13 +14,14 @@ RUN apt-get update && \
     bash-completion \
     sudo \
     vim \
-    openssh-server
+    openssh-server \
+    make
 
 # Start ssh client.
 RUN service ssh start
 
 # Configure sudo for initialization tasks. 
-RUN echo "NRuser ALL=(ALL) NOPASSWD: /home/NRuser/flaskapp/scripts/init.sh" >> /etc/sudoers && \
+RUN echo "NRuser ALL=(ALL) NOPASSWD: /home/NRuser/airkeys/scripts/init.sh" >> /etc/sudoers && \
     echo "NRuser ALL=(ALL) NOPASSWD: /bin/chown" >> etc/sudoers
 
 # Create and switch to non-Root User.

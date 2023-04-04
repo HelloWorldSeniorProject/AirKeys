@@ -50,7 +50,7 @@ END
     exit 0;
 }
 
-convert_to_media () {
+convert_to_media() {
     # check if output filename and extension passed
     if [ -z "${output_file}" ]; then
         echo "Creating ${input_file%.*}.pdf"
@@ -62,7 +62,7 @@ convert_to_media () {
     
 }
 
-interactive_mode () {
+interactive_mode() {
     d2 --watch --layout=elk --theme 4 ${source_dir}/${input_file} 
 }
 

@@ -22,7 +22,7 @@ grant_ownership() {
     display_progress
 }
 
-prep_scripts (){
+prep_scripts() {
 
     echo "Granting execute perms for all scripts in folder."
 
@@ -36,8 +36,11 @@ display_progress() {
     echo "Tasks completed => ${completed} / ${tasks}"
 }
 
-# Run all tasks
-for t in $task_list; do $t; done
+
+run() {
+    # Run all tasks
+    for t in $task_list; do $t; done
+}
 
 echo "---------------------------------"
 echo "Startup script completed."

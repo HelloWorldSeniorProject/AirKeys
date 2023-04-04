@@ -1,9 +1,9 @@
-.. AirKeys documentation master file, created by
-   sphinx-quickstart on Wed Mar 29 23:22:39 2023.
+.. Airkeys documentation master file, created by
+   sphinx-quickstart on Tue Apr  4 16:51:54 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to AirKeys's documentation!
+Welcome to Airkeys's documentation!
 ===================================
 
 .. toctree::
@@ -11,8 +11,6 @@ Welcome to AirKeys's documentation!
    :caption: Contents:
 
    modules
-
-
 
 Indices and tables
 ==================

@@ -3,13 +3,17 @@
 # Update all Python requirements file for future loads
 
 update_python_deps () {
-    pip freeze > ${airkeys}/requirements.txt
+    pip freeze > ${config}/requirements.txt
 
     echo "requirements.txt updated"
 }
 
+run() {
+    update_python_deps
+}
+
 echo "Updating requirements file(s)"
 
-update_python_deps
+run
 
 exit 0;
