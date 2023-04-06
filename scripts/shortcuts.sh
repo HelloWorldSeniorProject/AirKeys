@@ -23,9 +23,6 @@ alias commands="${scripts}/command_help.sh"
 # d2 documentaton-only
 alias diagram="${scripts}/create_diagram.sh"
 
-
-
-
 # usefule inline functions
 inline_funcs='back'
 
@@ -39,3 +36,5 @@ back() {
 
 for inline_func in $inline_funcs ; do export -f $inline_func ; done 
 
+# path exports 
+export PYTHONPATH=$PYTHONPATH:${src}
