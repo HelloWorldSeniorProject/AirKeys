@@ -78,12 +78,12 @@ generate_rst_files() {
         update_version
     fi
 
-    sphinx-apidoc $src --output . --force --separate --module-first
+    sphinx-apidoc $src --output . --separate --module-first
 }
 
 create_html() {
     # use reStructuredText files to create html files. Use 
-    make html
+    make clean && make html
 
     clear
 

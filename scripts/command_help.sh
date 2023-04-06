@@ -10,8 +10,6 @@ cat << END
 
 L${location_shortcuts: 3}
 
-
-
 C${command_shortcuts: 3}
 
 Python Dev Commands :

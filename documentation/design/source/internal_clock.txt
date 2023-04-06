@@ -6,7 +6,6 @@ participantspacing 5
 
 participant "Internal Clock" as IC
 fontawesome f017 Clock
-fontawesome f254 "System Observer" as Obs1
 fontawesome f254 "Special Observer" as ObsN
 
 [-> IC : init()
@@ -16,19 +15,10 @@ IC -->>*Clock : <<create>>
 par internal functionality
   loop power off 
   
-  IC ->*Obs1 : <<create>> setTimer (inactive limit)
-  
-  note over Obs1: decrement timer using Runnable
   
   Clock ->> Clock : updateTime()
  	
-    alt curr time - last input >= inactive limit
-        Obs1-->IC : timer done
-        IC ->[ : changeState(inactive)
-    else new input detected
-    	[--> IC : input detected
-        IC -> Obs1 : resetTimer()
-    end
+ 
 
   end
 

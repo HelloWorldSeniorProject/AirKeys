@@ -14,6 +14,7 @@ alias all="ls -al"
 alias rm="rm -i"
 alias rmd="rm -ri"
 alias rmf="rm -f"
+alias pytest="pytest -v -rpfs ${src}/tests/"
 
 # script shortcuts
 alias update_deps="${scripts}/shortcut_scripts/update_dependencies.sh"
@@ -39,3 +40,5 @@ back() {
 
 for inline_func in $inline_funcs ; do export -f $inline_func ; done 
 
+# path exports 
+export PYTHONPATH=$PYTHONPATH:${src}

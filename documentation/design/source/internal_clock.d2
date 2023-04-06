@@ -1,10 +1,10 @@
 Internal Clock : {
     shape : class
 
-    - system clock : Observer
+    - system clock : Parallel Thread
 
     getTime(): float
-    createTime(TimeLimit limit, Callback cb) 
+    createTimer(TimeLimit limit, Function task) : Timer
 }
 
 Sequence Diagram : {
