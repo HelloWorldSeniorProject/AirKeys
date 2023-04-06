@@ -40,8 +40,10 @@ display_progress() {
     echo "Tasks completed => ${completed} / ${tasks}"
 }
 
+
 # Run all tasks
 for t in $task_list; do $t; done
+
 
 echo "---------------------------------"
 echo "Startup script completed."
