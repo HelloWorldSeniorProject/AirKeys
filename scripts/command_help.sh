@@ -17,6 +17,8 @@ Python Dev Commands :
     -   update_deps : updates requirements.txt with all installed Python modules.
     -   create_docs: generates source code documentation using Sphinx. 
             - run 'create_docs -h' for help with the command.
+    -   test: run Pytest on files within test folder.
+            - run 'test -h' for help with command.
     
     Note: These do not work on D2 Documentation Image.
     
