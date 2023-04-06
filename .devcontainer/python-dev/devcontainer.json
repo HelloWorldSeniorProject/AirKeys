@@ -14,5 +14,5 @@
 			]
 		}
 	},
-    "postCreateCommand": "dos2unix scripts/init.sh && chmod +x scripts/init.sh && scripts/init.sh"
+    "postCreateCommand": "sudo dos2unix scripts/init.sh && chmod +x scripts/init.sh && scripts/init.sh"
 }
