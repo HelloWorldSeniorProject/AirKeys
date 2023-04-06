@@ -21,8 +21,8 @@ RUN apt-get update && \
 RUN service ssh start
 
 # Configure sudo for initialization tasks. 
-RUN echo "NRuser ALL=(ALL) NOPASSWD: /home/NRuser/airkeys/scripts/init.sh" >> /etc/sudoers && \
-    echo "NRuser ALL=(ALL) NOPASSWD: /bin/chown" >> etc/sudoers
+RUN echo "NRuser ALL=(ALL) NOPASSWD: /bin/chown" >> etc/sudoers && \
+    echo "NRuser ALL=(ALL) NOPASSWD: /usr/bin/dos2unix" >> etc/sudoers
 
 # Create and switch to non-Root User.
 RUN useradd --home-dir ${reldir} ${username}
@@ -41,9 +41,10 @@ RUN pip3 install --upgrade pip
 # Install all python modules.
 RUN pip3 install -r config/requirements.txt
 
-
 # Copy cli shortcuts for permanent use.
-RUN dos2unix ${workdir}/scripts/shortcuts.sh
-RUN cp ${workdir}/scripts/shortcuts.sh ${reldir}/.bashrc
+
+RUN sudo dos2unix ${workdir}/scripts/shortcuts.sh && \
+    cp ${workdir}/scripts/shortcuts.sh ${reldir}/.bashrc
+
 
 

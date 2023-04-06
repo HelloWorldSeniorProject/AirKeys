@@ -18,9 +18,12 @@ Python Dev Commands :
     -   create_docs: generates source code documentation using Sphinx. 
             - run 'create_docs -h' for help with the command.
     
+    Note: These do not work on D2 Documentation Image.
+    
 D2 Documentation Commands
     -   diagram: generate diagrams in pdf format using D2.
             - run 'diagram' or for help with the command.
 
+    Note: These do not work on Python Dev Image.
 END
 
