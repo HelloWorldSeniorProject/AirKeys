@@ -21,7 +21,8 @@ RUN apt-get update && \
 RUN service ssh start
 
 # Configure sudo for initialization tasks. 
-RUN echo "NRuser ALL=(ALL) NOPASSWD: /bin/chown" >> etc/sudoers
+RUN echo "NRuser ALL=(ALL) NOPASSWD: /bin/chown" >> etc/sudoers && \
+    echo "NRuser ALL=(ALL) NOPASSWD: /usr/bin/dos2unix" >> etc/sudoers
 
 # Create and switch to non-Root User.
 RUN useradd --home-dir ${reldir} ${username}
