@@ -14,7 +14,7 @@ cd ${source_dir}
 
 usage() {
 
-    cd ${airkeys}
+    back
 
     # print as plain text in terminal up until keyword END
     cat << END
@@ -56,7 +56,7 @@ END
     exit 0;
 }
 
-convert_to_media () {
+convert_to_media() {
     # check if output filename and extension passed
     if [ -z "${output_file}" ]; then
         echo "Creating ${input_file%.*}.pdf"
@@ -67,7 +67,7 @@ convert_to_media () {
     fi
 }
 
-interactive_mode () {
+interactive_mode() {
 
     d2 --watch --layout=elk --theme 4 ./${input_file} 
 }
@@ -143,7 +143,7 @@ else
         convert_to_media
     fi
 
-    cd ${airkeys}
+    back
     exit 0;
 fi
 
