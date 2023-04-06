@@ -40,4 +40,3 @@ for inline_func in $inline_funcs ; do export -f $inline_func ; done
 
 # path exports 
 export PYTHONPATH=$PYTHONPATH:${src}
-export PATH=$PATH:/home/NRuser/.local/bin/
