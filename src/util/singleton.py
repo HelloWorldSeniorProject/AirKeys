@@ -7,7 +7,7 @@ class Singleton(type):
     """A thread-safe implementation of Sinlgeton pattern for 'shared' resources.
     
     Typical usage will be as a parent class using polymorphism and Python's support for 
-    passing variables via the \*args and \*\*kwargs special keywords. Utilizes threading
+    passing variables via the *args and **kwargs special keywords. Utilizes threading
     standard package to prevent the edge case where multiple threads attempt to create the same
     singleton object at the same time(race condition).
     
@@ -22,8 +22,8 @@ class Singleton(type):
         """Initializes or returns available singleton objects.
         
         Args:
-            \*args: any amount of arguments of any type that are non-named.
-            \*\*kwargs: any amount of arguments of any type that are named.
+            *args: any amount of arguments of any type that are non-named.
+            **kwargs: any amount of arguments of any type that are named.
             
         Note: Utilizes the double-checked locking method.
         """

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>util.singleton &mdash; Airkeys 1.1.0 documentation</title>
+  <title>util.singleton &mdash; Airkeys 1.1.1 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -39,9 +39,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">API Documentation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../common.html">Common Package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../common.html">Common</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../test.html">Testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../util.html">util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../util.html">Utilities</a></li>
 </ul>
 
         </div>
@@ -78,7 +78,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A thread-safe implementation of Sinlgeton pattern for &#39;shared&#39; resources.</span>
 <span class="sd">    </span>
 <span class="sd">    Typical usage will be as a parent class using polymorphism and Python&#39;s support for </span>
-<span class="sd">    passing variables via the \*args and \*\*kwargs special keywords. Utilizes threading</span>
+<span class="sd">    passing variables via the *args and **kwargs special keywords. Utilizes threading</span>
 <span class="sd">    standard package to prevent the edge case where multiple threads attempt to create the same</span>
 <span class="sd">    singleton object at the same time(race condition).</span>
 <span class="sd">    </span>
@@ -93,8 +93,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes or returns available singleton objects.</span>
 <span class="sd">        </span>
 <span class="sd">        Args:</span>
-<span class="sd">            \*args: any amount of arguments of any type that are non-named.</span>
-<span class="sd">            \*\*kwargs: any amount of arguments of any type that are named.</span>
+<span class="sd">            *args: any amount of arguments of any type that are non-named.</span>
+<span class="sd">            **kwargs: any amount of arguments of any type that are named.</span>
 <span class="sd">            </span>
 <span class="sd">        Note: Utilizes the double-checked locking method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

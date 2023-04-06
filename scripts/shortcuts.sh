@@ -14,12 +14,13 @@ alias all="ls -al"
 alias rm="rm -i"
 alias rmd="rm -ri"
 alias rmf="rm -f"
-alias pytest="pytest -v -rpfs ${src}/tests/"
+
 
 # script shortcuts
 alias update_deps="${scripts}/shortcut_scripts/update_dependencies.sh"
 alias create_docs="${scripts}/shortcut_scripts/create_source_documentation.sh"
 alias commands="${scripts}/command_help.sh"
+alias test="${scripts}/shortcut_scripts/run_pytest.sh"
 
 # d2 documentaton-only
 alias diagram="${scripts}/create_diagram.sh"
