@@ -42,10 +42,9 @@ RUN pip3 install --upgrade pip
 RUN pip3 install -r config/requirements.txt
 
 # Copy cli shortcuts for permanent use.
-USER root
-RUN dos2unix ${workdir}/scripts/shortcuts.sh && \
+
+RUN sudo dos2unix ${workdir}/scripts/shortcuts.sh && \
     cp ${workdir}/scripts/shortcuts.sh ${reldir}/.bashrc
 
-USER ${username}
 
 
