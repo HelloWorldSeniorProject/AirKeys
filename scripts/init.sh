@@ -27,10 +27,10 @@ prep_scripts() {
     echo "Granting execute perms for all scripts in folder."
 
     # sys scripts
-    for script in ${scripts}/*.sh; do chmod +x $script && dos2unix $script; done;
+    for script in ${scripts}/*.sh; do chmod +x $script && sudo dos2unix $script; done;
 
     # command scripts
-    for script in ${scripts}/shortcut_scripts/*.sh; do chmod +x $script && dos2unix $script; done;
+    for script in ${scripts}/shortcut_scripts/*.sh; do chmod +x $script && sudo dos2unix $script; done;
 
     display_progress
 }

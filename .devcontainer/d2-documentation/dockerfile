@@ -24,4 +24,4 @@ COPY ./scripts/d2_scripts ${workdir}/scripts
 
 # Copy cli shortcuts for permanent use.
 COPY ./scripts/shortcuts.sh /root/.bashrc
-
+RUN dos2unix /root/.bashrc
