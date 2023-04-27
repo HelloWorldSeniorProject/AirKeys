@@ -3,3 +3,6 @@ License
 
 # OS-specific files
 /**/.DS_Store
+
+# Cache
+/**/__pycache__
