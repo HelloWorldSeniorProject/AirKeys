@@ -54,8 +54,11 @@ update_version() {
     # Increment version based on passed flags.
     if [ "$major_update" = true ] ; then
         major_version=$(( $major_version + 1))
+        feature_version=0
+        fix_version=0
     elif [ "$feature_update" = true ] ; then
         feature_version=$(( $feature_version + 1))
+        fix_version=0
     else
         fix_version=$(( $fix_version + 1))
     fi

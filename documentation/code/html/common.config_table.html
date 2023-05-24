@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>common.config_table module &mdash; Airkeys 1.1.1 documentation</title>
+  <title>common.config_table module &mdash; Airkeys 2.0.3 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -44,10 +44,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="common.html">Common</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="common.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">common.config_table module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#common.config_table.ConfigTable"><code class="docutils literal notranslate"><span class="pre">ConfigTable</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">common.config_table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="common.types.html">common.types module</a></li>
 </ul>
 </li>
@@ -83,40 +80,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-common.config_table">
-<span id="common-config-table-module"></span><h1>common.config_table module<a class="headerlink" href="#module-common.config_table" title="Permalink to this heading"></a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="common.config_table.ConfigTable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConfigTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config_table.html#ConfigTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config_table.ConfigTable" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A shared configuration for use across the system.</p>
-<p>Configuration Table is a singleton class that contains information about the system’s state
-and other important configuration information. Utilizes thread locks to prevent concurrent
-access while modifying/retrieving table information.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="common.config_table.ConfigTable.get_state">
-<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="common.types.html#common.types.SystemState" title="common.types.SystemState"><span class="pre">SystemState</span></a></span></span><a class="reference internal" href="_modules/common/config_table.html#ConfigTable.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config_table.ConfigTable.get_state" title="Permalink to this definition"></a></dt>
-<dd><p>Fetches the system state.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The SystemState currently set.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="common.config_table.ConfigTable.set_state">
-<span class="sig-name descname"><span class="pre">set_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="common.types.html#common.types.SystemState" title="common.types.SystemState"><span class="pre">SystemState</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config_table.html#ConfigTable.set_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config_table.ConfigTable.set_state" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the system state.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>state</strong> – the SystemState to set.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+  <section id="common-config-table-module">
+<h1>common.config_table module<a class="headerlink" href="#common-config-table-module" title="Permalink to this heading"></a></h1>
 </section>
 
 
