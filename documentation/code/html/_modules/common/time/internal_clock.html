@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>common.time.internal_clock &mdash; Airkeys 2.0.3 documentation</title>
+  <title>common.time.internal_clock &mdash; Airkeys 2.0.5 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -39,9 +39,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">API Documentation:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../common.html">Common</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../test.html">Testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../util.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Available Modules</a></li>
 </ul>
 
         </div>
@@ -121,6 +119,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an object that calls specified passed task after specified time duration, in</span>
 <span class="sd">        seconds, has passed.</span>
 <span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            limit : the amount of time, in seconds, before the task should execute.</span>
+<span class="sd">            task : a callable function or instructions to run once the time limit has been reached.</span>
+<span class="sd">            </span>
 <span class="sd">        Return:</span>
 <span class="sd">            A configured Timer object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -130,6 +132,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an object that calls specified passed task after specified time duration, in</span>
 <span class="sd">        milliseconds, has passed.</span>
 <span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            limit : the amount of time, in milliseconds, before the task should execute.</span>
+<span class="sd">            task : a callable function or instructions to run once the time limit has been reached.</span>
+<span class="sd">            </span>
 <span class="sd">        Return:</span>
 <span class="sd">            A configured Timer object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

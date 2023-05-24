@@ -12,5 +12,6 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   common.config_table
+   common.config
+   common.time
    common.types

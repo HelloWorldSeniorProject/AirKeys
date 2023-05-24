@@ -50,6 +50,10 @@ class InternalClock(metaclass = Singleton):
         """Creates an object that calls specified passed task after specified time duration, in
         seconds, has passed.
         
+        Args:
+            limit : the amount of time, in seconds, before the task should execute.
+            task : a callable function or instructions to run once the time limit has been reached.
+            
         Return:
             A configured Timer object.
         """
@@ -59,6 +63,10 @@ class InternalClock(metaclass = Singleton):
         """Creates an object that calls specified passed task after specified time duration, in
         milliseconds, has passed.
         
+        Args:
+            limit : the amount of time, in milliseconds, before the task should execute.
+            task : a callable function or instructions to run once the time limit has been reached.
+            
         Return:
             A configured Timer object.
         """

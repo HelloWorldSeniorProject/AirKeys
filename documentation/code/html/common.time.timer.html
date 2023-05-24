@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>common.time.timer module &mdash; Airkeys 2.0.3 documentation</title>
+  <title>common.time.timer module &mdash; Airkeys 2.0.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,7 +16,9 @@
         <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="common.types module" href="common.types.html" />
+    <link rel="prev" title="common.time.internal_clock module" href="common.time.internal_clock.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -39,10 +41,21 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">API Documentation:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="common.html">Common</a></li>
-<li class="toctree-l1"><a class="reference internal" href="test.html">Testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="util.html">Utilities</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Available Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="common.html">Common</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="common.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="common.config.html">common.config package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="common.time.html">common.time package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.types.html">common.types module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="test.html">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">Utilities</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -59,6 +72,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Available Modules</a></li>
+          <li class="breadcrumb-item"><a href="common.html">Common</a></li>
+          <li class="breadcrumb-item"><a href="common.time.html">common.time package</a></li>
       <li class="breadcrumb-item active">common.time.timer module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/common.time.timer.rst.txt" rel="nofollow"> View page source</a>
@@ -75,10 +91,21 @@
 <dt class="sig sig-object py" id="common.time.timer.Timer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/time/timer.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.time.timer.Timer" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Timer</span></code></p>
+<p>A mechanism for executing a set of instructions after waiting a specified amount of time.</p>
+<p>The timer class is a child class of the threading.Timer class with minor added functionality.
+With every new object, a new thread is created, ensuring the specified task will execute regarldless of
+the main system thread.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="common.time.timer.Timer.get_remaining_time">
 <span class="sig-name descname"><span class="pre">get_remaining_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/common/time/timer.html#Timer.get_remaining_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.time.timer.Timer.get_remaining_time" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Fetches remaining time on timer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A float representing the remaining time, in seconds, the timer will wait before
+executing task.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -87,7 +114,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="common.time.internal_clock.html" class="btn btn-neutral float-left" title="common.time.internal_clock module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="common.types.html" class="btn btn-neutral float-right" title="common.types module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
