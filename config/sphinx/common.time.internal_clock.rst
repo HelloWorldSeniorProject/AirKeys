@@ -1,4 +1,4 @@
-common.time.internal\_clock module
+Internal Clock module
 ==================================
 
 .. automodule:: common.time.internal_clock

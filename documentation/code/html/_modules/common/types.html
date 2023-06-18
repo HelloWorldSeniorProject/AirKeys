@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>common.types &mdash; Airkeys 2.0.5 documentation</title>
+  <title>common.types &mdash; Airkeys 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -75,19 +75,19 @@
 <span class="sd">    from the built-in enum module.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+
 <div class="viewcode-block" id="SystemState"><a class="viewcode-back" href="../../common.types.html#common.types.SystemState">[docs]</a><span class="k">class</span> <span class="nc">SystemState</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; A description of the System&#39;s Current State.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A description of the System&#39;s Current State.&quot;&quot;&quot;</span>
+
     <span class="c1">#: System is not yet ready for use.</span>
     <span class="n">Standby</span> <span class="o">=</span> <span class="mi">0</span>
-    
+
     <span class="c1">#: System has not been used for system_timeout time limit. Ready to</span>
     <span class="c1">#: reconnect once active signal detected.</span>
     <span class="n">Inactive</span> <span class="o">=</span> <span class="mi">1</span>
-    
+
     <span class="c1">#: System is ready to use.</span>
     <span class="n">Active</span> <span class="o">=</span> <span class="mi">2</span></div>
-    
 </pre></div>
 
            </div>

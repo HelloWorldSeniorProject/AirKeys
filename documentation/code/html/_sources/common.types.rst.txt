@@ -1,4 +1,4 @@
-common.types module
+Types module
 ===================
 
 .. automodule:: common.types

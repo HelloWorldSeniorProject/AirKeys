@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>common.time.timer &mdash; Airkeys 2.0.5 documentation</title>
+  <title>common.time.timer &mdash; Airkeys 2.2.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -69,17 +69,18 @@
   <h1>Source code for common.time.timer</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">threading</span>
 
+
 <div class="viewcode-block" id="Timer"><a class="viewcode-back" href="../../../common.time.timer.html#common.time.timer.Timer">[docs]</a><span class="k">class</span> <span class="nc">Timer</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Timer</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A mechanism for executing a set of instructions after waiting a specified amount of time.</span>
-<span class="sd">    </span>
+
 <span class="sd">    The timer class is a child class of the threading.Timer class with minor added functionality.</span>
 <span class="sd">    With every new object, a new thread is created, ensuring the specified task will execute regarldless of</span>
 <span class="sd">    the main system thread.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="n">callable</span><span class="p">,</span> <span class="n">start_time</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the instance and saves the initialization time. </span>
-<span class="sd">        </span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the instance and saves the initialization time.</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            limit : the amount of time, in seconds, before the task should execute.</span>
 <span class="sd">            task : a callable function or instructions to run once the time limit has been reached.</span>
@@ -89,26 +90,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">start_time</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_limit</span> <span class="o">=</span> <span class="n">limit</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-    
+
 <div class="viewcode-block" id="Timer.get_remaining_time"><a class="viewcode-back" href="../../../common.time.timer.html#common.time.timer.Timer.get_remaining_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_remaining_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches remaining time on timer. </span>
-<span class="sd">        </span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches remaining time on timer.</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            A float representing the remaining time, in seconds, the timer will wait before </span>
+<span class="sd">            A float representing the remaining time, in seconds, the timer will wait before</span>
 <span class="sd">            executing task.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># get around circular import errors</span>
         <span class="kn">from</span> <span class="nn">common.time.internal_clock</span> <span class="kn">import</span> <span class="n">InternalClock</span>
-        
+
         <span class="n">clock</span> <span class="o">=</span> <span class="n">InternalClock</span><span class="p">()</span>
-        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">clock</span><span class="o">.</span><span class="n">get_time_ms</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="n">elapsed_time</span> <span class="o">=</span> <span class="p">(</span><span class="n">clock</span><span class="o">.</span><span class="n">get_time_ms</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
         <span class="n">remaining_time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_limit</span> <span class="o">-</span> <span class="n">elapsed_time</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">remaining_time</span> <span class="k">if</span> <span class="n">remaining_time</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span></div></div>
-        
-
-    
-    
-    
 </pre></div>
 
            </div>

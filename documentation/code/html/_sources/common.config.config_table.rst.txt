@@ -1,4 +1,4 @@
-common.config.config\_table module
+Config Table module
 ==================================
 
 .. automodule:: common.config.config_table

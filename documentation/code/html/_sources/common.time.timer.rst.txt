@@ -1,4 +1,4 @@
-common.time.timer module
+Timer module
 ========================
 
 .. automodule:: common.time.timer

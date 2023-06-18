@@ -1,4 +1,4 @@
-common.config package
+Config package
 =====================
 
 .. automodule:: common.config

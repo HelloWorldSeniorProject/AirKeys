@@ -1,4 +1,4 @@
-common.time package
+Time package
 ===================
 
 .. automodule:: common.time
