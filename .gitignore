@@ -6,3 +6,6 @@ License
 
 # Cache
 /**/__pycache__
+
+# Software logs
+/logs

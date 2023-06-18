@@ -14,7 +14,7 @@ alias all="ls -al"
 alias rm="rm -i"
 alias rmd="rm -ri"
 alias rmf="rm -f"
-
+alias lint="black ${src}"
 
 # script shortcuts
 alias update_deps="${scripts}/shortcut_scripts/update_dependencies.sh"
@@ -24,9 +24,6 @@ alias test="${scripts}/shortcut_scripts/run_pytest.sh"
 
 # d2 documentaton-only
 alias diagram="${scripts}/create_diagram.sh"
-
-
-
 
 # usefule inline functions
 inline_funcs='back'

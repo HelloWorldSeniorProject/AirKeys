@@ -10,7 +10,8 @@
 				"ms-python.python",
 				"VisualStudioExptTeam.vscodeintellicode",
 				"KevinRose.vsc-python-indent",
-				"ritwickdey.LiveServer"
+				"ritwickdey.LiveServer",
+				"emilast.LogFileHighlighter"
 			]
 		}
 	},
