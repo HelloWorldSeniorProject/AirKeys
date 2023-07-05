@@ -33,9 +33,8 @@ class InternalClock(metaclass=Singleton):
         try:
             time = self._get_sys_time()
             return time
-        except:
-            logger.error("Failed to get time.")
-            return None
+        except Exception as e:
+            logger.error(f"Failed to get time. \n{e}")
 
     def get_time_ms(self) -> int:
         """Fetches the total time system time since boot.
@@ -46,9 +45,8 @@ class InternalClock(metaclass=Singleton):
         try:
             time = int(self._get_sys_time() * 1000)
             return time
-        except:
-            logger.error("Failed to get time.")
-            return None
+        except Exception as e:
+            logger.error(f"Failed to get time. \n{e}")
 
     def _get_sys_time(self) -> float:
         """Fetches the total time system time since boot.
@@ -76,9 +74,8 @@ class InternalClock(metaclass=Singleton):
         try:
             timer = Timer(limit=limit, task=task, start_time=self.get_time_ms())
             return timer
-        except:
-            logger.error(f"Failed to create timer.")
-            return None
+        except Exception as e:
+            logger.error(f"Failed to create timer. \n{e}")
 
     def create_timer_ms(self, limit: int, task: callable) -> Timer:
         """Creates an object that calls specified passed task after specified time duration, in
