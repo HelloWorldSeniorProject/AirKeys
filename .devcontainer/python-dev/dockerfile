@@ -33,9 +33,6 @@ WORKDIR ${workdir}
 # Copy source files
 COPY . .
 
-# Create virtaul env.
-RUN python3 -m venv ${reldir}/env
-ENV PATH=${reldir}/env/bin:$PATH
 # Update Package Management
 RUN pip3 install --upgrade pip
 # Install all python modules.
