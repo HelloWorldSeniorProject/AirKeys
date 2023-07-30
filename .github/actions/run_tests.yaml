@@ -14,12 +14,11 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-      - name: Install Python Dependencies
-        uses: actions/setup-python@v4
+      - name: Build Dev Container & Run Tests
+        uses: devcontainers/ci@v0.3
         with:
-          python-version: '3.11'
-        run: pip3 install --upgrade pip
-        run: pip3 install -r config/requirements.txt
-      - name: Run All Tests using Test Script
-        run: test -a
+          subFolder: .devcontainer/python-dev
+          imageName: python-container
+          runCMD: test -a
+          
       
