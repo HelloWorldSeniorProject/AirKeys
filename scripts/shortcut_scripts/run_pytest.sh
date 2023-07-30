@@ -1,11 +1,11 @@
 #!/bin/bash
-source ../.bashrc
+env
 
 # Run Pytest from testing folder. Gives users the ability to specify to only run certain files or functions within files.
 filename=""
 funcname=""
 run_all=false
-test_dir=${src}/tests/
+test_dir=${src}/test/
 
 usage() {
 
