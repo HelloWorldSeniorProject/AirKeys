@@ -2,10 +2,10 @@ name: Run Python Tests
 on:
   push:
     branches:
-      - actions
+      - develop
   pull_request:
     branches:
-      - actions
+      - develop
 jobs:
   test:
     name: Setup and Run Test Suite
