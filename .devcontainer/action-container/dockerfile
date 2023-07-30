@@ -1,0 +1,43 @@
+FROM python:3.11-slim-bullseye
+
+# use bash shell.
+ENV SHELL=/bin/bash
+
+# define user variables for account setup.
+ARG reldir=/home/user
+ARG workdir=${reldir}/airkeys
+
+RUN apt-get update && \
+    apt-get --no-install-recommends -y install git \
+    dos2unix \
+    bash-completion \
+    sudo \
+    vim \
+    openssh-server \
+    make
+
+# Start ssh client.
+RUN service ssh start
+
+# Configure sudo for initialization tasks. 
+RUN echo "root ALL=(ALL) NOPASSWD: /bin/chown" >> etc/sudoers && \
+    echo "root ALL=(ALL) NOPASSWD: /usr/bin/dos2unix" >> etc/sudoers
+
+
+WORKDIR ${workdir}
+
+# Copy source files
+COPY . .
+
+# Update Package Management
+RUN pip3 install --upgrade pip
+# Install all python modules.
+RUN pip3 install -r config/requirements.txt
+
+# Copy cli shortcuts for permanent use.
+
+RUN sudo dos2unix ${workdir}/scripts/shortcuts.sh && \
+    cp ${workdir}/scripts/shortcuts.sh ${reldir}/.bashrc
+
+
+

@@ -1,0 +1,11 @@
+
+services:
+
+  # Python for development and testing.
+  python-dev:
+    build: 
+      context: ./../../
+      dockerfile: ./.devcontainer/action-container/dockerfile
+    volumes:
+      - ./../../:/home/user/airkeys/
+    command: sleep infinity

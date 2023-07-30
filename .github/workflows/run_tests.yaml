@@ -6,7 +6,6 @@ on:
   pull_request:
     branches:
       - actions
-permissions: read-all|write-all
 jobs:
   test:
     name: Setup and Run Test Suite
@@ -24,9 +23,9 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: Start dev container
-        run: devcontainer up --config .devcontainer/python-dev/devcontainer.json --workspace-folder .
+        run: devcontainer up --config .devcontainer/action-container/devcontainer.json --workspace-folder .
 
       - name: Run tests in dev container
-        run: devcontainer exec --config .devcontainer/python-dev/devcontainer.json test -a --workspace-folder .
+        run: devcontainer exec --config .devcontainer/action-container/devcontainer.json test -a --workspace-folder .
           
       
