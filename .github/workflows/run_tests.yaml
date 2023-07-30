@@ -17,7 +17,6 @@ jobs:
       - name: Build Dev Container & Run Tests
         uses: devcontainers/ci@v0.3
         with:
-          subFolder: .devcontainer/python-dev
           imageName: python-container
           runCMD: test -a
           
