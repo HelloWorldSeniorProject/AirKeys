@@ -1,6 +1,6 @@
 from common.config.config_table import ConfigTable
 from common.types import *
-from tests.swte import large_banner
+from test.swte import large_banner, small_banner
 
 
 def test_config_table():
