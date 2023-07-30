@@ -2,10 +2,17 @@ name: Run Python Tests
 on:
   push:
     branches:
+<<<<<<< HEAD
+      - testing
+  pull_request:
+    branches:
+      - testing
+=======
       - develop
   pull_request:
     branches:
       - develop
+>>>>>>> develop
 
 jobs:
   test:
@@ -17,7 +24,10 @@ jobs:
       - name: Build Dev Container & Run Tests
         uses: devcontainers/ci@v0.3
         with:
+<<<<<<< HEAD
+=======
           subFolder: .devcontainer/python-dev
+>>>>>>> develop
           imageName: python-container
           runCMD: test -a
           
