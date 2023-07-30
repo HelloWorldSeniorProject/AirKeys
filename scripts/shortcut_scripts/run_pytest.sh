@@ -1,5 +1,5 @@
 #!/bin/bash
-ls -al && cd ${src} && ls -al 
+
 # Run Pytest from testing folder. Gives users the ability to specify to only run certain files or functions within files.
 filename=""
 funcname=""
