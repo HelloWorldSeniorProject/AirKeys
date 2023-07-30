@@ -7,5 +7,5 @@ services:
       context: ./../../
       dockerfile: ./.devcontainer/action-container/dockerfile
     volumes:
-      - ./../../:/home/user/airkeys/
+      - ./../../:/root/airkeys
     command: sleep infinity

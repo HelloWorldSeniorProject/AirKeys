@@ -3,7 +3,7 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "python-dev",
     "shutdownAction": "stopCompose",
-    "workspaceFolder": "/home/user/airkeys/",
+    "workspaceFolder": "/root/airkeys/",
 	"customizations": {
 		"vscode": {
 			"extensions": [
