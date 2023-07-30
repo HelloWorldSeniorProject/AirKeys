@@ -26,6 +26,6 @@ jobs:
         run: devcontainer up --config .devcontainer/action-container/devcontainer.json --workspace-folder .
 
       - name: Run tests in dev container
-        run: devcontainer exec --config .devcontainer/action-container/devcontainer.json --workspace-folder . commands
+        run: devcontainer exec --config .devcontainer/action-container/devcontainer.json --workspace-folder . alias
           
       
