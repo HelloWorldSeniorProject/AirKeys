@@ -1,0 +1,25 @@
+name: Run Python Tests
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    name: Setup and Run Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Install Python Dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+        run: pip3 install --upgrade pip
+        run: pip3 install -r config/requirements.txt
+      - name: Run All Tests using Test Script
+        run: test -a
+      
