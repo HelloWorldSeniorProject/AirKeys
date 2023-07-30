@@ -24,9 +24,9 @@ jobs:
         run: npm install -g @devcontainers/cli
 
       - name: Start dev container
-        run: devcontainer up --config .devcontainer/python-dev/devcontainer.json
+        run: devcontainer up --config .devcontainer/python-dev/devcontainer.json --workspace-folder /home/NRuser/airkeys
 
       - name: Run tests in dev container
-        run: devcontainer exec --config .devcontainer/python-dev/devcontainer.json test -a
+        run: devcontainer exec --config .devcontainer/python-dev/devcontainer.json test -a --workspace-folder /home/NRuser/airkeys
           
       
