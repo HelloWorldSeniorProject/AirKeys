@@ -30,11 +30,8 @@ class InternalClock(metaclass=Singleton):
         Returns:
             A float representing the system time in seconds rounded to the nearest ms.
         """
-        try:
-            time = self._get_sys_time()
-            return time
-        except Exception as e:
-            logger.error(f"Failed to get time. \n{e}")
+        time = self._get_sys_time()
+        return time
 
     def get_time_ms(self) -> int:
         """Fetches the total time system time since boot.
@@ -42,11 +39,10 @@ class InternalClock(metaclass=Singleton):
         Returns:
             An integer representing the system time in ms.
         """
-        try:
-            time = int(self._get_sys_time() * 1000)
-            return time
-        except Exception as e:
-            logger.error(f"Failed to get time. \n{e}")
+
+        time = int(self._get_sys_time() * 1000)
+        return time
+
 
     def _get_sys_time(self) -> float:
         """Fetches the total time system time since boot.
@@ -57,8 +53,13 @@ class InternalClock(metaclass=Singleton):
         Returns:
             A float representing the system time in seconds rounded to the nearest ms.
         """
-        with thread_lock:
-            return round((time.perf_counter() - self._init_time), 3)
+        try:
+            with thread_lock:
+                return round((time.perf_counter() - self._init_time), 3)
+        except Exception as e:
+            logger.error(f"Failed to get time. \n{e}")
+            return float(0)
+
 
     def create_timer(self, limit: int, task: callable) -> Timer:
         """Creates an object that calls specified passed task after specified time duration, in
@@ -76,6 +77,7 @@ class InternalClock(metaclass=Singleton):
             return timer
         except Exception as e:
             logger.error(f"Failed to create timer. \n{e}")
+            return None
 
     def create_timer_ms(self, limit: int, task: callable) -> Timer:
         """Creates an object that calls specified passed task after specified time duration, in

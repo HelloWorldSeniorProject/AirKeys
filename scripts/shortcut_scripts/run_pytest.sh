@@ -5,7 +5,8 @@
 filename=""
 funcname=""
 run_all=false
-test_dir=${src}/tests/
+test_dir=${src}/test/
+temp_dir=${test_dir}/temp/
 
 usage() {
 
@@ -75,6 +76,11 @@ find_file() {
     run_specific_tests
 }
 
+# create temp dir in test suite
+if [ ! -d "${temp_dir}" ]; then
+    mkdir ${temp_dir}
+fi
+
 while getopts "f:m:a" flag; do
     case $flag in
     f ) # filename to search for.
@@ -94,7 +100,7 @@ done
 if [ "${run_all}" = true ]; then
     run_all_tests
 elif [ -z "${filename}" ]; then
-    echo "No file specified \n" && usage
+    echo -e "No file specified \n" && usage
 else
     find_file
 fi

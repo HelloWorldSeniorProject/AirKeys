@@ -1,6 +1,6 @@
 from common.time.internal_clock import InternalClock
 from common.types import *
-from tests.swte import large_banner, small_banner
+from test.swte import large_banner, small_banner
 from time import sleep
 
 

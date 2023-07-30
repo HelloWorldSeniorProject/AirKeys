@@ -6,6 +6,10 @@ License
 
 # Cache
 /**/__pycache__
+/**/.pytest_cache
 
 # Software logs
 /logs
+
+# Temp folders
+/**/temp
