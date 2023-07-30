@@ -1,0 +1,31 @@
+name: Run Python Tests
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+jobs:
+  test:
+    name: Setup and Run Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js (Workaround)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install devcontainer CLI
+        run: npm install -g @devcontainers/cli
+
+      - name: Start dev container
+        run: devcontainer up --config .devcontainer/action-container/devcontainer.json --workspace-folder .
+
+      - name: Run tests in dev container
+        run: devcontainer exec --config .devcontainer/action-container/devcontainer.json --workspace-folder . ./scripts/shortcut_scripts/run_pytest.sh -a
+          
+      
