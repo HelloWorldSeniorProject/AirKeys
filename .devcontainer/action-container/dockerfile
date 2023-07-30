@@ -4,7 +4,7 @@ FROM python:3.11-slim-bullseye
 ENV SHELL=/bin/bash
 
 # define user variables for account setup.
-ARG reldir=/home/user
+ARG reldir=/root
 ARG workdir=${reldir}/airkeys
 
 RUN apt-get update && \
