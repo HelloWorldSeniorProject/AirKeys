@@ -1,5 +1,3 @@
-version: "1.0.0"
-
 services:
 
 # The image running D2 and all related dependencies.
