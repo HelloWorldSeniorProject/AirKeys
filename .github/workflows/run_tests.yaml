@@ -6,7 +6,7 @@ on:
   pull_request:
     branches:
       - actions
-
+permissions: read-all|write-all
 jobs:
   test:
     name: Setup and Run Test Suite
