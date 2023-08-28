@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Common &mdash; Airkeys 2.0.5 documentation</title>
+  <title>common.time package &mdash; Airkeys 2.0.5 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -17,8 +17,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="common.config package" href="common.config.html" />
-    <link rel="prev" title="Available Modules" href="modules.html" /> 
+    <link rel="next" title="common.time.internal_clock module" href="common.time.internal_clock.html" />
+    <link rel="prev" title="common.config.config_table module" href="common.config.config_table.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,10 +43,10 @@
               <p class="caption" role="heading"><span class="caption-text">API Documentation:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Available Modules</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Common</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="common.html">Common</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="common.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="common.config.html">common.config package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="common.time.html">common.time package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">common.time package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="common.types.html">common.types module</a></li>
 </ul>
 </li>
@@ -73,9 +73,10 @@
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="modules.html">Available Modules</a></li>
-      <li class="breadcrumb-item active">Common</li>
+          <li class="breadcrumb-item"><a href="common.html">Common</a></li>
+      <li class="breadcrumb-item active">common.time package</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/common.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/common.time.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -83,41 +84,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-common">
-<span id="common"></span><h1>Common<a class="headerlink" href="#module-common" title="Permalink to this heading"></a></h1>
+  <section id="module-common.time">
+<span id="common-time-package"></span><h1>common.time package<a class="headerlink" href="#module-common.time" title="Permalink to this heading"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="common.config.html">common.config package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="common.config.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="common.config.config_table.html">common.config.config_table module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="common.config.config_table.html#common.config.config_table.ConfigTable"><code class="docutils literal notranslate"><span class="pre">ConfigTable</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="common.time.internal_clock.html">common.time.internal_clock module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.time.internal_clock.html#common.time.internal_clock.InternalClock"><code class="docutils literal notranslate"><span class="pre">InternalClock</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="common.time.internal_clock.html#common.time.internal_clock.InternalClock.create_timer"><code class="docutils literal notranslate"><span class="pre">InternalClock.create_timer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.time.internal_clock.html#common.time.internal_clock.InternalClock.create_timer_ms"><code class="docutils literal notranslate"><span class="pre">InternalClock.create_timer_ms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.time.internal_clock.html#common.time.internal_clock.InternalClock.get_time"><code class="docutils literal notranslate"><span class="pre">InternalClock.get_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="common.time.internal_clock.html#common.time.internal_clock.InternalClock.get_time_ms"><code class="docutils literal notranslate"><span class="pre">InternalClock.get_time_ms()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="common.time.html">common.time package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="common.time.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="common.time.internal_clock.html">common.time.internal_clock module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="common.time.internal_clock.html#common.time.internal_clock.InternalClock"><code class="docutils literal notranslate"><span class="pre">InternalClock</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="common.time.timer.html">common.time.timer module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="common.time.timer.html#common.time.timer.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="common.types.html">common.types module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="common.types.html#common.types.SystemState"><code class="docutils literal notranslate"><span class="pre">SystemState</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="common.types.html#common.types.SystemState.Active"><code class="docutils literal notranslate"><span class="pre">SystemState.Active</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="common.types.html#common.types.SystemState.Inactive"><code class="docutils literal notranslate"><span class="pre">SystemState.Inactive</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="common.types.html#common.types.SystemState.Standby"><code class="docutils literal notranslate"><span class="pre">SystemState.Standby</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="common.time.timer.html">common.time.timer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="common.time.timer.html#common.time.timer.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="common.time.timer.html#common.time.timer.Timer.get_remaining_time"><code class="docutils literal notranslate"><span class="pre">Timer.get_remaining_time()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -131,8 +116,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="modules.html" class="btn btn-neutral float-left" title="Available Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="common.config.html" class="btn btn-neutral float-right" title="common.config package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="common.config.config_table.html" class="btn btn-neutral float-left" title="common.config.config_table module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="common.time.internal_clock.html" class="btn btn-neutral float-right" title="common.time.internal_clock module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

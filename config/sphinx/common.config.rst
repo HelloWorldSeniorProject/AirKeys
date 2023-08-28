@@ -1,7 +1,7 @@
-Common
-==============
+common.config package
+=====================
 
-.. automodule:: common
+.. automodule:: common.config
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,6 +12,4 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   common.config
-   common.time
-   common.types
+   common.config.config_table

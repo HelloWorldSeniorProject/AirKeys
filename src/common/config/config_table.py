@@ -7,7 +7,7 @@ thread_lock = threading.Lock()
 
 class ConfigTable(metaclass=Singleton):
     
-    """ A shared configuration for use across the system.
+    """A shared configuration for use across the system.
     
     Configuration Table is a singleton class that contains information about the system's state
     and other important configuration information. Utilizes thread locks to prevent concurrent

@@ -1,4 +1,5 @@
-
+""" Provides a series of useful functions for use within the Software Test Environment.
+"""
 divider = "- "*50
 
 def large_banner(string: str) :
@@ -15,5 +16,5 @@ def small_banner(string: str) :
     Args:
         string: a string containing the desired text.    
     """
-    print(f"\n{divider} \n{string}\n {divider}")
+    print(f"\n\t- {string}")
     
