@@ -14,7 +14,11 @@ sys.path.insert(0, src_code_path)
 project = 'Airkeys'
 copyright = '2023, Hello World!'
 author = 'Hello World!'
+<<<<<<< HEAD
+release = '2.2.0'
+=======
 release = '2.0.5'
+>>>>>>> develop
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

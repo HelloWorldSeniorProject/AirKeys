@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
+  <title>util.singleton &mdash; Airkeys 2.2.0 documentation</title>
+=======
   <title>util.singleton &mdash; Airkeys 2.0.5 documentation</title>
+>>>>>>> develop
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -72,35 +76,37 @@
 <span class="c1"># a lock that allows only one thread to access the resource it &quot;locks&quot;.</span>
 <span class="n">thread_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
+
 <div class="viewcode-block" id="Singleton"><a class="viewcode-back" href="../../util.singleton.html#util.singleton.Singleton">[docs]</a><span class="k">class</span> <span class="nc">Singleton</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A thread-safe implementation of Sinlgeton pattern for &#39;shared&#39; resources.</span>
-<span class="sd">    </span>
-<span class="sd">    Typical usage will be as a parent class using polymorphism and Python&#39;s support for </span>
+
+<span class="sd">    Typical usage will be as a parent class using polymorphism and Python&#39;s support for</span>
 <span class="sd">    passing variables via the *args and **kwargs special keywords. Utilizes threading</span>
 <span class="sd">    standard package to prevent the edge case where multiple threads attempt to create the same</span>
 <span class="sd">    singleton object at the same time(race condition).</span>
-<span class="sd">    </span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        _instances: A dictionary of instances with the Singleton class as its parent class.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="n">_instances</span> <span class="o">=</span> <span class="p">{}</span>
-    
-    
+
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes or returns available singleton objects.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Args:</span>
 <span class="sd">            *args: any amount of arguments of any type that are non-named.</span>
 <span class="sd">            **kwargs: any amount of arguments of any type that are named.</span>
-<span class="sd">            </span>
+
 <span class="sd">        Note: Utilizes the double-checked locking method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">:</span>   <span class="c1"># check for object before locking.</span>
-            <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>   <span class="c1"># lock Singleton class / prevent concurrent access</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">:</span>  <span class="c1"># check for object before locking.</span>
+            <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>  <span class="c1"># lock Singleton class / prevent concurrent access</span>
                 <span class="k">if</span> <span class="bp">cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">:</span>
-                    <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c1"># create instance and store in dict</span>
-        
+                    <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Singleton</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span>
+                        <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+                    <span class="p">)</span>  <span class="c1"># create instance and store in dict</span>
+
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instances</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>  <span class="c1"># return instance if available/once created</span></div>
 </pre></div>
 

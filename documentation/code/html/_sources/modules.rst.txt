@@ -5,5 +5,4 @@ Available Modules
    :maxdepth: 4
 
    common
-   test
    util

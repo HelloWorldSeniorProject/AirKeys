@@ -1,4 +1,4 @@
-util.singleton module
+Singleton module
 =====================
 
 .. automodule:: util.singleton

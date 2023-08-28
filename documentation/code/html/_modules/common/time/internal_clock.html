@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
+  <title>common.time.internal_clock &mdash; Airkeys 2.2.0 documentation</title>
+=======
   <title>common.time.internal_clock &mdash; Airkeys 2.0.5 documentation</title>
+>>>>>>> develop
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -71,6 +75,95 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">util.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
 <span class="kn">from</span> <span class="nn">common.time.timer</span> <span class="kn">import</span> <span class="n">Timer</span>
+<<<<<<< HEAD
+<span class="kn">from</span> <span class="nn">util.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;internal_clock.log&quot;</span><span class="p">)</span>
+
+<span class="n">thread_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="InternalClock"><a class="viewcode-back" href="../../../common.time.internal_clock.html#common.time.internal_clock.InternalClock">[docs]</a><span class="k">class</span> <span class="nc">InternalClock</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">Singleton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A monotonic clock for use across the system.</span>
+
+<span class="sd">    Internal Clock is a singleton class that functions for determining relational times</span>
+<span class="sd">    throughout the system. Utilizes thread locks to prevent concurrent access to CPU</span>
+<span class="sd">    hardware clocks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the instance and saves the initialization time.&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing internal clock.&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initialization complete.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InternalClock.get_time"><a class="viewcode-back" href="../../../common.time.internal_clock.html#common.time.internal_clock.InternalClock.get_time">[docs]</a>    <span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches the total time system time since boot.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A float representing the system time in seconds rounded to the nearest ms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sys_time</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">time</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to get time.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="InternalClock.get_time_ms"><a class="viewcode-back" href="../../../common.time.internal_clock.html#common.time.internal_clock.InternalClock.get_time_ms">[docs]</a>    <span class="k">def</span> <span class="nf">get_time_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches the total time system time since boot.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An integer representing the system time in ms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_sys_time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">time</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to get time.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_sys_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches the total time system time since boot.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            See get_time() for external use.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A float representing the system time in seconds rounded to the nearest ms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">round</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_time</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InternalClock.create_timer"><a class="viewcode-back" href="../../../common.time.internal_clock.html#common.time.internal_clock.InternalClock.create_timer">[docs]</a>    <span class="k">def</span> <span class="nf">create_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="n">callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Timer</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an object that calls specified passed task after specified time duration, in</span>
+<span class="sd">        seconds, has passed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            limit : the amount of time, in seconds, before the task should execute.</span>
+<span class="sd">            task : a callable function or instructions to run once the time limit has been reached.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A configured Timer object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_time_ms</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">timer</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to create timer.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="InternalClock.create_timer_ms"><a class="viewcode-back" href="../../../common.time.internal_clock.html#common.time.internal_clock.InternalClock.create_timer_ms">[docs]</a>    <span class="k">def</span> <span class="nf">create_timer_ms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="n">callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Timer</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates an object that calls specified passed task after specified time duration, in</span>
+<span class="sd">        milliseconds, has passed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            limit : the amount of time, in milliseconds, before the task should execute.</span>
+<span class="sd">            task : a callable function or instructions to run once the time limit has been reached.</span>
+
+<span class="sd">        Returns:</span>
+=======
 
 <span class="n">thread_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 <div class="viewcode-block" id="InternalClock"><a class="viewcode-back" href="../../../common.time.internal_clock.html#common.time.internal_clock.InternalClock">[docs]</a><span class="k">class</span> <span class="nc">InternalClock</span><span class="p">(</span><span class="n">metaclass</span> <span class="o">=</span> <span class="n">Singleton</span><span class="p">):</span>
@@ -137,6 +230,7 @@
 <span class="sd">            task : a callable function or instructions to run once the time limit has been reached.</span>
 <span class="sd">            </span>
 <span class="sd">        Return:</span>
+>>>>>>> develop
 <span class="sd">            A configured Timer object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="nb">round</span><span class="p">((</span><span class="n">limit</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="n">task</span><span class="o">=</span><span class="n">task</span><span class="p">)</span></div></div>

@@ -13,3 +13,5 @@ Submodules
    :maxdepth: 4
 
    util.singleton
+   util.logger
+   util.info
