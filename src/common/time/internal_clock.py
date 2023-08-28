@@ -1,6 +1,6 @@
 import threading
 import time
-from util.singleton import Singleton
+from common.patterns.singleton import Singleton
 from common.time.timer import Timer
 from util.logger import get_logger
 

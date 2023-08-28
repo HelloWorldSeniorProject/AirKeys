@@ -1,5 +1,5 @@
 from common.types import *
-from util.singleton import Singleton
+from common.patterns.singleton import Singleton
 import threading
 
 thread_lock = threading.Lock()
