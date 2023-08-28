@@ -1,0 +1,16 @@
+title Add Layout Scenario
+actor ":User" as User
+participant ":GUI" as System
+participantspacing 20
+
+User->System: uploadNewLayout()
+User<--System: detected device
+User->System: selectDevice(device)
+loop while user has a layout to upload
+User->System: uploadLayoutImage(image)
+end
+alt added successfully
+User<--System: confirmation message
+else failure
+User<--System: failure message
+end

@@ -1,0 +1,16 @@
+title Change Connection Scenario
+actor ":User" as User
+participant ":GUI" as System
+participantspacing 20
+
+User->System: changeConnection()
+User<--System: detected devices
+User->System: selectDevice(device)
+User<--System: possible connections for host device
+User->System: selectConnection(connection)
+alt success
+User<--System: confirmation message
+else failure
+User<--System: failure message
+end
+
