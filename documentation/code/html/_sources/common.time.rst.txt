@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Time package
+=======
+common.time package
+>>>>>>> develop
 ===================
 
 .. automodule:: common.time

@@ -52,7 +52,6 @@ def test_create_timer():
     small_banner("Sleep for 5 seconds")
     sleep(5)
     small_banner("Timer 1 task should run before this line")
-
     timer2 = ic.create_timer_ms(4000, lambda: small_banner("Timer 2 rang!"))
     small_banner("Sleep for 5 seconds")
     sleep(5)
