@@ -1,10 +1,10 @@
 import threading
 import time
+from .timer import Timer
 from common.patterns.singleton import Singleton
-from common.time.timer import Timer
-from util.logger import get_logger
+from common.util.logger import get_logger
 
-logger = get_logger("internal_clock.log")
+logger = get_logger("InternalClock.log")
 
 thread_lock = threading.Lock()
 
@@ -43,7 +43,6 @@ class InternalClock(metaclass=Singleton):
         time = int(self._get_sys_time() * 1000)
         return time
 
-
     def _get_sys_time(self) -> float:
         """Fetches the total time system time since boot.
 
@@ -59,7 +58,6 @@ class InternalClock(metaclass=Singleton):
         except Exception as e:
             logger.error(f"Failed to get time. \n{e}")
             return float(0)
-
 
     def create_timer(self, limit: int, task: callable) -> Timer:
         """Creates an object that calls specified passed task after specified time duration, in

@@ -1,7 +1,7 @@
 import logging
 import inspect
 import os
-from util.info import ROOT_DIR, LOGS_DIR
+from .info import ROOT_DIR, LOGS_DIR
 
 
 class Formatter(logging.Formatter):
