@@ -1,3 +1,5 @@
+// Compiled using https://sequencediagram.org/
+
 title Change Connection Scenario
 actor ":User" as User
 participant ":GUI" as System

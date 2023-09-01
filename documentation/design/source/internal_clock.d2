@@ -1,10 +1,13 @@
 Internal Clock : {
     shape : class
 
-    - system clock : Parallel Thread
+    - initTime : Parallel Thread
 
-    getTime(): float
+    - getSysTime(): Float
+    getTime(): Float
+    getTimeMs(): Integer
     createTimer(TimeLimit limit, Function task) : Timer
+    createTimerMs(TimeLimit limit, Function task): Timer
 }
 
 Sequence Diagram : {

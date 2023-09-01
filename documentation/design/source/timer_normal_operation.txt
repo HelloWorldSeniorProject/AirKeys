@@ -1,0 +1,22 @@
+// Compiled using https://sequencediagram.org/
+
+title Normal Timer Operation
+participantspacing 5
+
+
+participant "Internal Clock" as IC
+fontawesome f017 Clock
+fontawesome f254 "Special Observer" as ObsN
+
+[-> IC : createTimer( time limit)
+        IC ->*ObsN : <<create>> setTimer (time limit)
+        
+note over ObsN: decrement timer using Runnable
+
+opt curr time - create time >= time limit
+	ObsN->]: runTask
+   	ObsN-->IC:timer done
+	destroy ObsN
+end
+        
+IC -->[ : timer done

@@ -1,0 +1,23 @@
+File Manager : {
+    shape : class
+
+    - checkFileLocations()
+    - createFile(String fType, String fName, Data f_data): Boolean
+    - retrieveFile(String fType, String fName): String
+    - getFiles(String fType): "[]String"
+    - readImage(String f_name): "[]Integer"
+    getLayoutFile(String fName): "[]Integer"
+    getCalibrationFile(String fName): "[]Integer"
+    readConfigurationFile(): Dictionary
+
+    uploadLayoutFile(String srcName, String fName) : Boolean
+    uploadCalibrationFile(String srcName, String fName) : Boolean
+    writeConfigurationFile() : Boolean
+}
+
+Operation Sequence Diagram {
+    shape: image
+    icon : ./file_manager.png
+    width: 1200
+    height: 1000
+}
