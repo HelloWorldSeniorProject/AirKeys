@@ -1,12 +1,15 @@
-import os, sys
+import os, sys, json
 from common.patterns.singleton import Singleton
 from common.util.logger import get_logger
 from common.util.info import FILE_DIR
 from collections import OrderedDict
+import numpy as np
 import cv2
 
 
 logger = get_logger("FileManager.log")
+
+CONFIG_FNAME = "config.json"
 
 class InvalidFileType(Exception):
     
@@ -60,8 +63,11 @@ class FileManager(metaclass=Singleton):
             return False
         
         try:
-            with open(os.path.join(type_dir, f_name), 'w') as file:
-                file.write(f_data)
+            if type(f_data) == np.array:
+                cv2.imwrite(f_name, f_data)
+            else:
+                with open(os.path.join(type_dir, f_name), 'w') as file:
+                    file.write(f_data)
         except OSError:
             logger.error(f"Failed to write to {file}.")
             return False
@@ -112,7 +118,7 @@ class FileManager(metaclass=Singleton):
         
         return files
     
-    def _readImage(self, f_name:str):
+    def _readImage(self, f_name:str)-> np.array:
         try:
             return cv2.imread(f_name)
         except Exception as e:
@@ -129,20 +135,37 @@ class FileManager(metaclass=Singleton):
         return self._readImage(f_name)
         
 
-    # TODO : implement
     def get_calibration_file(self, f_name):
-        pass
-    # TODO : implement 
-    def read_configuration_file(self, f_name) -> OrderedDict:
-        pass
-    
-    
+        calibration = self._retrieve_file(f_type="calibration", f_name=f_name)
+        
+        if calibration == None:
+            logger.error("Failed to find layout file.")
+            return None
+        
+        return self._readImage(f_name)
+        
+    def read_configuration_file(self) -> OrderedDict:
+        config = self._retrieve_file(f_type="config", f_name=CONFIG_FNAME)
+        
+        if config == None: 
+            logger.warning("No config file found.")
+        else:
+            with open(config, "r") as f:
+                config = json.load(f, object_pairs_hook=OrderedDict)
+                
+        return config
+            
+        
         
     # TODO : Figure out how UI may pass data
-    def upload_layout(self, f_name:str):
+    def upload_layout(self, f_name:str) -> bool:
+        pass  
+    def upload_calibration(self, f_name:str) -> bool:
         pass
     
-    
+    # TODO : Implement
+    def write_configuration_file(self, config: OrderedDict) -> bool:
+        pass
         
             
         
