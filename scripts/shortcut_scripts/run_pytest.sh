@@ -49,7 +49,7 @@ run_specific_tests(){
             full_test_path="${file}"
         fi
 
-        pytest -v -rpfs -s ${full_test_path}
+        python -m pytest -v -rpfs -s ${full_test_path}
 
     done
 
