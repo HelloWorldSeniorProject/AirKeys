@@ -20,8 +20,7 @@ def logger():
         logger.addHandler(h)
 
     yield logger
-
-
+    
 # make a small space after test name for readability.
 @pytest.fixture(autouse=True, scope="function")
 def make_space():

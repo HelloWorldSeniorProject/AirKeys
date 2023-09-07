@@ -58,7 +58,7 @@ run_specific_tests(){
 
 run_all_tests() {
     # run all tests of the format test_*.py or *_test.py
-    pytest -v -rpfs -s ${test_dir}
+    pytest -v -rpfs -s ${test_dir} --random-order-bucket=class
 }
 
 find_file() {

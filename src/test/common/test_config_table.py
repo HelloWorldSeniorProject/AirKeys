@@ -2,24 +2,24 @@ from common.config.config_table import ConfigTable
 from common.types import *
 from test.swte import large_banner
 
+class Test_ConfigTable:
+    
+    def test_singleton():
+        large_banner(
+            "Test Config Table Singleton: Tests Config Table's Singleton inheritence"
+        )
 
-def test_config_table():
-    large_banner(
-        "Test Config Table: Tests Config Tables's instantiation instantiation logic"
-    )
+        ct1 = ConfigTable()
+        ct2 = ConfigTable()
+        assert ct1 is ct2
 
-    ct = ConfigTable()
-    assert ct.get_state() == SystemState.Standby
+        ct3 = ConfigTable()
+        assert ct1 is ct2 is ct3
 
+    def test_setup():
+        large_banner(
+            "Test Config Table: Tests Config Tables's instantiation instantiation logic"
+        )
 
-def test_config_table_singleton():
-    large_banner(
-        "Test Config Table Singleton: Tests Config Table's Singleton inheritence"
-    )
-
-    ct1 = ConfigTable()
-    ct2 = ConfigTable()
-    assert ct1 is ct2
-
-    ct3 = ConfigTable()
-    assert ct1 is ct2 is ct3
+        ct = ConfigTable()
+        assert ct.get_state() == SystemState.Standby
