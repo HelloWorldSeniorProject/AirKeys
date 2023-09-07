@@ -12,7 +12,7 @@ thread_lock = threading.Lock()
 class InternalClock(metaclass=Singleton):
     """A monotonic clock for use across the system.
 
-    Internal Clock is a singleton class that functions for determining relational times
+    Internal Clock is a singleton class that has functions for determining relational times
     throughout the system. Utilizes thread locks to prevent concurrent access to CPU
     hardware clocks.
     """

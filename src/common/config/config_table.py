@@ -66,3 +66,7 @@ class ConfigTable(metaclass=Singleton):
 
     # def getDriver(self) :
     #     pass
+
+    # TODO : Implement
+    def to_dictionary(self) -> dict:
+        pass
