@@ -49,7 +49,7 @@ run_specific_tests(){
             full_test_path="${file}"
         fi
 
-        pytest -v -rpfs -s ${full_test_path}
+        python -m pytest -v -rpfs -s ${full_test_path}
 
     done
 
@@ -58,7 +58,7 @@ run_specific_tests(){
 
 run_all_tests() {
     # run all tests of the format test_*.py or *_test.py
-    pytest -v -rpfs -s ${test_dir}
+    python -m pytest -v -rpfs -s ${test_dir}
 }
 
 find_file() {
