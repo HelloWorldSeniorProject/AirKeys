@@ -14,7 +14,7 @@ alias all="ls -al"
 alias rm="rm -i"
 alias rmd="rm -ri"
 alias rmf="rm -f"
-alias lint="black ${src}"
+alias lint="python -m black ${src}"
 
 # script shortcuts
 alias update_deps="${scripts}/shortcut_scripts/update_dependencies.sh"
