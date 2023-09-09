@@ -18,17 +18,24 @@ Usage : Run test functions in tests folder using Pytest.
         -f ) Specifies the test file. The entire tests folder is search so there is no need to pass
              the folder the file is in. Partial names also work.
 
-            Ex. test -f test_s -> runs all functions of files under test that match the pattern test_s{...}.py.
+            Ex. test -f test_file -> runs all functions of files under test that match the pattern test_s{...}.py.
 
-        -m ) Specifies a function to run.
+            Note: No need to include .py extension.
 
-            Ex. test -f test_s -m test_func-> runs the function test_func() of files under test that match
-                the pattern test_s{...}.py, if available.
+        -m ) Specifies a function(s) to run.
+
+            Ex. test -f test_file -m test_func-> runs the function test_func() of files under test that match
+                the pattern test_file{...}.py, if available.
+
+            Note: To specify multiple tests, use quotes '' and 'or' in-between each test name.
+
+            Ex. test -f test_file -m 'test_setup or test_singleton' -> runs the functions test_setup and test_singleton 
+            if they exist within any file pattern matching test_file{...}.py, if available.
 
         -a ) Run all test files and functions under tests folder. Pytest requires test files be named either test_*.py 
              or *_test.py where * is any combination of characters.
 
-            Ex. test -a -> runs all test files.
+            Ex. test -a -> runs all test cases for every test file.
 
         -h) Display help/usage. If no valid flag combinations or unrecognized flags are provided, help/usage
             will display.
@@ -39,17 +46,17 @@ END
 }
 
 run_specific_tests(){
-    
+
     for file in $filename; do
 
+        cmd="python -m pytest -v -rpfs -s --random-order-bucket=class ${file}"
         # append function name to files.
         if ! [ -z "${funcname}" ]; then
-            full_test_path="${file}::funcname"
-        else
-            full_test_path="${file}"
+            full_test_path="${file}::${funcname}"
+            cmd="${cmd} -k '${funcname}'"
         fi
 
-        python -m pytest -v -rpfs -s ${full_test_path} --random-order-bucket=class
+        eval "${cmd}"
 
     done
 
