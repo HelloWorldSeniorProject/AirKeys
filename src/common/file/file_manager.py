@@ -5,7 +5,6 @@ from common.util.info import FILE_DIR
 import numpy as np
 import cv2
 
-
 logger = get_logger("FileManager.log")
 
 CONFIG_FNAME = "config.json"
@@ -55,16 +54,20 @@ class FileManager(metaclass=Singleton):
 
         logger.info("Checking file locations.")
 
-        if not (os.path.exists(FILE_DIR)):
-            logger.warning(f"File directory '{FILE_DIR}' not found. Creating.. ")
-            os.makedir(FILE_DIR)
+        try:
+            if not (os.path.exists(FILE_DIR)):
+                logger.warning(f"File directory '{FILE_DIR}' not found. Creating.. ")
+                os.mkdir(FILE_DIR)
 
-        for key, loc in self._LOCATIONS.items():
-            if not (os.path.exists(loc)):
-                logger.warning(
-                    f"{key.capitalize()} file directory '{loc}' not found. Creating... "
-                )
-                os.makedir(loc)
+            for key, loc in self._LOCATIONS.items():
+                if not (os.path.exists(loc)):
+                    logger.warning(
+                        f"{key.capitalize()} file directory '{loc}' not found. Creating... "
+                    )
+                    os.mkdir(loc)
+        except Exception as e:
+            logger.error(f"Failed to make necessary directories.\n{e}")
+            raise
 
     def _create_file(
         self, f_type: str, f_name: str, f_data, overwrite: bool = False
@@ -105,7 +108,7 @@ class FileManager(metaclass=Singleton):
                 cv2.imwrite(full_file_path, f_data)
             else:
                 with open(full_file_path, "w") as file:
-                    json.dump(f_data, indent=4)
+                    json.dump(f_data, file, indent=4)
         except OSError:
             logger.error(f"Failed to write to {file}.")
             return False

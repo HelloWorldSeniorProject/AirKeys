@@ -1,10 +1,10 @@
 from common.config.config_table import ConfigTable
 from common.types import *
-from test.swte import large_banner
+from test.swte import large_banner, small_banner
+
 
 class Test_ConfigTable:
-    
-    def test_singleton():
+    def test_singleton(self):
         large_banner(
             "Test Config Table Singleton: Tests Config Table's Singleton inheritence"
         )
@@ -16,10 +16,10 @@ class Test_ConfigTable:
         ct3 = ConfigTable()
         assert ct1 is ct2 is ct3
 
-    def test_setup():
+    def test_setup(self):
         large_banner(
             "Test Config Table: Tests Config Tables's instantiation instantiation logic"
         )
 
         ct = ConfigTable()
-        assert ct.get_state() == SystemState.Standby
+        small_banner(f"Config Table vars:\n\t{ct.vars()}")

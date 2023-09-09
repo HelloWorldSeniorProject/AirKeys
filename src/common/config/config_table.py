@@ -1,6 +1,8 @@
+import threading
+from enum import Enum
 from common.types import *
 from common.patterns.singleton import Singleton
-import threading
+
 
 thread_lock = threading.Lock()
 
@@ -14,15 +16,33 @@ class ConfigTable(metaclass=Singleton):
     access while modifying/retrieving table information.
     """
 
+    DEFAULTS = {
+        "state": SystemState.Standby,
+        "layout": "Qwerty",
+        "connection": Connection.UsbA,
+        "device": Device.Large,
+        "os": OperatingSystem.Windows,
+    }
+
     def __init__(self):
         """Initializes the instance and sets a default state."""
-        self._state = SystemState.Standby
+        self._state = self.DEFAULTS["state"]
+        self._layout = self.DEFAULTS["layout"]
+        self._connection = self.DEFAULTS["connection"]
+        self._device = self.DEFAULTS["device"]
+        self._os = self.DEFAULTS["os"]
 
-        # TODO : initialize config table as necessary.
-        # self._keyboard = None
-        # self._connection = None
-        # self._device = None
-        # self._driver = None
+    def __init(self, prev_config: dict):
+        """Intializes the instance to a previous state.
+
+        Args:
+            prev_config: a dictionary containing the last saved state.
+        """
+        self._state = prev_config.get("state", self.DEFAULTS["state"])
+        self._layout = prev_config.get("layout", self.DEFAULTS["layout"])
+        self._connection = prev_config.get("connection", self.DEFAULTS["connection"])
+        self._device = prev_config.get("device", self.DEFAULTS["device"])
+        self._os = prev_config.get("os", self.DEFAULTS["os"])
 
     def set_state(self, state: SystemState):
         """Sets the system state.
@@ -43,30 +63,36 @@ class ConfigTable(metaclass=Singleton):
             return self._state
 
     # TODO : implement function as system evolves
-    # def setKeyboard(self, keyboard):
-    #     pass
-
-    # def getKeyboard(self):
-    #     pass
-
-    # def setConnection(self, connection):
-    #     pass
-
-    # def getConnection(self):
-    #     pass
-
-    # def setDevice(self, device):
-    #     pass
-
-    # def getDevice(self) :
-    #     pass
-
-    # def setDriver(self, driver):
-    #     pass
-
-    # def getDriver(self) :
-    #     pass
-
-    # TODO : Implement
-    def to_dictionary(self) -> dict:
+    def setKeyboard(self, keyboard):
         pass
+
+    def getKeyboard(self):
+        pass
+
+    def setConnection(self, connection):
+        pass
+
+    def getConnection(self):
+        pass
+
+    def setDevice(self, device):
+        pass
+
+    def getDevice(self):
+        pass
+
+    def to_dictionary(self) -> dict:
+        """Converts config table to dictionary.
+
+        Returns:
+            A dictionary containing the current values of the config table.
+        """
+
+        config = {
+            "state": self._state,
+            "layout": self._layout,
+            "connection": self._connection,
+            "device": self._device,
+            "os": self._os,
+        }
+        return config

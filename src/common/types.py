@@ -1,4 +1,4 @@
-import enum
+from enum import Enum
 
 """ Definitions of types and enums.
     
@@ -7,15 +7,32 @@ import enum
 """
 
 
-class SystemState(enum.Enum):
-    """A description of the System's Current State."""
+class SystemState(Enum):
+    """An indicator of the system's current state."""
 
-    #: System is not yet ready for use.
     Standby = 0
-
-    #: System has not been used for system_timeout time limit. Ready to
-    #: reconnect once active signal detected.
     Inactive = 1
-
-    #: System is ready to use.
     Active = 2
+
+
+class Device:
+    Large = 0
+    Small = 1
+
+
+class Connection(Enum):
+    """An indicator of the current method of connecting with a device."""
+
+    UsbA = 0
+    UsbC = 1
+    Bluetooth = 2
+
+
+class OperatingSystem(Enum):
+    """An indicator of the current device's operating system."""
+
+    Windows = 0
+    Linux = 1
+    Mac = 2
+    Android = 3
+    IPhone = 4

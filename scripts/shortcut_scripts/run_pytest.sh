@@ -42,14 +42,14 @@ run_specific_tests(){
     
     for file in $filename; do
 
-        cmd="python -m pytest -v -rpfs -s --random-order-bucket=class ${file}"
         # append function name to files.
         if ! [ -z "${funcname}" ]; then
-            full_test_path="${file}::${funcname}"
-            cmd="${cmd} -k ${funcname}"
+            full_test_path="${file}::funcname"
+        else
+            full_test_path="${file}"
         fi
 
-        pytest -v -rpfs -s ${full_test_path}
+        python -m pytest -v -rpfs -s ${full_test_path} --random-order-bucket=class
 
     done
 
@@ -58,7 +58,7 @@ run_specific_tests(){
 
 run_all_tests() {
     # run all tests of the format test_*.py or *_test.py
-    python -m pytest -v -rpfs -s ${test_dir}
+    python -m pytest -v -rpfs -s ${test_dir} --random-order-bucket=class
 }
 
 find_file() {

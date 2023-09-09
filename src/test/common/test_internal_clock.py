@@ -3,12 +3,10 @@ from common.types import *
 from test.swte import large_banner, small_banner
 from time import sleep
 
+
 class Test_InternalClock:
-    
-    def test_singleton():
-        large_banner(
-            "Test Singleton: Tests singleton inheritence"
-        )
+    def test_singleton(self):
+        large_banner("Test Singleton: Tests singleton inheritence")
 
         ic1 = InternalClock()
         ic2 = InternalClock()
@@ -17,8 +15,7 @@ class Test_InternalClock:
         ic3 = InternalClock()
         assert ic1 is ic2 is ic3
 
-
-    def test_get_time():
+    def test_get_time(self):
         large_banner("Test Get Time: Tests time tracking functions")
 
         ic = InternalClock()
@@ -43,8 +40,7 @@ class Test_InternalClock:
 
         assert (time2 - time1) >= 5000
 
-
-    def test_create_timer():
+    def test_create_timer(self):
         large_banner("Test Create Timer: Tests timer creation functions")
         ic = InternalClock()
 
@@ -58,8 +54,7 @@ class Test_InternalClock:
         sleep(5)
         small_banner("Timer 2 task should run before this line")
 
-
-    def test_timer_remaining_time():
+    def test_timer_remaining_time(self):
         large_banner("Test Create Timer: Tests Timer's remaining timing function")
 
         # relies on visual confirmation
