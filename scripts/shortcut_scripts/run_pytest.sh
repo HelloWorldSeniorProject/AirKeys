@@ -39,17 +39,17 @@ END
 }
 
 run_specific_tests(){
-    
+
     for file in $filename; do
 
+        cmd="python -m pytest -v -rpfs -s --random-order-bucket=class ${file}"
         # append function name to files.
         if ! [ -z "${funcname}" ]; then
-            full_test_path="${file}::funcname"
-        else
-            full_test_path="${file}"
+            full_test_path="${file}::${funcname}"
+            cmd="${cmd} -k ${funcname}"
         fi
 
-        python -m pytest -v -rpfs -s ${full_test_path}
+        eval "${cmd}"
 
     done
 
