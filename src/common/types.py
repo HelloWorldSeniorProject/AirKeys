@@ -7,15 +7,15 @@ from enum import Enum
 """
 
 
-class SystemState(Enum):
-    """An indicator of the system's current state."""
+class Mode(Enum):
+    """An indicator of the system's current mode."""
 
     Standby = 0
     Inactive = 1
     Active = 2
 
 
-class Device:
+class Device(Enum):
     Large = 0
     Small = 1
 

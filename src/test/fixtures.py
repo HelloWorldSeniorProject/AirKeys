@@ -1,6 +1,7 @@
 import pytest
 import logging
 from swte import *
+from common.patterns.singleton import Singleton
 
 
 @pytest.fixture(autouse=True, scope="session")
@@ -24,5 +25,10 @@ def logger():
 
 # make a small space after test name for readability.
 @pytest.fixture(autouse=True, scope="function")
-def make_space():
+def cleanup():
     print("\n")
+
+    yield
+
+    # pseudo-reset of env.
+    Singleton._instances.clear()

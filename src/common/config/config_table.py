@@ -1,10 +1,11 @@
 import threading
-from enum import Enum
+from common.util.logger import get_logger
 from common.types import *
 from common.patterns.singleton import Singleton
 
 
 thread_lock = threading.Lock()
+logger = get_logger("ConfigTable.log")
 
 
 class ConfigTable(metaclass=Singleton):
@@ -16,8 +17,8 @@ class ConfigTable(metaclass=Singleton):
     access while modifying/retrieving table information.
     """
 
-    DEFAULTS = {
-        "state": SystemState.Standby,
+    _DEFAULTS = {
+        "mode": Mode.Standby,
         "layout": "Qwerty",
         "connection": Connection.UsbA,
         "device": Device.Large,
@@ -26,44 +27,93 @@ class ConfigTable(metaclass=Singleton):
 
     def __init__(self):
         """Initializes the instance and sets a default state."""
-        self._state = self.DEFAULTS["state"]
-        self._layout = self.DEFAULTS["layout"]
-        self._connection = self.DEFAULTS["connection"]
-        self._device = self.DEFAULTS["device"]
-        self._os = self.DEFAULTS["os"]
 
-    def __init(self, prev_config: dict):
-        """Intializes the instance to a previous state.
+        logger.info("Initializing the Config Table to default state.")
+        self.default()
 
-        Args:
-            prev_config: a dictionary containing the last saved state.
-        """
-        self._state = prev_config.get("state", self.DEFAULTS["state"])
-        self._layout = prev_config.get("layout", self.DEFAULTS["layout"])
-        self._connection = prev_config.get("connection", self.DEFAULTS["connection"])
-        self._device = prev_config.get("device", self.DEFAULTS["device"])
-        self._os = prev_config.get("os", self.DEFAULTS["os"])
+    def default(self):
+        """Sets all variables to their default state"""
+        logger.info("Setting default Config Table state.")
+        self._mode = self._DEFAULTS["mode"]
+        self._layout = self._DEFAULTS["layout"]
+        self._connection = self._DEFAULTS["connection"]
+        self._device = self._DEFAULTS["device"]
+        self._os = self._DEFAULTS["os"]
 
-    def set_state(self, state: SystemState):
-        """Sets the system state.
+    def write(self, prev_config: dict) -> bool:
+        """Sets all variables to last a previous state.
 
         Args:
-            state : the SystemState to set.
-        """
-        with thread_lock:
-            self._state = state
-
-    def get_state(self) -> SystemState:
-        """Fetches the system state.
+            prev_config: a dictionary containing the last saved config table state.
 
         Returns:
-            The SystemState currently set.
+            True if operation was successful, false otherwise.
         """
         with thread_lock:
-            return self._state
+            logger.info(f"Attempting to overwrite current config table:\n {vars(self)}")
+
+            if type(prev_config) != dict:
+                logger.error(
+                    f"Passed configuration is not of type dictionary. Aborting operation."
+                )
+                return False
+
+            # retrieve values from previous config. Note any missing values.
+            if not (mode := prev_config.get("mode"), None):
+                mode = self._DEFAULTS["mode"]
+                logger.warning(f"Did not find prev mode, setting default {mode}.")
+
+            if not (layout := prev_config.get("layout"), None):
+                layout = self._DEFAULTS["layout"]
+                logger.warning(f"Did not find prev layout, setting default {layout}.")
+
+            if not (connection := prev_config.get("connection"), None):
+                connection = self._DEFAULTS["connection"]
+                logger.warning(
+                    f"Did not find prev connection type, setting default {connection}."
+                )
+
+            if not (device := prev_config.get("device"), None):
+                device = self._DEFAULTS["device"]
+                logger.warning(
+                    f"Did not find prev device type, setting default {device}."
+                )
+
+            if not (os := prev_config.get("os"), None):
+                os = self._DEFAULTS["os"]
+                logger.warning(
+                    f"Did not find prev operating system, setting default {os}."
+                )
+
+            self._mode = mode
+            self._layout = layout
+            self._connection = connection
+            self._device = device
+            self._os = os
+
+            logger.info(f"Write operation was a success. New table:\n {vars(self)}")
+            return True
+
+    def set_mode(self, mode: Mode):
+        """Sets the system's mode.
+
+        Args:
+            mode : the system mode to set.
+        """
+        with thread_lock:
+            self._mode = mode
+
+    def get_mode(self) -> Mode:
+        """Fetches the system's mode.
+
+        Returns:
+            The system mode currently set.
+        """
+        with thread_lock:
+            return self._mode
 
     # TODO : implement function as system evolves
-    def setKeyboard(self, keyboard):
+    def set_layout(self, layout):
         pass
 
     def getKeyboard(self):
@@ -89,7 +139,7 @@ class ConfigTable(metaclass=Singleton):
         """
 
         config = {
-            "state": self._state,
+            "mode": self._mode,
             "layout": self._layout,
             "connection": self._connection,
             "device": self._device,
