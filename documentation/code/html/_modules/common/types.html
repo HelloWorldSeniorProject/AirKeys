@@ -3,11 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
-  <title>common.types &mdash; Airkeys 2.2.0 documentation</title>
-=======
-  <title>common.types &mdash; Airkeys 2.0.5 documentation</title>
->>>>>>> develop
+  <title>common.types &mdash; Airkeys 2.0.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -71,7 +67,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for common.types</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">enum</span>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="sd">&quot;&quot;&quot; Definitions of types and enums.</span>
 <span class="sd">    </span>
@@ -80,18 +76,35 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="SystemState"><a class="viewcode-back" href="../../common.types.html#common.types.SystemState">[docs]</a><span class="k">class</span> <span class="nc">SystemState</span><span class="p">(</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A description of the System&#39;s Current State.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Mode"><a class="viewcode-back" href="../../common.types.html#common.types.Mode">[docs]</a><span class="k">class</span> <span class="nc">Mode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An indicator of the system&#39;s current mode.&quot;&quot;&quot;</span>
 
-    <span class="c1">#: System is not yet ready for use.</span>
     <span class="n">Standby</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="c1">#: System has not been used for system_timeout time limit. Ready to</span>
-    <span class="c1">#: reconnect once active signal detected.</span>
     <span class="n">Inactive</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="c1">#: System is ready to use.</span>
     <span class="n">Active</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="Device"><a class="viewcode-back" href="../../common.types.html#common.types.Device">[docs]</a><span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">Large</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">Small</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="Connection"><a class="viewcode-back" href="../../common.types.html#common.types.Connection">[docs]</a><span class="k">class</span> <span class="nc">Connection</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An indicator of the current method of connecting with a device.&quot;&quot;&quot;</span>
+
+    <span class="n">UsbA</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">UsbC</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">Bluetooth</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="OperatingSystem"><a class="viewcode-back" href="../../common.types.html#common.types.OperatingSystem">[docs]</a><span class="k">class</span> <span class="nc">OperatingSystem</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An indicator of the current device&#39;s operating system.&quot;&quot;&quot;</span>
+
+    <span class="n">Windows</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">Linux</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">Mac</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">Android</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">IPhone</span> <span class="o">=</span> <span class="mi">4</span></div>
 </pre></div>
 
            </div>

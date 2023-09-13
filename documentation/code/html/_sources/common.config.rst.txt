@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 Config package
-=======
-common.config package
->>>>>>> develop
 =====================
 
 .. automodule:: common.config
