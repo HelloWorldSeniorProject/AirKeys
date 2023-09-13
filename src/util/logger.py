@@ -32,9 +32,7 @@ class Formatter(logging.Formatter):
         return logging.Formatter(log_format).format(record)
 
 
-def get_logger(
-    output_file: str, name: str = None, overwrite: bool = True
-) -> logging.Logger:
+def get_logger(output_file: str, name: str = None, overwrite: bool = True) -> logging.Logger:
     """Creates a log of application activity.
 
     Args:
@@ -54,11 +52,7 @@ def get_logger(
         os.mkdir(LOGS_DIR)
 
     # generate logger object.
-    name = (
-        name
-        if name is not None
-        else os.path.relpath(inspect.stack()[1].filename, ROOT_DIR)
-    )
+    name = name if name is not None else os.path.relpath(inspect.stack()[1].filename, ROOT_DIR)
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)  # accept all messages globally.
 
@@ -66,9 +60,7 @@ def get_logger(
 
     # add handler for stdout. This handler will capture information and error messages.
     std_out_handler = logging.StreamHandler()
-    std_out_handler.setLevel(
-        logging.WARNING
-    )  # ignore debug and info messages on this handler.
+    std_out_handler.setLevel(logging.WARNING)  # ignore debug and info messages on this handler.
     std_out_handler.setFormatter(log_formatter)
     logger.addHandler(std_out_handler)
 

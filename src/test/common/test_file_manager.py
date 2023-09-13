@@ -77,9 +77,7 @@ class Test_FileManager:
         small_banner("Verify folder creation after instantiation")
 
         # get base location plus every location defined in class.
-        locations = [FILE_DIR] + [
-            loc for loc in vars(FileManager)["_LOCATIONS"].values()
-        ]
+        locations = [FILE_DIR] + [loc for loc in vars(FileManager)["_LOCATIONS"].values()]
 
         # we only need the instantiation logic to run, not any of the class data.
         FileManager()
@@ -111,10 +109,8 @@ class Test_FileManager:
             cv2.waitKey(0)
 
     def test_retrieve_file(self):
-        large_banner(
-            "Test Retrieve File: Tests file retrieval logic and error handling"
-        )
-        
+        large_banner("Test Retrieve File: Tests file retrieval logic and error handling")
+
         fm = FileManager()
         exps_met = []
 
@@ -132,7 +128,6 @@ class Test_FileManager:
                 json.dump(TEST_JSON, f)
         except Exception as e:
             pytest.fail(f"Failed write to file '{file}'.\n{e}")
-            
 
         small_banner("Verify file found")
         exps_met.append(fm._retrieve_file("calibration", "test.json") == file)
@@ -142,7 +137,7 @@ class Test_FileManager:
         except Exception as e:
             # should not affect test's acceptance
             logger.warn(f"Failed to delete file '{file}'.\n{e}")
-            
+
         small_banner("Verify 'None' is returned when matching file doesn't exist.")
         exps_met.append(fm._retrieve_file("calibration", "test.json") == None)
 
@@ -153,11 +148,8 @@ class Test_FileManager:
             small_banner("Failed as expected")
         except Exception as e:  # all others
             pytest.fail(f"Did not throw expected exception\n{e}")
-            
 
         assert all(exps_met)
-        
-        
 
     def test_create_file(self):
         large_banner("Test Create File: Tests file creation logic and error handling")
@@ -181,7 +173,7 @@ class Test_FileManager:
                 data = json.load(f)
         except Exception as e:
             pytest.fail(f"Failed to open file '{file}'.\n{e}")
-            
+
         exps_met.append(data == TEST_JSON)
 
         small_banner("Verify overwrite functionality")
@@ -190,8 +182,7 @@ class Test_FileManager:
 
         # ignore file already existing; should return true.
         exps_met.append(
-            fm._create_file("calibration", "test.json", TEST_JSON, overwrite=True)
-            == True
+            fm._create_file("calibration", "test.json", TEST_JSON, overwrite=True) == True
         )
 
         # delete test file

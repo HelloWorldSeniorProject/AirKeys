@@ -53,9 +53,7 @@ class ConfigTable(metaclass=Singleton):
             logger.info(f"Attempting to overwrite current config table:\n {vars(self)}")
 
             if type(prev_config) != dict:
-                logger.error(
-                    f"Passed configuration is not of type dictionary. Aborting operation."
-                )
+                logger.error(f"Passed configuration is not of type dictionary. Aborting operation.")
                 return False
 
             # retrieve values from previous config. Note any missing values.
@@ -69,21 +67,15 @@ class ConfigTable(metaclass=Singleton):
 
             if not (connection := prev_config.get("connection"), None):
                 connection = self._DEFAULTS["connection"]
-                logger.warning(
-                    f"Did not find prev connection type, setting default {connection}."
-                )
+                logger.warning(f"Did not find prev connection type, setting default {connection}.")
 
             if not (device := prev_config.get("device"), None):
                 device = self._DEFAULTS["device"]
-                logger.warning(
-                    f"Did not find prev device type, setting default {device}."
-                )
+                logger.warning(f"Did not find prev device type, setting default {device}.")
 
             if not (os := prev_config.get("os"), None):
                 os = self._DEFAULTS["os"]
-                logger.warning(
-                    f"Did not find prev operating system, setting default {os}."
-                )
+                logger.warning(f"Did not find prev operating system, setting default {os}.")
 
             self._mode = mode
             self._layout = layout

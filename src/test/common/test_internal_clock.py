@@ -61,26 +61,21 @@ class Test_InternalClock:
         small_banner("Sleep for 5 seconds")
         sleep(5)
         small_banner("Timer 2 task should run before this line")
-        
 
     def test_timer_remaining_time(self):
-        large_banner(
-            "Test Timer Remaining Time: Tests Timer's remaining timing function"
-        )
+        large_banner("Test Timer Remaining Time: Tests Timer's remaining timing function")
         ic = InternalClock()
         timer = ic.create_timer(5, lambda: small_banner("Timer rang!"))
         exps_met = []
 
-        small_banner(
-            "Verify timer returns expected remaining time at set intervals (1s)"
-        )
+        small_banner("Verify timer returns expected remaining time at set intervals (1s)")
         for i in range(4):
             last_time = timer.get_remaining_time()
             sleep(1)
-            
+
             # account for varying hardware speeds.
-            exps_met.append(last_time >= timer.get_remaining_time() + .95)
-            
+            exps_met.append(last_time >= timer.get_remaining_time() + 0.95)
+
         # ensure timer finished before test ends
         timer.join()
 

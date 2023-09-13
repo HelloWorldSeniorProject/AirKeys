@@ -69,9 +69,7 @@ class FileManager(metaclass=Singleton):
             logger.error(f"Failed to make necessary directories.\n{e}")
             raise
 
-    def _create_file(
-        self, f_type: str, f_name: str, f_data, overwrite: bool = False
-    ) -> bool:
+    def _create_file(self, f_type: str, f_name: str, f_data, overwrite: bool = False) -> bool:
         """Creates a in file and saves in expected location.
 
         Args:
