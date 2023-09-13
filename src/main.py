@@ -14,6 +14,9 @@ from util.logger import get_logger
 
 logger = get_logger("Main.log")
 
+""" Main program thread. Functions as object Factory & Controller """
+
+# TODO : finish
 
 def main():
     # initialize system resources
