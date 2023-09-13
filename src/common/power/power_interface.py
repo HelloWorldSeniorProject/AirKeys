@@ -1,7 +1,7 @@
 import subprocess
 
 from common.config.config_table import ConfigTable
-from common.util.logger import get_logger
+from util.logger import get_logger
 from common.file.file_manager import FileManager
 
 logger = get_logger("PowerInterface.log", overwrite=False)

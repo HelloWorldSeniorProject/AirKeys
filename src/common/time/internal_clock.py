@@ -2,7 +2,7 @@ import threading
 import time
 from .timer import Timer
 from common.patterns.singleton import Singleton
-from common.util.logger import get_logger
+from util.logger import get_logger
 
 logger = get_logger("InternalClock.log")
 

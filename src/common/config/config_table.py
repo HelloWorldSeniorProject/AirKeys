@@ -1,5 +1,5 @@
 import threading
-from common.util.logger import get_logger
+from util.logger import get_logger
 from common.types import *
 from common.patterns.singleton import Singleton
 

@@ -6,7 +6,7 @@ from common.patterns.singleton import Singleton
 
 @pytest.fixture(autouse=True, scope="session")
 def logger():
-    format_str = "%(levelname)s [%(asctime)s]: %(message)s "
+    format_str = "%(levelname)-7s [%(asctime)s]: %(message)s"
     formatter = logging.Formatter(format_str)
 
     # create logger

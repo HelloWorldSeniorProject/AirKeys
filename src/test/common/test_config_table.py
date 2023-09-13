@@ -28,7 +28,6 @@ class Test_ConfigTable:
 
         for i, ct in enumerate(cts[1:]):
             exps_met.append(ct is cts[i - 1])
-
         assert all(exps_met)
 
     def test_setup(self):
@@ -44,7 +43,6 @@ class Test_ConfigTable:
 
         # compare defaults to actual variables inside config table class (i.e. self._var).
         for act, exp in zip(vars(ct).values(), defaults.values()):
-            print(f"Actual: {act}, Expected: {exp}")
             exps_met.append(act == exp)
 
         assert all(exps_met)

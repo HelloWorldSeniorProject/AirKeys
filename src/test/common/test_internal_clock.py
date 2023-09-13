@@ -1,6 +1,6 @@
 from common.time.internal_clock import InternalClock
 from common.types import *
-from test.swte import large_banner, small_banner
+from test.swte import *
 from time import sleep
 
 
@@ -8,15 +8,20 @@ class Test_InternalClock:
     def test_singleton(self):
         large_banner("Test Singleton: Tests singleton inheritence")
 
+        exps_met = []
+
         ic1 = InternalClock()
         ic2 = InternalClock()
-        assert ic1 is ic2
+        exps_met.append(ic1 is ic2)
 
         ic3 = InternalClock()
-        assert ic1 is ic2 is ic3
+        exps_met.append(ic1 is ic2 is ic3)
+
+        assert all(exps_met)
 
     def test_get_time(self):
         large_banner("Test Get Time: Tests time tracking functions")
+        exps_met = []
 
         ic = InternalClock()
 
@@ -28,7 +33,7 @@ class Test_InternalClock:
         time2 = ic.get_time()
         small_banner(f"End time : {time2}")
         # may be more than exactly 10 seconds due to thread locking
-        assert (time2 - time1) >= 5
+        exps_met.append((time2 - time1) >= 5)
 
         # millisecond format
         small_banner("Sleep for 5 seconds")
@@ -38,8 +43,11 @@ class Test_InternalClock:
         time2 = ic.get_time_ms()
         small_banner(f"End time : {time2}")
 
-        assert (time2 - time1) >= 5000
+        exps_met.append((time2 - time1) >= 5000)
+        assert all(exps_met)
 
+    @conditional
+    # Verify by inspection.
     def test_create_timer(self):
         large_banner("Test Create Timer: Tests timer creation functions")
         ic = InternalClock()
@@ -53,14 +61,27 @@ class Test_InternalClock:
         small_banner("Sleep for 5 seconds")
         sleep(5)
         small_banner("Timer 2 task should run before this line")
+        
 
     def test_timer_remaining_time(self):
-        large_banner("Test Create Timer: Tests Timer's remaining timing function")
-
-        # relies on visual confirmation
+        large_banner(
+            "Test Timer Remaining Time: Tests Timer's remaining timing function"
+        )
         ic = InternalClock()
         timer = ic.create_timer(5, lambda: small_banner("Timer rang!"))
+        exps_met = []
 
-        for i in range(5):
-            small_banner(f"Remaining time : {timer.get_remaining_time()}")
+        small_banner(
+            "Verify timer returns expected remaining time at set intervals (1s)"
+        )
+        for i in range(4):
+            last_time = timer.get_remaining_time()
             sleep(1)
+            
+            # account for varying hardware speeds.
+            exps_met.append(last_time >= timer.get_remaining_time() + .95)
+            
+        # ensure timer finished before test ends
+        timer.join()
+
+        assert all(exps_met)

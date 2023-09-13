@@ -1,7 +1,7 @@
 import os, sys, json
 from common.patterns.singleton import Singleton
-from common.util.logger import get_logger
-from common.util.info import FILE_DIR
+from util.logger import get_logger
+from util.info import FILE_DIR
 import numpy as np
 import cv2
 
@@ -138,7 +138,7 @@ class FileManager(metaclass=Singleton):
             logger.error(f"Expected file directory '{search_dir}' not found.")
             return None
 
-        full_file_path = os.join(search_dir, f_name)
+        full_file_path = os.path.join(search_dir, f_name)
         if not (os.path.exists(full_file_path)):
             logger.error(f"File '{f_name}' does not exist in '{search_dir}'.")
             return None
@@ -167,7 +167,7 @@ class FileManager(metaclass=Singleton):
 
         files = []
         for f in os.listdir(search_dir):
-            full_path = os.join(search_dir, f)
+            full_path = os.path.join(search_dir, f)
 
             if os.path.isfile(full_path):
                 files.append(full_path)
@@ -178,7 +178,7 @@ class FileManager(metaclass=Singleton):
 
         return files
 
-    def _readImage(self, f_name: str) -> np.array:
+    def _read_image(self, f_name: str) -> np.array:
         """Fetches data from image file.
 
         Args:
@@ -209,7 +209,7 @@ class FileManager(metaclass=Singleton):
             logger.error("Failed to find layout file.")
             return None
 
-        return self._readImage(f_name)
+        return self._read_image(f_name)
 
     def get_calibration_file(self, f_name):
         """Fetches data from specified calibration file.
@@ -226,7 +226,7 @@ class FileManager(metaclass=Singleton):
             logger.error("Failed to find layout file.")
             return None
 
-        return self._readImage(f_name)
+        return self._read_image(f_name)
 
     def read_configuration_file(self) -> dict:
         """Fetches data from configuration file.
