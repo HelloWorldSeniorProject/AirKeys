@@ -1,14 +1,10 @@
-common.power package
+Power 
 ====================
 
 .. automodule:: common.power
    :members:
    :undoc-members:
    :show-inheritance:
-
-Submodules
-----------
-
 .. toctree::
    :maxdepth: 4
 

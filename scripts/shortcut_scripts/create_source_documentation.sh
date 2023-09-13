@@ -88,7 +88,7 @@ create_html() {
     # use reStructuredText files to create html files. Use 
     make clean && make html
 
-    # clear
+    clear
 
     echo "Index html file is located in documentation/code/html. Live Server is installed for quick viewing."
 }

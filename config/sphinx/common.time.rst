@@ -5,10 +5,6 @@ Time package
    :members:
    :undoc-members:
    :show-inheritance:
-
-Submodules
-----------
-
 .. toctree::
    :maxdepth: 4
 

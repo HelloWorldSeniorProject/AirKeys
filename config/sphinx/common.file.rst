@@ -1,14 +1,10 @@
-common.file package
+File
 ===================
 
 .. automodule:: common.file
    :members:
    :undoc-members:
    :show-inheritance:
-
-Submodules
-----------
-
 .. toctree::
    :maxdepth: 4
 

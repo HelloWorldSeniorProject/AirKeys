@@ -1,4 +1,4 @@
-common.power.power\_interface module
+Power Interface 
 ====================================
 
 .. automodule:: common.power.power_interface

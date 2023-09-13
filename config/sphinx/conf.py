@@ -14,7 +14,7 @@ sys.path.insert(0, src_code_path)
 project = 'Airkeys'
 copyright = '2023, Hello World!'
 author = 'Hello World!'
-release = '2.0.6'
+release = '2.1.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -29,5 +29,5 @@ add_module_names = False
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+
 

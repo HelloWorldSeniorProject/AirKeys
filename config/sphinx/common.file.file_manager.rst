@@ -1,4 +1,4 @@
-common.file.file\_manager module
+File Manager
 ================================
 
 .. automodule:: common.file.file_manager
