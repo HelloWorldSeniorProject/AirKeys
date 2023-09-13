@@ -1,0 +1,4 @@
+INFO: Initializing File Manager. 
+INFO: Checking file locations. 
+INFO: Initialized File Manager successfully. 
+[2023-09-13 16:30:59,586] ERROR : File 'test.json' does not exist in '/home/NRuser/airkeys/src/files/calibration'. (common/file/file_manager.py:143)

@@ -1,0 +1,30 @@
+INFO: Initializing the Config Table to default state. 
+INFO: Setting default Config Table state. 
+INFO: Attempting to overwrite current config table:
+ {'_mode': <Mode.Standby: 0>, '_layout': 'Qwerty', '_connection': <Connection.UsbA: 0>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Windows: 0>} 
+INFO: Write operation was a success. New table:
+ {'_mode': <Mode.Standby: 0>, '_layout': 'Qwerty', '_connection': <Connection.UsbA: 0>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Windows: 0>} 
+INFO: Attempting to overwrite current config table:
+ {'_mode': <Mode.Standby: 0>, '_layout': 'Qwerty', '_connection': <Connection.UsbA: 0>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Windows: 0>} 
+INFO: Write operation was a success. New table:
+ {'_mode': <Mode.Inactive: 1>, '_layout': 'Qwerty', '_connection': <Connection.UsbA: 0>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Mac: 2>} 
+INFO: Attempting to overwrite current config table:
+ {'_mode': <Mode.Inactive: 1>, '_layout': 'Qwerty', '_connection': <Connection.UsbA: 0>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Mac: 2>} 
+INFO: Write operation was a success. New table:
+ {'_mode': <Mode.Standby: 0>, '_layout': 'Qwerty', '_connection': None, '_device': <Device.Small: 1>, '_os': <OperatingSystem.Windows: 0>} 
+INFO: Attempting to overwrite current config table:
+ {'_mode': <Mode.Standby: 0>, '_layout': 'Qwerty', '_connection': None, '_device': <Device.Small: 1>, '_os': <OperatingSystem.Windows: 0>} 
+INFO: Write operation was a success. New table:
+ {'_mode': <Mode.Standby: 0>, '_layout': 'Azerty', '_connection': <Connection.UsbC: 1>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Linux: 1>} 
+INFO: Attempting to overwrite current config table:
+ {'_mode': <Mode.Standby: 0>, '_layout': 'Azerty', '_connection': <Connection.UsbC: 1>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Linux: 1>} 
+INFO: Write operation was a success. New table:
+ {'_mode': <Mode.Active: 2>, '_layout': 'Qwerty', '_connection': <Connection.Bluetooth: 2>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Windows: 0>} 
+INFO: Initializing the Config Table to default state. 
+INFO: Setting default Config Table state. 
+INFO: Initializing the Config Table to default state. 
+INFO: Setting default Config Table state. 
+INFO: Attempting to overwrite current config table:
+ {'_mode': <Mode.Active: 2>, '_layout': 'Qwerty', '_connection': <Connection.UsbA: 0>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Windows: 0>} 
+INFO: Write operation was a success. New table:
+ {'_mode': <Mode.Active: 2>, '_layout': 'Qwerty', '_connection': <Connection.UsbA: 0>, '_device': <Device.Large: 0>, '_os': <OperatingSystem.Windows: 0>} 

@@ -4,18 +4,14 @@ from test.swte import large_banner
 
 
 def test_config_table():
-    large_banner(
-        "Test Config Table: Tests Config Tables's instantiation instantiation logic"
-    )
+    large_banner("Test Config Table: Tests Config Tables's instantiation instantiation logic")
 
     ct = ConfigTable()
     assert ct.get_state() == SystemState.Standby
 
 
 def test_config_table_singleton():
-    large_banner(
-        "Test Config Table Singleton: Tests Config Table's Singleton inheritence"
-    )
+    large_banner("Test Config Table Singleton: Tests Config Table's Singleton inheritence")
 
     ct1 = ConfigTable()
     ct2 = ConfigTable()

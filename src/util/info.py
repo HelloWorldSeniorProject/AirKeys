@@ -8,4 +8,3 @@ LOGS_DIR = os.path.join(ROOT_DIR, "logs")
 SRC_DIR = os.path.join(ROOT_DIR, "src")
 SCRIPT_DIR = os.path.join(ROOT_DIR, "scripts")
 TEST_DIR = os.path.join(SRC_DIR, "test")
-

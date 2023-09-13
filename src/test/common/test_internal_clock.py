@@ -5,9 +5,7 @@ from time import sleep
 
 
 def test_internal_clock_singleton():
-    large_banner(
-        "Test Internal Clock Singleton: Tests Internal Clock's singleton inheritence"
-    )
+    large_banner("Test Internal Clock Singleton: Tests Internal Clock's singleton inheritence")
 
     ic1 = InternalClock()
     ic2 = InternalClock()
