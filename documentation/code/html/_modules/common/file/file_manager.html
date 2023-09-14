@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>common.file.file_manager &mdash; Airkeys 2.1.0 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Airkeys
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Available Modules</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Airkeys</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">common.file.file_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for common.file.file_manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">common.patterns.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
+<span class="kn">from</span> <span class="nn">util.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">util.info</span> <span class="kn">import</span> <span class="n">FILE_DIR</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;FileManager.log&quot;</span><span class="p">)</span>
+
+<span class="n">CONFIG_FNAME</span> <span class="o">=</span> <span class="s2">&quot;config.json&quot;</span>
+
+
+<div class="viewcode-block" id="InvalidFileType"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.InvalidFileType">[docs]</a><span class="k">class</span> <span class="nc">InvalidFileType</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An exception thrown when attempting to store/retrieve an unknown file type.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File type </span><span class="si">{</span><span class="n">f_type</span><span class="si">}</span><span class="s2"> is not valid.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FileManager"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.FileManager">[docs]</a><span class="k">class</span> <span class="nc">FileManager</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">Singleton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A set of targeted file operations for use across the syste.</span>
+
+<span class="sd">    File Manager is a singleton class that has functions for the storage and retrieval of files</span>
+<span class="sd">    within the system. These operations will be used in most cases of file IO.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        _LOCATIONS: a dictionary containing predefined paths for every type of expected data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_LOCATIONS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;layout&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FILE_DIR</span><span class="p">,</span> <span class="s2">&quot;layouts&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FILE_DIR</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;calibration&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FILE_DIR</span><span class="p">,</span> <span class="s2">&quot;calibration&quot;</span><span class="p">),</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the instance&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing File Manager.&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_file_locations</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to make one or more necessary file directories.&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initialized File Manager successfully.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_file_locations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates necessary file locations if necessary.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Utilizies OS calls; may require elevated permissions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checking file locations.&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FILE_DIR</span><span class="p">)):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File directory &#39;</span><span class="si">{</span><span class="n">FILE_DIR</span><span class="si">}</span><span class="s2">&#39; not found. Creating.. &quot;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">FILE_DIR</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">loc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_LOCATIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">loc</span><span class="p">)):</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> file directory &#39;</span><span class="si">{</span><span class="n">loc</span><span class="si">}</span><span class="s2">&#39; not found. Creating... &quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">loc</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to make necessary directories.</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span>
+
+    <span class="k">def</span> <span class="nf">_create_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">f_data</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a in file and saves in expected location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f_type : the expected type of file data. Must exactly match a location in _LOCATIONS.</span>
+<span class="sd">            f_name : the name to save the file as.</span>
+<span class="sd">            f_data : the data to save to file.</span>
+<span class="sd">            overwrite: whether to overwrite file if it already exists. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if the operation was a success; false otherwise.</span>
+<span class="sd">        Note:</span>
+<span class="sd">            If data is of type Numpy Array, the function will use OpenCV&#39;s image write function</span>
+<span class="sd">            function to create a new image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># verify folder of desired file type exists.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">type_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_LOCATIONS</span><span class="p">[</span><span class="n">f_type</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidFileType</span><span class="p">(</span><span class="n">f_type</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">type_dir</span><span class="p">)):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected file directory &#39;</span><span class="si">{</span><span class="n">type_dir</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># verify file doesn&#39;t already exist.</span>
+        <span class="n">full_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">type_dir</span><span class="p">,</span> <span class="n">f_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">overwrite</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">full_file_path</span><span class="p">)):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matching filename &#39;</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">&#39; found in &#39;</span><span class="si">{</span><span class="n">type_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># attempt to create file.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">f_data</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">full_file_path</span><span class="p">,</span> <span class="n">f_data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">full_file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">f_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to write to </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Succesfully create file </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_retrieve_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds a file in specified location and returns full file path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f_type : the expected type of file. Must exactly match a location in _LOCATIONS.</span>
+<span class="sd">            f_name : the name of the file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The full path to desired file.</span>
+<span class="sd">        Note:</span>
+<span class="sd">            Will return None if file does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">search_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_LOCATIONS</span><span class="p">[</span><span class="n">f_type</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidFileType</span><span class="p">(</span><span class="n">f_type</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">search_dir</span><span class="p">)):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected file directory &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">full_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">search_dir</span><span class="p">,</span> <span class="n">f_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">full_file_path</span><span class="p">)):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File &#39;</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">&#39; does not exist in &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">full_file_path</span>
+
+    <span class="k">def</span> <span class="nf">_get_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches all files within a specified location.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f_type : the file type to search. Must exactly match a location in _LOCATIONS.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of full file paths for every file in location.</span>
+<span class="sd">        Note:</span>
+<span class="sd">            Returns None if no files are found in directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">search_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_LOCATIONS</span><span class="p">[</span><span class="n">f_type</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidFileType</span><span class="p">(</span><span class="n">f_type</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">search_dir</span><span class="p">)):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected file directory &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">search_dir</span><span class="p">):</span>
+            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">search_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">full_path</span><span class="p">):</span>
+                <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No files in directory &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">files</span>
+
+    <span class="k">def</span> <span class="nf">_read_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches data from image file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f_name : the full file path of the image file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Image data as Numpy Array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">f_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to read img at &#39;</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">&#39;.</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FileManager.get_layout_file"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.FileManager.get_layout_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_layout_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches data from specified layout file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f_name : the name of image file in layouts folder.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Image data as Numpy Array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve_file</span><span class="p">(</span><span class="n">f_type</span><span class="o">=</span><span class="s2">&quot;layout&quot;</span><span class="p">,</span> <span class="n">f_name</span><span class="o">=</span><span class="n">f_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">layout</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to find layout file.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_image</span><span class="p">(</span><span class="n">f_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FileManager.get_calibration_file"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.FileManager.get_calibration_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_calibration_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches data from specified calibration file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            f_name : the name of image file in calibration folder.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Image data as Numpy Array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">calibration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve_file</span><span class="p">(</span><span class="n">f_type</span><span class="o">=</span><span class="s2">&quot;calibration&quot;</span><span class="p">,</span> <span class="n">f_name</span><span class="o">=</span><span class="n">f_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">calibration</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to find layout file.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_image</span><span class="p">(</span><span class="n">f_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FileManager.read_configuration_file"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.FileManager.read_configuration_file">[docs]</a>    <span class="k">def</span> <span class="nf">read_configuration_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches data from configuration file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary with config table items as keys and their known last values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retrieve_file</span><span class="p">(</span><span class="n">f_type</span><span class="o">=</span><span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="n">f_name</span><span class="o">=</span><span class="n">CONFIG_FNAME</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No config file found.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">config</span></div>
+
+    <span class="c1"># TODO : Figure out how UI may pass data</span>
+<div class="viewcode-block" id="FileManager.upload_layout"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.FileManager.upload_layout">[docs]</a>    <span class="k">def</span> <span class="nf">upload_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="FileManager.upload_calibration"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.FileManager.upload_calibration">[docs]</a>    <span class="k">def</span> <span class="nf">upload_calibration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="FileManager.write_configuration_file"><a class="viewcode-back" href="../../../common.file.file_manager.html#common.file.file_manager.FileManager.write_configuration_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_configuration_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves configuration data to file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config : a dictionary with config table items as keys and their known last values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if the operation was successful; false otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file</span><span class="p">(</span>
+            <span class="n">f_type</span><span class="o">=</span><span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="n">f_name</span><span class="o">=</span><span class="n">CONFIG_FNAME</span><span class="p">,</span> <span class="n">f_data</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Hello World!.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

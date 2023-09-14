@@ -7,5 +7,5 @@ DOCS_DIR = os.path.join(ROOT_DIR, "documentation")
 LOGS_DIR = os.path.join(ROOT_DIR, "logs")
 SRC_DIR = os.path.join(ROOT_DIR, "src")
 SCRIPT_DIR = os.path.join(ROOT_DIR, "scripts")
+FILE_DIR = os.path.join(ROOT_DIR, "files")
 TEST_DIR = os.path.join(SRC_DIR, "test")
-

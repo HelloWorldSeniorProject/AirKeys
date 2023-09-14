@@ -9,7 +9,9 @@ License
 /**/.pytest_cache
 
 # Software logs
-/logs
+/**/logs
 
 # Temp folders
 /**/temp
+
+/src/files/

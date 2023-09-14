@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>util.logger &mdash; Airkeys 2.2.0 documentation</title>
+  <title>util.logger &mdash; Airkeys 2.1.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -70,7 +70,7 @@
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">util.info</span> <span class="kn">import</span> <span class="n">ROOT_DIR</span><span class="p">,</span> <span class="n">LOGS_DIR</span>
+<span class="kn">from</span> <span class="nn">.info</span> <span class="kn">import</span> <span class="n">ROOT_DIR</span><span class="p">,</span> <span class="n">LOGS_DIR</span>
 
 
 <div class="viewcode-block" id="Formatter"><a class="viewcode-back" href="../../util.logger.html#util.logger.Formatter">[docs]</a><span class="k">class</span> <span class="nc">Formatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
@@ -78,8 +78,8 @@
 
     <span class="c1"># no explicit constructor necessary.</span>
 
-    <span class="n">minimal_details</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(levelname)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2"> &quot;</span>
-    <span class="n">full_details</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2">] </span><span class="si">%(levelname)s</span><span class="s2"> : </span><span class="si">%(message)s</span><span class="s2"> (</span><span class="si">%(name)s</span><span class="s2">:</span><span class="si">%(lineno)s</span><span class="s2">)&quot;</span>
+    <span class="n">minimal_details</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(levelname)-7s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2"> &quot;</span>
+    <span class="n">full_details</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(levelname)-7s</span><span class="s2"> [</span><span class="si">%(asctime)s</span><span class="s2">]: </span><span class="si">%(message)s</span><span class="s2"> (</span><span class="si">%(name)s</span><span class="s2">:</span><span class="si">%(lineno)s</span><span class="s2">)&quot;</span>
     <span class="n">LEVEL_STYLES</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span> <span class="n">minimal_details</span><span class="p">,</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">:</span> <span class="n">minimal_details</span><span class="p">,</span>
@@ -91,6 +91,9 @@
 <div class="viewcode-block" id="Formatter.format"><a class="viewcode-back" href="../../util.logger.html#util.logger.Formatter.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts log record into customized format.</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            record: logging object (attributes + message).</span>
+
 <span class="sd">        Returns:</span>
 <span class="sd">            A formatted string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -98,14 +101,19 @@
         <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">log_format</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="get_logger"><a class="viewcode-back" href="../../util.logger.html#util.logger.get_logger">[docs]</a><span class="k">def</span> <span class="nf">get_logger</span><span class="p">(</span><span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">:</span>
+<div class="viewcode-block" id="get_logger"><a class="viewcode-back" href="../../util.logger.html#util.logger.get_logger">[docs]</a><span class="k">def</span> <span class="nf">get_logger</span><span class="p">(</span><span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a log of application activity.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        output_file : the name of the output file to generate.</span>
+<span class="sd">        name : the name to give logger object. Defaults to None.</span>
+<span class="sd">        overwrite : whether to overwrite file if it already exists. Defaults to True.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A logger object that records information to both the specified file and standard output.</span>
 <span class="sd">    Note:</span>
 <span class="sd">        Output file should be a filename and will be stored in the logs directory. If there is file with a matching name,</span>
-<span class="sd">        the logger will create one. If a file with that name already exists, it will be overwritten.</span>
+<span class="sd">        the logger will create one. If a file with that name already exists, it will be overwritten unless otherwise specified.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># make logs directory if needed.</span>
@@ -113,11 +121,7 @@
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">LOGS_DIR</span><span class="p">)</span>
 
     <span class="c1"># generate logger object.</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">name</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">ROOT_DIR</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">stack</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">ROOT_DIR</span><span class="p">)</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>  <span class="c1"># accept all messages globally.</span>
 
@@ -125,15 +129,13 @@
 
     <span class="c1"># add handler for stdout. This handler will capture information and error messages.</span>
     <span class="n">std_out_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
-    <span class="n">std_out_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
-    <span class="p">)</span>  <span class="c1"># ignore debug and info messages on this handler.</span>
+    <span class="n">std_out_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>  <span class="c1"># ignore debug and info messages on this handler.</span>
     <span class="n">std_out_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">log_formatter</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">std_out_handler</span><span class="p">)</span>
 
     <span class="c1"># add handler for a specified file. This handler will capture all messages.</span>
     <span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">LOGS_DIR</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span>
-    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">file_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span> <span class="k">if</span> <span class="n">overwrite</span> <span class="k">else</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
     <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
     <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">log_formatter</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>

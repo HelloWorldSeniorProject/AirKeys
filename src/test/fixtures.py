@@ -1,28 +1,34 @@
 import pytest
 import logging
 from swte import *
+from common.patterns.singleton import Singleton
 
-@pytest.fixture(autouse=True,scope="session")
+
+@pytest.fixture(autouse=True, scope="session")
 def logger():
-    
-    format_str = "%(levelname)s [%(asctime)s]: %(message)s "
+    format_str = "%(levelname)-7s [%(asctime)s]: %(message)s"
     formatter = logging.Formatter(format_str)
 
     # create logger
-    logger = logging.getLogger('test')
+    logger = logging.getLogger("test")
     logger.setLevel(logging.DEBUG)
 
-    
     # create and configure handlers.
     handlers = [logging.StreamHandler(), logging.FileHandler(LOG_FILE, "w")]
     for h in handlers:
         h.setLevel(logging.DEBUG)
         h.setFormatter(formatter)
         logger.addHandler(h)
-        
+
     yield logger
+
 
 # make a small space after test name for readability.
 @pytest.fixture(autouse=True, scope="function")
-def make_space():
+def cleanup():
     print("\n")
+
+    yield
+
+    # pseudo-reset of env.
+    Singleton._instances.clear()

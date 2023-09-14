@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Logger module &mdash; Airkeys 2.2.0 documentation</title>
+  <title>Logger module &mdash; Airkeys 2.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -92,7 +92,7 @@
 <p>Defines common message format for files.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="util.logger.Formatter.LEVEL_STYLES">
-<span class="sig-name descname"><span class="pre">LEVEL_STYLES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{10:</span> <span class="pre">'%(levelname)s:</span> <span class="pre">%(message)s</span> <span class="pre">',</span> <span class="pre">20:</span> <span class="pre">'%(levelname)s:</span> <span class="pre">%(message)s</span> <span class="pre">',</span> <span class="pre">30:</span> <span class="pre">'%(levelname)s:</span> <span class="pre">%(message)s</span> <span class="pre">',</span> <span class="pre">40:</span> <span class="pre">'[%(asctime)s]</span> <span class="pre">%(levelname)s</span> <span class="pre">:</span> <span class="pre">%(message)s</span> <span class="pre">(%(name)s:%(lineno)s)',</span> <span class="pre">50:</span> <span class="pre">'[%(asctime)s]</span> <span class="pre">%(levelname)s</span> <span class="pre">:</span> <span class="pre">%(message)s</span> <span class="pre">(%(name)s:%(lineno)s)'}</span></em><a class="headerlink" href="#util.logger.Formatter.LEVEL_STYLES" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">LEVEL_STYLES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{10:</span> <span class="pre">'%(levelname)-7s:</span> <span class="pre">%(message)s</span> <span class="pre">',</span> <span class="pre">20:</span> <span class="pre">'%(levelname)-7s:</span> <span class="pre">%(message)s</span> <span class="pre">',</span> <span class="pre">30:</span> <span class="pre">'%(levelname)-7s:</span> <span class="pre">%(message)s</span> <span class="pre">',</span> <span class="pre">40:</span> <span class="pre">'%(levelname)-7s</span> <span class="pre">[%(asctime)s]:</span> <span class="pre">%(message)s</span> <span class="pre">(%(name)s:%(lineno)s)',</span> <span class="pre">50:</span> <span class="pre">'%(levelname)-7s</span> <span class="pre">[%(asctime)s]:</span> <span class="pre">%(message)s</span> <span class="pre">(%(name)s:%(lineno)s)'}</span></em><a class="headerlink" href="#util.logger.Formatter.LEVEL_STYLES" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -100,37 +100,47 @@
 <span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/util/logger.html#Formatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#util.logger.Formatter.format" title="Permalink to this definition"></a></dt>
 <dd><p>Converts log record into customized format.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A formatted string.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> – logging object (attributes + message).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A formatted string.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="util.logger.Formatter.full_details">
-<span class="sig-name descname"><span class="pre">full_details</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'[%(asctime)s]</span> <span class="pre">%(levelname)s</span> <span class="pre">:</span> <span class="pre">%(message)s</span> <span class="pre">(%(name)s:%(lineno)s)'</span></em><a class="headerlink" href="#util.logger.Formatter.full_details" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">full_details</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%(levelname)-7s</span> <span class="pre">[%(asctime)s]:</span> <span class="pre">%(message)s</span> <span class="pre">(%(name)s:%(lineno)s)'</span></em><a class="headerlink" href="#util.logger.Formatter.full_details" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="util.logger.Formatter.minimal_details">
-<span class="sig-name descname"><span class="pre">minimal_details</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%(levelname)s:</span> <span class="pre">%(message)s</span> <span class="pre">'</span></em><a class="headerlink" href="#util.logger.Formatter.minimal_details" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">minimal_details</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'%(levelname)-7s:</span> <span class="pre">%(message)s</span> <span class="pre">'</span></em><a class="headerlink" href="#util.logger.Formatter.minimal_details" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="util.logger.get_logger">
-<span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="reference internal" href="_modules/util/logger.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#util.logger.get_logger" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="reference internal" href="_modules/util/logger.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#util.logger.get_logger" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a log of application activity.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A logger object that records information to both the specified file and standard output.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_file</strong> – the name of the output file to generate.</p></li>
+<li><p><strong>name</strong> – the name to give logger object. Defaults to None.</p></li>
+<li><p><strong>overwrite</strong> – whether to overwrite file if it already exists. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A logger object that records information to both the specified file and standard output.</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Output file should be a filename and will be stored in the logs directory. If there is file with a matching name,
-the logger will create one. If a file with that name already exists, it will be overwritten.</p>
+the logger will create one. If a file with that name already exists, it will be overwritten unless otherwise specified.</p>
 </div>
 </dd></dl>
 

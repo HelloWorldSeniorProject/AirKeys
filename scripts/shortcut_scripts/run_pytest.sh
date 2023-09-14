@@ -32,6 +32,8 @@ Usage : Run test functions in tests folder using Pytest.
             Ex. test -f test_file -m 'test_setup or test_singleton' -> runs the functions test_setup and test_singleton 
             if they exist within any file pattern matching test_file{...}.py, if available.
 
+            Note: Removes conditional check for specified test function(s). Be sure to run only tests you are comfortable with.
+
         -a ) Run all test files and functions under tests folder. Pytest requires test files be named either test_*.py 
              or *_test.py where * is any combination of characters.
 
@@ -49,7 +51,7 @@ run_specific_tests(){
 
     for file in $filename; do
 
-        cmd="python -m pytest -v -rpfs -s --random-order-bucket=class ${file}"
+        cmd="pytest -v -rpfs -s --random-order-bucket=class ${file}"
         # append function name to files.
         if ! [ -z "${funcname}" ]; then
             full_test_path="${file}::${funcname}"
@@ -64,8 +66,8 @@ run_specific_tests(){
 }
 
 run_all_tests() {
-    # run all tests of the format test_*.py or *_test.py
-    python -m pytest -v -rpfs -s ${test_dir}
+    # run all tests of the format test_*.py or *_test.py and are not marked 'conditional'
+    pytest -v -rpfs -s ${test_dir} --random-order-bucket=class
 }
 
 find_file() {
@@ -80,6 +82,16 @@ find_file() {
     fi
 
     run_specific_tests
+}
+
+set_test_level() {
+    level=""
+    if [ "${run_all}" = true ]; then
+        level="unconditional"
+    else
+        level="all"
+    fi
+    export TEST_LEVEL=${level}
 }
 
 # create temp dir in test suite
@@ -102,6 +114,9 @@ while getopts "f:m:a" flag; do
         usage ;;
     esac
 done
+
+# set test level based on passed params
+set_test_level
 
 if [ "${run_all}" = true ]; then
     run_all_tests
