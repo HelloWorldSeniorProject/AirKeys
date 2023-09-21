@@ -58,7 +58,7 @@ class ConfigTable(metaclass=Singleton):
 
             # retrieve values from previous config. Note any missing values.
             if not (mode := prev_config.get("mode"), None):
-                mode = self._DEFAULTS["mode"]
+                mode = Mode(self._DEFAULTS["mode"])
                 logger.warning(f"Did not find prev mode, setting default {mode}.")
 
             if not (layout := prev_config.get("layout"), None):
@@ -66,15 +66,15 @@ class ConfigTable(metaclass=Singleton):
                 logger.warning(f"Did not find prev layout, setting default {layout}.")
 
             if not (connection := prev_config.get("connection"), None):
-                connection = self._DEFAULTS["connection"]
+                connection = Connection(self._DEFAULTS["connection"])
                 logger.warning(f"Did not find prev connection type, setting default {connection}.")
 
             if not (device := prev_config.get("device"), None):
-                device = self._DEFAULTS["device"]
+                device = Device(self._DEFAULTS["device"])
                 logger.warning(f"Did not find prev device type, setting default {device}.")
 
             if not (os := prev_config.get("os"), None):
-                os = self._DEFAULTS["os"]
+                os = OperatingSystem(self._DEFAULTS["os"])
                 logger.warning(f"Did not find prev operating system, setting default {os}.")
 
             self._mode = mode

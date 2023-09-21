@@ -7,32 +7,32 @@ from enum import Enum
 """
 
 
-class Mode(Enum):
+class Mode(str, Enum):
     """An indicator of the system's current mode."""
 
-    Standby = 0
-    Inactive = 1
-    Active = 2
+    Standby = "Standby"
+    Inactive = "Inactive"
+    Active = "Active"
 
 
 class Device(Enum):
-    Large = 0
-    Small = 1
+    Large = "Large"
+    Small = "Small"
 
 
 class Connection(Enum):
     """An indicator of the current method of connecting with a device."""
 
-    UsbA = 0
-    UsbC = 1
-    Bluetooth = 2
+    UsbA = "UsbA"
+    UsbC = "UsbC"
+    Bluetooth = "Bluetooth"
 
 
 class OperatingSystem(Enum):
     """An indicator of the current device's operating system."""
 
-    Windows = 0
-    Linux = 1
-    Mac = 2
-    Android = 3
-    IPhone = 4
+    Windows = "Windows"
+    Linux = "Linux"
+    Mac = "Mac"
+    Android = "Android"
+    IPhone = "iPhone"
