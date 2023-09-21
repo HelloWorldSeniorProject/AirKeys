@@ -18,12 +18,16 @@ logger = get_logger("Main.log")
 
 # TODO : finish
 
+
 def main():
     # initialize system resources
     try:
         clock = InternalClock()
         ct = ConfigTable()
         fm = FileManager()
+
+        # try to load previous config table
+        ct.write(fm.read_configuration_file())
     except Exception as e:
         exit_with_failure(f"Failed to initialize system resources.\n{e}")
 
