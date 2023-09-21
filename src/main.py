@@ -45,3 +45,8 @@ def exit_with_failure(message: str):
     """
     logger.error(message)
     sys.exit(1)
+
+
+# run program
+if __name__ == "__main__":
+    main()
