@@ -15,12 +15,12 @@ class Mode(str, Enum):
     Active = "Active"
 
 
-class Device(Enum):
+class Device(str, Enum):
     Large = "Large"
     Small = "Small"
 
 
-class Connection(Enum):
+class Connection(str, Enum):
     """An indicator of the current method of connecting with a device."""
 
     UsbA = "UsbA"
@@ -28,7 +28,7 @@ class Connection(Enum):
     Bluetooth = "Bluetooth"
 
 
-class OperatingSystem(Enum):
+class OperatingSystem(str, Enum):
     """An indicator of the current device's operating system."""
 
     Windows = "Windows"
