@@ -4,11 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
-  <title>Config Table module &mdash; Airkeys 2.2.0 documentation</title>
-=======
-  <title>common.config.config_table module &mdash; Airkeys 2.0.5 documentation</title>
->>>>>>> develop
+  <title>Config Table module &mdash; Airkeys 2.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -21,13 +17,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-<<<<<<< HEAD
-    <link rel="next" title="Time package" href="common.time.html" />
+    <link rel="next" title="File" href="common.file.html" />
     <link rel="prev" title="Config package" href="common.config.html" /> 
-=======
-    <link rel="next" title="common.time package" href="common.time.html" />
-    <link rel="prev" title="common.config package" href="common.config.html" /> 
->>>>>>> develop
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,23 +45,15 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Available Modules</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="common.html">Common</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="common.html#submodules">Submodules</a><ul class="current">
-<<<<<<< HEAD
 <li class="toctree-l4 current"><a class="reference internal" href="common.config.html">Config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.file.html">File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="common.power.html">Power</a></li>
 <li class="toctree-l4"><a class="reference internal" href="common.time.html">Time package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="common.types.html">Types module</a></li>
-=======
-<li class="toctree-l4 current"><a class="reference internal" href="common.config.html">common.config package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="common.time.html">common.time package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="common.types.html">common.types module</a></li>
->>>>>>> develop
 </ul>
 </li>
 </ul>
 </li>
-<<<<<<< HEAD
-=======
-<li class="toctree-l2"><a class="reference internal" href="test.html">Testing</a></li>
->>>>>>> develop
 <li class="toctree-l2"><a class="reference internal" href="util.html">Utilities</a></li>
 </ul>
 </li>
@@ -92,13 +75,8 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="modules.html">Available Modules</a></li>
           <li class="breadcrumb-item"><a href="common.html">Common</a></li>
-<<<<<<< HEAD
           <li class="breadcrumb-item"><a href="common.config.html">Config package</a></li>
       <li class="breadcrumb-item active">Config Table module</li>
-=======
-          <li class="breadcrumb-item"><a href="common.config.html">common.config package</a></li>
-      <li class="breadcrumb-item active">common.config.config_table module</li>
->>>>>>> develop
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/common.config.config_table.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -109,11 +87,7 @@
            <div itemprop="articleBody">
              
   <section id="module-common.config.config_table">
-<<<<<<< HEAD
 <span id="config-table-module"></span><h1>Config Table module<a class="headerlink" href="#module-common.config.config_table" title="Permalink to this heading"></a></h1>
-=======
-<span id="common-config-config-table-module"></span><h1>common.config.config_table module<a class="headerlink" href="#module-common.config.config_table" title="Permalink to this heading"></a></h1>
->>>>>>> develop
 <dl class="py class">
 <dt class="sig sig-object py" id="common.config.config_table.ConfigTable">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConfigTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable" title="Permalink to this definition"></a></dt>
@@ -123,23 +97,84 @@
 and other important configuration information. Utilizes thread locks to prevent concurrent
 access while modifying/retrieving table information.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.get_state">
-<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="common.types.html#common.types.SystemState" title="common.types.SystemState"><span class="pre">SystemState</span></a></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.get_state" title="Permalink to this definition"></a></dt>
-<dd><p>Fetches the system state.</p>
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.default" title="Permalink to this definition"></a></dt>
+<dd><p>Sets all variables to their default state</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.getConnection">
+<span class="sig-name descname"><span class="pre">getConnection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.getConnection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.getConnection" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.getDevice">
+<span class="sig-name descname"><span class="pre">getDevice</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.getDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.getDevice" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.getKeyboard">
+<span class="sig-name descname"><span class="pre">getKeyboard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.getKeyboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.getKeyboard" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.get_mode">
+<span class="sig-name descname"><span class="pre">get_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="common.types.html#common.types.Mode" title="common.types.Mode"><span class="pre">Mode</span></a></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.get_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.get_mode" title="Permalink to this definition"></a></dt>
+<dd><p>Fetches the system’s mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The SystemState currently set.</p>
+<dd class="field-odd"><p>The system mode currently set.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_state">
-<span class="sig-name descname"><span class="pre">set_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="common.types.html#common.types.SystemState" title="common.types.SystemState"><span class="pre">SystemState</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_state" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the system state.</p>
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.setConnection">
+<span class="sig-name descname"><span class="pre">setConnection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.setConnection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.setConnection" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.setDevice">
+<span class="sig-name descname"><span class="pre">setDevice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.setDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.setDevice" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_layout">
+<span class="sig-name descname"><span class="pre">set_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_layout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_mode">
+<span class="sig-name descname"><span class="pre">set_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="common.types.html#common.types.Mode" title="common.types.Mode"><span class="pre">Mode</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_mode" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the system’s mode.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>state</strong> – the SystemState to set.</p>
+<dd class="field-odd"><p><strong>mode</strong> – the system mode to set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.to_dictionary">
+<span class="sig-name descname"><span class="pre">to_dictionary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.to_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.to_dictionary" title="Permalink to this definition"></a></dt>
+<dd><p>Converts config table to dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing the current values of the config table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prev_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.write" title="Permalink to this definition"></a></dt>
+<dd><p>Sets all variables to last a previous state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>prev_config</strong> – a dictionary containing the last saved config table state.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if operation was successful, false otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -152,13 +187,8 @@ access while modifying/retrieving table information.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-<<<<<<< HEAD
         <a href="common.config.html" class="btn btn-neutral float-left" title="Config package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="common.time.html" class="btn btn-neutral float-right" title="Time package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-=======
-        <a href="common.config.html" class="btn btn-neutral float-left" title="common.config package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="common.time.html" class="btn btn-neutral float-right" title="common.time package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
->>>>>>> develop
+        <a href="common.file.html" class="btn btn-neutral float-right" title="File" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

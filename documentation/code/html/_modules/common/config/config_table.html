@@ -3,11 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<<<<<<< HEAD
-  <title>common.config.config_table &mdash; Airkeys 2.2.0 documentation</title>
-=======
-  <title>common.config.config_table &mdash; Airkeys 2.0.5 documentation</title>
->>>>>>> develop
+  <title>common.config.config_table &mdash; Airkeys 2.1.0 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -71,94 +67,146 @@
            <div itemprop="articleBody">
              
   <h1>Source code for common.config.config_table</h1><div class="highlight"><pre>
-<<<<<<< HEAD
-<span></span><span class="kn">from</span> <span class="nn">common.types</span> <span class="kn">import</span> <span class="o">*</span>
-=======
-<span></span>
+<span></span><span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">util.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">common.types</span> <span class="kn">import</span> <span class="o">*</span>
->>>>>>> develop
-<span class="kn">from</span> <span class="nn">util.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
-<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">common.patterns.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
+
 
 <span class="n">thread_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s2">&quot;ConfigTable.log&quot;</span><span class="p">)</span>
 
-<<<<<<< HEAD
 
 <div class="viewcode-block" id="ConfigTable"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable">[docs]</a><span class="k">class</span> <span class="nc">ConfigTable</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">Singleton</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A shared configuration for use across the system.</span>
 
-=======
-<div class="viewcode-block" id="ConfigTable"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable">[docs]</a><span class="k">class</span> <span class="nc">ConfigTable</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">Singleton</span><span class="p">):</span>
-<span class="w">    </span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A shared configuration for use across the system.</span>
-<span class="sd">    </span>
->>>>>>> develop
 <span class="sd">    Configuration Table is a singleton class that contains information about the system&#39;s state</span>
 <span class="sd">    and other important configuration information. Utilizes thread locks to prevent concurrent</span>
 <span class="sd">    access while modifying/retrieving table information.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">Mode</span><span class="o">.</span><span class="n">Standby</span><span class="p">,</span>
+        <span class="s2">&quot;layout&quot;</span><span class="p">:</span> <span class="s2">&quot;Qwerty&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;connection&quot;</span><span class="p">:</span> <span class="n">Connection</span><span class="o">.</span><span class="n">UsbA</span><span class="p">,</span>
+        <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="n">Device</span><span class="o">.</span><span class="n">Large</span><span class="p">,</span>
+        <span class="s2">&quot;os&quot;</span><span class="p">:</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">Windows</span><span class="p">,</span>
+    <span class="p">}</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the instance and sets a default state.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">SystemState</span><span class="o">.</span><span class="n">Standby</span>
 
-        <span class="c1"># TODO : initialize config table as necessary.</span>
-        <span class="c1"># self._keyboard = None</span>
-        <span class="c1"># self._connection = None</span>
-        <span class="c1"># self._device = None</span>
-        <span class="c1"># self._driver = None</span>
-<<<<<<< HEAD
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing the Config Table to default state.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
 
-=======
-    
->>>>>>> develop
-<div class="viewcode-block" id="ConfigTable.set_state"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.set_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">SystemState</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the system state.</span>
+<div class="viewcode-block" id="ConfigTable.default"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.default">[docs]</a>    <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets all variables to their default state&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Setting default Config Table state.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;connection&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;device&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_os</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;os&quot;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ConfigTable.write"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prev_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets all variables to last a previous state.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            state : the SystemState to set.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span></div>
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> develop
-<div class="viewcode-block" id="ConfigTable.get_state"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SystemState</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches the system state.</span>
+<span class="sd">            prev_config: a dictionary containing the last saved config table state.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The SystemState currently set.</span>
+<span class="sd">            True if operation was successful, false otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span></div></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to overwrite current config table:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">prev_config</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">dict</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Passed configuration is not of type dictionary. Aborting operation.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="c1"># retrieve values from previous config. Note any missing values.</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mode</span> <span class="o">:=</span> <span class="n">prev_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not find prev mode, setting default </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">layout</span> <span class="o">:=</span> <span class="n">prev_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;layout&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not find prev layout, setting default </span><span class="si">{</span><span class="n">layout</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">connection</span> <span class="o">:=</span> <span class="n">prev_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;connection&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;connection&quot;</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not find prev connection type, setting default </span><span class="si">{</span><span class="n">connection</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">device</span> <span class="o">:=</span> <span class="n">prev_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;device&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;device&quot;</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not find prev device type, setting default </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span> <span class="o">:=</span> <span class="n">prev_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;os&quot;</span><span class="p">),</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">os</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;os&quot;</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not find prev operating system, setting default </span><span class="si">{</span><span class="n">os</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">mode</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_layout</span> <span class="o">=</span> <span class="n">layout</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">device</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_os</span> <span class="o">=</span> <span class="n">os</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Write operation was a success. New table:</span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ConfigTable.set_mode"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.set_mode">[docs]</a>    <span class="k">def</span> <span class="nf">set_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">Mode</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the system&#39;s mode.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mode : the system mode to set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">mode</span></div>
+
+<div class="viewcode-block" id="ConfigTable.get_mode"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.get_mode">[docs]</a>    <span class="k">def</span> <span class="nf">get_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mode</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches the system&#39;s mode.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The system mode currently set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">thread_lock</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span></div>
 
     <span class="c1"># TODO : implement function as system evolves</span>
-    <span class="c1"># def setKeyboard(self, keyboard):</span>
-    <span class="c1">#     pass</span>
+<div class="viewcode-block" id="ConfigTable.set_layout"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.set_layout">[docs]</a>    <span class="k">def</span> <span class="nf">set_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layout</span><span class="p">):</span>
+        <span class="k">pass</span></div>
 
-    <span class="c1"># def getKeyboard(self):</span>
-    <span class="c1">#     pass</span>
+<div class="viewcode-block" id="ConfigTable.getKeyboard"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.getKeyboard">[docs]</a>    <span class="k">def</span> <span class="nf">getKeyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
 
-    <span class="c1"># def setConnection(self, connection):</span>
-    <span class="c1">#     pass</span>
+<div class="viewcode-block" id="ConfigTable.setConnection"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.setConnection">[docs]</a>    <span class="k">def</span> <span class="nf">setConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="k">pass</span></div>
 
-    <span class="c1"># def getConnection(self):</span>
-    <span class="c1">#     pass</span>
+<div class="viewcode-block" id="ConfigTable.getConnection"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.getConnection">[docs]</a>    <span class="k">def</span> <span class="nf">getConnection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
 
-    <span class="c1"># def setDevice(self, device):</span>
-    <span class="c1">#     pass</span>
+<div class="viewcode-block" id="ConfigTable.setDevice"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.setDevice">[docs]</a>    <span class="k">def</span> <span class="nf">setDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="k">pass</span></div>
 
-    <span class="c1"># def getDevice(self) :</span>
-    <span class="c1">#     pass</span>
+<div class="viewcode-block" id="ConfigTable.getDevice"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.getDevice">[docs]</a>    <span class="k">def</span> <span class="nf">getDevice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
 
-    <span class="c1"># def setDriver(self, driver):</span>
-    <span class="c1">#     pass</span>
+<div class="viewcode-block" id="ConfigTable.to_dictionary"><a class="viewcode-back" href="../../../common.config.config_table.html#common.config.config_table.ConfigTable.to_dictionary">[docs]</a>    <span class="k">def</span> <span class="nf">to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts config table to dictionary.</span>
 
-    <span class="c1"># def getDriver(self) :</span>
-    <span class="c1">#     pass</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary containing the current values of the config table.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">,</span>
+            <span class="s2">&quot;layout&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_layout</span><span class="p">,</span>
+            <span class="s2">&quot;connection&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span>
+            <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="p">,</span>
+            <span class="s2">&quot;os&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_os</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">config</span></div></div>
 </pre></div>
 
            </div>

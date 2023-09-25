@@ -14,7 +14,7 @@ alias all="ls -al"
 alias rm="rm -i"
 alias rmd="rm -ri"
 alias rmf="rm -f"
-alias lint="python -m black ${src} --line-length 100 --target-version py311"
+alias lint="black ${src} --line-length 100 --target-version py311"
 
 # script shortcuts
 alias update_deps="${scripts}/shortcut_scripts/update_dependencies.sh"
@@ -40,3 +40,4 @@ for inline_func in $inline_funcs ; do export -f $inline_func ; done
 
 # path exports 
 export PYTHONPATH=$PYTHONPATH:${src}
+export PATH=$PATH:/home/NRuser/.local/bin/

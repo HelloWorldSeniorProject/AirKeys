@@ -14,7 +14,24 @@ RUN apt-get update && \
     sudo \
     vim \
     openssh-server \
-    make
+    make \
+    build-essential cmake \
+    wget unzip \
+    libhdf5-103-1 libhdf5-dev \
+    libopenblas0 libopenblas-dev \
+    libprotobuf23 libprotobuf-dev \
+    libjpeg62-turbo libjpeg62-turbo-dev \
+    libpng16-16 libpng-dev \
+    libtiff5 libtiff-dev \
+    libwebp6 libwebp-dev \
+    libopenjp2-7 libopenjp2-7-dev \
+    libtbb2 libtbb-dev \
+    libeigen3-dev \
+    ffmpeg \
+    libsm6 \
+    libxext6 \
+    libgl1 \
+    python3-dev
 
 # Start ssh client.
 RUN service ssh start

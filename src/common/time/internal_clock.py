@@ -1,10 +1,10 @@
 import threading
 import time
-from util.singleton import Singleton
-from common.time.timer import Timer
+from .timer import Timer
+from common.patterns.singleton import Singleton
 from util.logger import get_logger
 
-logger = get_logger("internal_clock.log")
+logger = get_logger("InternalClock.log")
 
 thread_lock = threading.Lock()
 
@@ -12,7 +12,7 @@ thread_lock = threading.Lock()
 class InternalClock(metaclass=Singleton):
     """A monotonic clock for use across the system.
 
-    Internal Clock is a singleton class that functions for determining relational times
+    Internal Clock is a singleton class that has functions for determining relational times
     throughout the system. Utilizes thread locks to prevent concurrent access to CPU
     hardware clocks.
     """

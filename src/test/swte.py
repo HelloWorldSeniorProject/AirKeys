@@ -34,7 +34,7 @@ def large_banner(string: str):
     logger.info(f"")
 
     for s in msg:
-        logger.info(f"-{s}")
+        logger.info(f"- {s}")
 
     # end space
     logger.info(f"")
@@ -50,3 +50,22 @@ def small_banner(string: str):
     msg = truncate_str(string)
     for s in msg:
         logger.info(f"{s}")
+
+
+def conditional(test_func):
+    """Run function only when specified.
+
+    Note:
+        When test functions are marked with this decorator, they will not run unless
+        specificied using the test script. A commented reason should be included when using
+        unless reason is obvious.
+    """
+
+    # forward all function parameters to test_func
+    def wrapper(*args, **kwargs):
+        if os.environ["TEST_LEVEL"] == "all":
+            test_func(*args, **kwargs)
+        else:
+            logger.info(f"Skipped - {test_func.__name__}")
+
+    return wrapper
