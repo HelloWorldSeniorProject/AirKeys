@@ -1,0 +1,17 @@
+// Compiled using https://sequencediagram.org/
+
+title Change OS Scenario
+actor ":User" as User
+participant ":GUI" as System
+participantspacing 20
+
+User->System: changeOS()
+User<--System: detected devices
+User->System: selectDevice(device)
+User<--System: list of supported OSs
+User->System: selectOS(os)
+alt success
+User<--System: confirmation message
+else failure
+User<--System: failure message
+end

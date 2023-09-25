@@ -1,0 +1,46 @@
+// Compiled using https://sequencediagram.org/
+
+title File Operations
+participantspacing 5
+
+
+fontawesome f07b "File Manager" as File
+fontawesome f0a0 "Device Storage" as Storage
+
+alt file read
+	[-> File : read(fileName)
+    File -> Storage: find(fileName)
+    
+    alt file exists
+    	
+        Storage --> File: full file path
+        File -> File : getData(fullFilePath)
+        [<-- File : file content
+    else file does not exist
+    	Storage --> File: error
+        [<-- File : null
+    end
+	
+else file write
+    [-> File : write(fileName, data)
+    File -> Storage: find(fileName)
+    alt file exists
+        Storage --> File: Error
+        [<-- File: error
+    else file does not exist
+    	File ->Storage : createFile(fileName, data)
+		Storage --> File : result
+        [<-- File: result
+    end
+else find files
+	[-> File : getFiles(directory)
+    opt no files in directory
+    	[<-- File : null
+    end
+	loop files remaining in directory
+      File -> Storage : nextFile()
+      Storage --> File : full file path
+	end
+    
+    [<-- File: [] file paths
+end

@@ -1,0 +1,17 @@
+// Compiled using https://sequencediagram.org/
+
+title Change Layout Scenario
+actor ":User" as User
+participant ":GUI" as System
+participantspacing 20
+
+User->System: changeLayout()
+User<--System: detected devices
+User->System: selectDevice(device)
+User<--System: detected layouts for device
+User->System: selectLayout(layout)
+alt success
+User<--System: confirmation message
+else failure
+User<--System: failure message
+end
