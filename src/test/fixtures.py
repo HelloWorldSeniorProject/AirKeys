@@ -3,6 +3,8 @@ import logging
 from swte import *
 from common.patterns.singleton import Singleton
 
+mapped_requirements = {}
+
 
 @pytest.fixture(autouse=True, scope="session")
 def logger():
@@ -32,3 +34,15 @@ def cleanup():
 
     # pseudo-reset of env.
     Singleton._instances.clear()
+
+
+@pytest.fixture(autouse=True, scope="session")
+def map_requirements():
+    # extract specified requirements as test runs.
+    yield
+    
+    # empty line
+    print("")
+    compile_requirements_report()
+    
+    

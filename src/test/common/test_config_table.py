@@ -1,9 +1,11 @@
 from common.config.config_table import ConfigTable
 from common.types import *
-from test.swte import large_banner, small_banner
+from test.swte import *
 
 
 class Test_ConfigTable:
+    
+    @requirements(3.1)
     def test_singleton(self):
         large_banner("Test Singleton: Tests singleton inheritence")
 
@@ -30,6 +32,7 @@ class Test_ConfigTable:
             exps_met.append(ct is cts[i - 1])
         assert all(exps_met)
 
+    
     def test_setup(self):
         large_banner("Test Setup: Tests instantiation logic")
 
@@ -47,6 +50,7 @@ class Test_ConfigTable:
 
         assert all(exps_met)
 
+    @requirements(3.2)
     def test_write(self):
         large_banner("Test Write: Tests classes ability to set all instance variables.")
 
@@ -101,3 +105,7 @@ class Test_ConfigTable:
                 exps_met.append(act == exp)
 
         assert all(exps_met)
+        
+        
+        
+        

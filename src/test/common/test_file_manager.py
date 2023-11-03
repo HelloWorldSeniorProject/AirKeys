@@ -88,9 +88,10 @@ class Test_FileManager:
         assert all(exps_met)
 
     @conditional
+    @requirements(13.1)
     # Verify by inspection. Will not work in dev env as there is no display.
     def test_read_image(self):
-        large_banner("Test Read File: Tests the file reading logic ")
+        large_banner("Test Read Image: Tests the file reading logic ")
 
         fm = FileManager()
 
