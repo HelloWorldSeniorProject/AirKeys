@@ -1,5 +1,5 @@
 import os, shutil, json, requests
-import numpy as np, cv2, pytest
+import cv2, pytest
 from common.file.file_manager import FileManager, FILE_DIR, InvalidFileType
 from common.types import *
 from test.swte import *
