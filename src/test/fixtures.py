@@ -40,9 +40,7 @@ def cleanup():
 def map_requirements():
     # extract specified requirements as test runs.
     yield
-    
+
     # empty line
     print("")
     compile_requirements_report()
-    
-    

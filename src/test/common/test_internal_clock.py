@@ -5,7 +5,6 @@ from time import sleep
 
 
 class Test_InternalClock:
-    
     @requirements(2.1)
     def test_singleton(self):
         large_banner("Test Singleton: Tests singleton inheritence")
@@ -48,7 +47,6 @@ class Test_InternalClock:
 
         exps_met.append((time2 - time1) >= 5000)
         assert all(exps_met)
-
 
     @conditional
     @requirements(12.1, 12.2)
