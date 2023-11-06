@@ -214,6 +214,11 @@ def _get_requirements() -> tuple[pd.DataFrame, pd.DataFrame]:
     Returns:
         Two pandas dataframes containing all the requirements, they're descriptions, and additional comments. The first data frame
         contains the essentials requirements while the second dataframe contains the optional requirements.
+        
+    Notes:
+        Expects CSV file in `documentation/code` named `Requirements.csv`. File can be split into two sections as shown in
+        here : https://docs.google.com/spreadsheets/d/1KDWr5lpKnlF1U20N45R3keTzLomTzltnJHnH2cv9Ryc/edit?usp=sharing.
+        The delimiter "Req #" (1st match ignored) must be located in the Requirement # column.
     """
     # labels as defined in requirements spreadsheet.
     labels = ["Category", "Requirement", "Description", "Comments"]
