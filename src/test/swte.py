@@ -99,9 +99,9 @@ def requirements(*reqs):
         # add test name to requirement map and save distinct requirement tested
         for req in reqs:
             if mapped_requirements.get(req, None):
-                mapped_requirements[req].append(test_func.__name__)
+                mapped_requirements[req].append(test_func.__qualname__)
             else:
-                mapped_requirements[req] = [test_func.__name__]
+                mapped_requirements[req] = [test_func.__qualname__]
 
         # save data to file
         with open(TEMP_MAP_FILE, "w") as f:

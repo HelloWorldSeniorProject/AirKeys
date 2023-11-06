@@ -14,21 +14,21 @@ Number of Remaining Requirements        20
 Requirement #       Test Cases
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-3.1                 test_singleton                                                                  
+3.1                 Test_ConfigTable.test_singleton                                                 
 
-3.2                 test_write                                                                      
+3.2                 Test_ConfigTable.test_write                                                     
 
-13.1                test_read_image                                                                 
+13.1                Test_FileManager.test_read_image                                                
 
-2.1                 test_singleton                                                                  
+2.1                 Test_InternalClock.test_singleton                                               
 
-2.2                 test_get_time                                                                   
+2.2                 Test_InternalClock.test_get_time                                                
 
-12.1                test_create_timer                                                               
+12.1                Test_InternalClock.test_create_timer                                            
 
-12.2                test_create_timer                                                               
+12.2                Test_InternalClock.test_create_timer                                            
 
-12.3                test_timer_remaining_time                                                       
+12.3                Test_InternalClock.test_timer_remaining_time                                    
 
 1.2                 Satisfied by hardware                                                           
 
