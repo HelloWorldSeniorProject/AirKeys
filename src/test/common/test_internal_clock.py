@@ -5,6 +5,7 @@ from time import sleep
 
 
 class Test_InternalClock:
+    @requirements(2.1)
     def test_singleton(self):
         large_banner("Test Singleton: Tests singleton inheritence")
 
@@ -19,6 +20,7 @@ class Test_InternalClock:
 
         assert all(exps_met)
 
+    @requirements(2.2)
     def test_get_time(self):
         large_banner("Test Get Time: Tests time tracking functions")
         exps_met = []
@@ -47,6 +49,7 @@ class Test_InternalClock:
         assert all(exps_met)
 
     @conditional
+    @requirements(12.1, 12.2)
     # Verify by inspection.
     def test_create_timer(self):
         large_banner("Test Create Timer: Tests timer creation functions")
@@ -62,6 +65,7 @@ class Test_InternalClock:
         sleep(5)
         small_banner("Timer 2 task should run before this line")
 
+    @requirements(12.3)
     def test_timer_remaining_time(self):
         large_banner("Test Timer Remaining Time: Tests Timer's remaining timing function")
         ic = InternalClock()
