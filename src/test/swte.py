@@ -16,7 +16,7 @@ REQUIREMENTS_FILE = os.path.join(DOCUMENTATION_DIR, "Requirements.csv")
 logger = logging.getLogger(__name__)
 max_line_length = 70
 divider = "-" * max_line_length
-mapped_requirements = {"unique_requirements_tested" : []}
+mapped_requirements = {}
 run_test = True
 
 
@@ -101,9 +101,6 @@ def requirements(*reqs):
                 mapped_requirements[req].append(test_func.__name__)
             else:
                 mapped_requirements[req] = [test_func.__name__]
-            
-            if req not in mapped_requirements["unique_requirements_tested"]:
-                mapped_requirements["unique_requirements_tested"].append(req)
                 
         # save data to file
         with open(TEMP_MAP_FILE, 'w') as f:
@@ -127,47 +124,117 @@ def compile_requirements_report():
     """
     
     logger.info("Generating Requirements-to-Test Mapping")
-    requirements = get_requirements()
-    output = ""
     
-    with open(TEMP_MAP_FILE, 'r') as f:
-        mapped_requirements = json.load(f)
-        
-    title = "{:20}{:^}".format("Requirement #", "Test Cases\n")
-    output+=title
+    # constants
+    per_line=80
     
     separator = "{}\n".format(("- "* 50))
-    output += separator
     
-    for key, value in mapped_requirements.items():
-        prefix = key
-        line = ' '.join(value)
-        output += auto_wrap(line_to_wrap=line, prefix=prefix, padding_str=" "*20, per_line=80) + "\n"
+    
+    requirements, _ = _get_requirements()
+    output = ""
+    
+    # retreive test-requirement mappings as specified in test enviornment.
+    with open(TEMP_MAP_FILE, 'r') as f:
+        mapped_requirements = json.load(f)
+
+    # add requirements satisfied through standard modules, external modules, or hardware (i.e. unnecessary tests).
+    satisfied = {
+        1.2 : "Satisfied by hardware",
+        1.3 : "Satisfied by hardware",
+        7.1 : "Satisfied by hardware",
+        8.1 : "Satisfied by hardware",
+        15.3 : "Satisfied by visual inspection of functionality provided through standard module",
+        15.4 : "Satisfied by visual inspection of functionality provided through standard module",
+        15.5 : "Satisfied by visual inspection of functionality provided through standard module",
+        16.1 : "Satisfied by hardware",
+    }
+    for key, value in satisfied.items():
+        mapped_requirements[str(key)] = value
         
-    print(output)
+    # calculate coverage stats
+    reqs_needed = requirements["Requirement"].values.tolist()
+    coverage = { "covered": mapped_requirements.keys(), "needed": [req for req in reqs_needed if req not in mapped_requirements.keys()]}
+    stats = {
+        "Requirement Coverage (%)" : f"{round((len(coverage['covered'])/ len(reqs_needed))*100,2)}%",
+        "Number of Requirements Covered": f"{len(coverage['covered'])}",
+        "Number of Remaining Requirements": f"{len(coverage['needed'])}",
+    }
+
+    # format requirement coverage stats.
+    title = "{:^100}\n\n".format("Coverage Stats")
+    table_heading = "{:40}{:^}\n".format("Description", "Statistic")
+    output += title
+    output += separator
+    for desc, stat in stats.items():
+        output += _auto_wrap(line_to_wrap=stat, prefix=desc, padding_str=" " * 40, per_line=per_line) + "\n"
+    output += "\n\n"
     
-def get_requirements():
-    """Parses requirements file to 
+    # format test-requirement mapping.  
+    title = "{:^100}\n\n".format("Requirement-to-Test Mapping")  
+    table_heading = "{:20}{:^}\n".format("Requirement #", "Test Cases")
+    output += title
+    output += table_heading
+    output += separator
+    for req, justification in mapped_requirements.items():
+        line = ' '.join(justification) if type(justification) == list else justification
+        output += _auto_wrap(line_to_wrap=line, prefix=req, padding_str=" "*20, per_line=per_line) + "\n"
+    output += "\n\n"
+    
+    # format remaining requirements.  
+    title = "{:^100}\n\n".format("Remaining Requirements")  
+    table_heading = "{:20}{:^}\n".format("Requirement #", "Description")
+    output += title
+    output += table_heading
+    output += separator
+    for req, desc in _get_requirement_descriptions(requirements, coverage["needed"]).items():
+        output += _auto_wrap(line_to_wrap=desc, prefix=req, padding_str=" "*20, per_line=per_line) + "\n"
+    output += "\n\n"
+   
+    # save report to file.
+    with open(REPORT_FILE, 'w') as f:
+        f.write(output)
+    
+def _get_requirements() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Parses requirements file into two dataframes. 
 
     Returns:
-        A pandas dataframe containing all the requirements, they're descriptions, and additional comments.
+        Two pandas dataframes containing all the requirements, they're descriptions, and additional comments. The first data frame
+        contains the essentials requirements while the second dataframe contains the optional requirements.
     """
-    
-
+    # labels as defined in requirements spreadsheet.
     labels = ["Category", "Requirement", "Description","Comments"]
 
-    # read in csv file
+    # read in csv file.
     df = pd.read_csv(REQUIREMENTS_FILE, skiprows=4, header=0, names=labels)
 
     # drop any rows where there is not a requirement # specified.
     df = df[df["Requirement"].notna()]
-
-    # drop label rows
-    df = df[df["Requirement"] != "Req #"]
-
-
     
-def auto_wrap(line_to_wrap, prefix , padding_str, per_line):
+    # split data frame based on "Essential" vs "As Time Allows" requirements
+    split = df.index.get_loc(df.loc[df["Requirement"].str.contains("Req #",na=False)].index[0])
+    required = df.iloc[:split]
+    as_time_allows = df.iloc[split+1:]
+
+    return (required, as_time_allows) 
+
+def _get_requirement_descriptions(df: pd.DataFrame, reqs: list[str]) -> dict[str, str]:
+    """ Retrieves the descriptions of specified requirements.
+    
+    Args:
+        df: The dataframe the requirements can be found in.
+        reqs: The list of requirements to search for.
+    Returns:
+        A dictionary containing the each specified requirement and its description.
+    """
+    
+    # retreive rows based on requirement.
+    temp = df.loc[df["Requirement"].isin(reqs)]
+    
+    return pd.Series(temp["Description"].values,index=temp["Requirement"]).to_dict()
+    
+    
+def _auto_wrap(line_to_wrap, prefix , padding_str, per_line):
     
     max_output = 117
     # reduce chars per line of wrapped line(s) if output will not fit on one line.
@@ -189,7 +256,8 @@ def auto_wrap(line_to_wrap, prefix , padding_str, per_line):
             if(len(line) == 0):
                 line = word
             else:
-                line = line + ", " + word
+                # place commas between function names and spaces between regular words.
+                line = line + (", " if '_' in word else " " ) + word
         else: 
             formatted_words.append(line)
             line = word

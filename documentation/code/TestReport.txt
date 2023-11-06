@@ -1,0 +1,107 @@
+                                           Coverage Stats                                           
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Requirement Coverage (%)                44.44%                                                                       
+
+Number of Requirements Covered          16                                                                           
+
+Number of Remaining Requirements        20                                                                           
+
+
+                                    Requirement-to-Test Mapping                                     
+
+Requirement #       Test Cases
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+3.1                 test_singleton                                                                  
+
+3.2                 test_write                                                                      
+
+13.1                test_read_image                                                                 
+
+2.1                 test_singleton                                                                  
+
+2.2                 test_get_time                                                                   
+
+12.1                test_create_timer                                                               
+
+12.2                test_create_timer                                                               
+
+12.3                test_timer_remaining_time                                                       
+
+1.2                 Satisfied by hardware                                                           
+
+1.3                 Satisfied by hardware                                                           
+
+7.1                 Satisfied by hardware                                                           
+
+8.1                 Satisfied by hardware                                                           
+
+15.3                Satisfied by visual inspection of functionality provided through standard module
+
+15.4                Satisfied by visual inspection of functionality provided through standard module
+
+15.5                Satisfied by visual inspection of functionality provided through standard module
+
+16.1                Satisfied by hardware                                                           
+
+
+                                       Remaining Requirements                                       
+
+Requirement #       Description
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+1.1                 The system shall 'pair' with other devices within 15 seconds.                   
+
+2.3                 The system shall record the time when a key is pressed using the internal clock.
+
+3.3                 The system shall be able to set individual values within the configuration state
+
+3.4                 The system shall be able to read individual values from the configuration state 
+
+3.5                 The system shall maintain an 'inactive state' during diagnostic/calibration     
+                    tasks.                                                                          
+
+3.6                 The system shall not send any keystoke data to connected device when in a       
+                    non-active state.                                                               
+
+4.1                 The system should detect keystokes with 85% accuracy.                           
+
+5.1                 The system shall send user input to connected system within 1 second from       
+                    physical keystoke.                                                              
+
+6.1                 The system shall use the last set connection settings on power cycle.           
+
+8.2                 The system shall be capable of displaying an image upon startup without any user
+                    input.                                                                          
+
+13.2                The system shall be capable of writing data to files in jpeg or png format.     
+
+14.1                The system shall be capable of capturing live image (frame) data.               
+
+14.2                The system shall be capable of combining frame data from at least 2 synchronized
+                    sources.                                                                        
+
+14.3                The system shall capture a minimum of 20 frames per second per source.          
+
+15.1                The system shall keep a record of any event that results in an error due to file
+                    management. These events shall be considered 'critical'.                        
+
+15.2                The system shall keep a record of any error that will cause the software to     
+                    crash or operate at partial functionality. These errors shall be considered     
+                    'critical'.                                                                     
+
+16.2                The system shall be capable of sending a keyboard interrupt to devices with     
+                    Windows-based operating systems, Unix-based operating systems, Android operating
+                    system, and IOS.                                                                
+
+17.1                The system shall enter a 'calibration' state upon startup and every change of   
+                    keyboard layout.                                                                
+
+17.2                The system shall detect at least 4,3-dimensional edges of projection to create  
+                    an acceptable border of vision.                                                 
+
+17.3                The system shall only use data within the 3-dimensional border of vision.       
+
+
