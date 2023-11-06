@@ -69,8 +69,35 @@ class FileManager(metaclass=Singleton):
             logger.error(f"Failed to make necessary directories.\n{e}")
             raise
 
+    def _create_file_impl(self, f_path: str, f_data) -> bool:
+        """The implementation of create file.
+        
+        Args:
+            f_path : the full path to save file data to.
+            f_data : the data to save to file.
+        Returns:
+            True if the operation was a success; false otherwise.
+            
+        Note:
+            If data is of type Numpy Array, the function will use OpenCV's image write function
+            function to create a new image.
+        """
+        # attempt to create file.
+        try:
+            if type(f_data) == np.ndarray:
+                cv2.imwrite(f_path, f_data)
+            else:
+                with open(f_path, "w") as file:
+                    json.dump(f_data, file, indent=4)
+        except OSError:
+            logger.error(f"Failed to write to {f_path}.")
+            return False
+
+        logger.info(f"Succesfully created file {f_path}.")
+        return True
+        
     def _create_file(self, f_type: str, f_name: str, f_data, overwrite: bool = False) -> bool:
-        """Creates a in file and saves in expected location.
+        """Creates a file and saves in expected location.
 
         Args:
             f_type : the expected type of file data. Must exactly match a location in _LOCATIONS.
@@ -80,9 +107,6 @@ class FileManager(metaclass=Singleton):
 
         Returns:
             True if the operation was a success; false otherwise.
-        Note:
-            If data is of type Numpy Array, the function will use OpenCV's image write function
-            function to create a new image.
         """
         # verify folder of desired file type exists.
         try:
@@ -100,20 +124,8 @@ class FileManager(metaclass=Singleton):
             logger.error(f"Matching filename '{f_name}' found in '{type_dir}'.")
             return False
 
-        # attempt to create file.
-        try:
-            if type(f_data) == np.array:
-                cv2.imwrite(full_file_path, f_data)
-            else:
-                with open(full_file_path, "w") as file:
-                    json.dump(f_data, file, indent=4)
-        except OSError:
-            logger.error(f"Failed to write to {file}.")
-            return False
-
-        logger.info(f"Succesfully create file {file}.")
-        return True
-
+        return self._create_file_impl(full_file_path, f_data)
+        
     def _retrieve_file(self, f_type: str, f_name: str) -> str:
         """Finds a file in specified location and returns full file path.
 
@@ -143,16 +155,41 @@ class FileManager(metaclass=Singleton):
 
         return full_file_path
 
+    def _get_files_impl(self, search_dir: str) -> list[str]:
+        """ The implementation of get files.
+        
+        Args:
+            search_dir: the full path of the directory to search for files.
+        Returns:
+            A list of full file paths for every file in location.
+            
+        Note:
+            Returns None if no files are found in directory.
+        """
+        
+        files = []
+        
+        # get all files in directory.Exclude non-files.
+        for f in os.listdir(search_dir):
+            full_path = os.path.join(search_dir, f)
+
+            if os.path.isfile(full_path):
+                files.append(full_path)
+
+        # no files in search directory.
+        if len(files) == 0:
+            logger.warning(f"No files in directory '{search_dir}'.")
+            return None
+
+        return files
+    
     def _get_files(self, f_type: str) -> list[str]:
         """Fetches all files within a specified location.
 
         Args:
             f_type : the file type to search. Must exactly match a location in _LOCATIONS.
-
         Returns:
             A list of full file paths for every file in location.
-        Note:
-            Returns None if no files are found in directory.
         """
         try:
             search_dir = self._LOCATIONS[f_type]
@@ -163,18 +200,7 @@ class FileManager(metaclass=Singleton):
             logger.error(f"Expected file directory '{search_dir}' not found.")
             return None
 
-        files = []
-        for f in os.listdir(search_dir):
-            full_path = os.path.join(search_dir, f)
-
-            if os.path.isfile(full_path):
-                files.append(full_path)
-
-        if len(files) == 0:
-            logger.warning(f"No files in directory '{search_dir}'.")
-            return None
-
-        return files
+        return self._get_files_impl(search_dir)
 
     def _read_image(self, f_name: str) -> np.array:
         """Fetches data from image file.

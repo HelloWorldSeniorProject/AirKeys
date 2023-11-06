@@ -6,7 +6,33 @@ from test.swte import *
 
 
 class Test_FileManager:
-    def _download_temp_images(self) -> dict:
+    
+    def _create_temp_folder(self, *f_name:str) -> str:
+        """ Creates a temporary folder.
+        
+        Args:
+            f_name: the directory structure of the desired folder.
+        Returns: 
+            The full path of the temporary folder.
+        """
+        small_banner(f"Create temp {f_name} folder.")
+        
+        temp_f = os.path.join(TEMP_DIR, *f_name)
+        try:
+            if not os.path.exists(temp_f):
+                os.makedirs(temp_f)
+        except Exception as e:
+            pytest.fail(f"Failed to make {f_name} folder at '{temp_f}'\n{e}")
+            
+        return temp_f
+            
+    def _download_temp_images(self) -> dict[str, str]:
+        """Downloads a set of images from the internet.
+        
+        Returns:
+            A dictionary containing each downloaded image's name and 
+            the url it was downloaded from.
+        """
         # source: https://picsum.photos/
         TEST_IMAGES = {
             "img0": "https://picsum.photos/seed/picsum/200/300",
@@ -14,14 +40,7 @@ class Test_FileManager:
             "img2": "https://picsum.photos/200/300",
         }
 
-        small_banner("Create temp images folder.")
-
-        imgs_f = os.path.join(TEMP_DIR, "images")
-        try:
-            if not os.path.exists(imgs_f):
-                os.mkdir(imgs_f)
-        except Exception as e:
-            pytest.fail(f"Failed to make images folder at '{imgs_f}'\n{e}")
+        imgs_f = self._create_temp_folder("images")
 
         small_banner("Download test images.")
         for img in TEST_IMAGES.keys():
@@ -95,6 +114,7 @@ class Test_FileManager:
 
         fm = FileManager()
 
+        small_banner("Download Images from the internet.")
         TEST_IMAGES = self._download_temp_images()
 
         for img in TEST_IMAGES.keys():
@@ -108,7 +128,32 @@ class Test_FileManager:
             cv2.imshow("Test Image", img_data)
 
             cv2.waitKey(0)
+            
+    @requirements(13.2)
+    def test_write_image(self):
+        fm = FileManager()
 
+        small_banner("Download Images from the internet.")
+        TEST_IMAGES = self._download_temp_images()
+        
+        # create converted image folder
+        converted_imgs_f = self._create_temp_folder("images", "converted")
+        
+        small_banner("Save each image in png and jpeg format")
+        for img in TEST_IMAGES.keys():
+            img_f = os.path.join(TEMP_DIR, "images", f"{img}.png")
+            
+            img_data = cv2.imread(img_f)
+            
+            small_banner(f"Image data is a {type(img_data)}.")
+            
+            png_f = os.path.join(converted_imgs_f, f"{img}.png")
+            jpeg_f = os.path.join(converted_imgs_f, f"{img}.jpeg")            
+            
+            fm._create_file_impl(png_f, img_data)
+            fm._create_file_impl(jpeg_f, img_data)
+            
+    @requirements(13.3, 15.1)
     def test_retrieve_file(self):
         large_banner("Test Retrieve File: Tests file retrieval logic and error handling")
 
@@ -152,12 +197,12 @@ class Test_FileManager:
 
         assert all(exps_met)
 
-    def test_create_file(self):
+    @requirements(13.2, 15.1)
+    def test_write_file(self):
         large_banner("Test Create File: Tests file creation logic and error handling")
 
         fm = FileManager()
         exps_met = []
-
         # [ {"key0" : 0}, {"key1" : 1}, ... ]
         TEST_JSON = {}
 
@@ -165,6 +210,8 @@ class Test_FileManager:
             TEST_JSON[f"key{i}"] = i
 
         small_banner("Generate JSON and verify read data matches.")
+        
+        
         exps_met.append(fm._create_file("calibration", "test.json", TEST_JSON))
 
         file = os.path.join(FILE_DIR, "calibration", "test.json")
@@ -203,6 +250,7 @@ class Test_FileManager:
 
         assert all(exps_met)
 
+    @requirements(13.4, 15.1)
     def test_get_files(self):
         large_banner("Test Get Files: Tests file gathering logic and error handling")
 

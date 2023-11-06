@@ -77,6 +77,7 @@ class ConfigTable(metaclass=Singleton):
                 os = OperatingSystem(self._DEFAULTS["os"])
                 logger.warning(f"Did not find prev operating system, setting default {os}.")
 
+            # set config items.
             self._mode = mode
             self._layout = layout
             self._connection = connection
@@ -104,24 +105,77 @@ class ConfigTable(metaclass=Singleton):
         with thread_lock:
             return self._mode
 
-    # TODO : implement function as system evolves
-    def set_layout(self, layout):
-        pass
+    def set_layout(self, layout: str):
+        """Sets the keyboard layout.
 
-    def getKeyboard(self):
-        pass
+        Args:
+            layout : the identifier of the layout to set.
+        """
+        with thread_lock:
+            self._layout = layout
 
-    def setConnection(self, connection):
-        pass
+    def get_layout(self) -> str:
+        """Fetches the current keyboard layout.
 
-    def getConnection(self):
-        pass
+        Returns:
+            The identifier of the current keyboard layout.
+        """
+        with thread_lock:
+            return self._layout
 
-    def setDevice(self, device):
-        pass
+    def set_connection(self, connection: Connection):
+        """Sets the system's connection method.
 
-    def getDevice(self):
-        pass
+        Args:
+            connection : the connection method to set.
+        """
+        with thread_lock:
+            self._connection = connection
+
+    def get_connection(self) -> Connection:
+        """Fetches the current connection method.
+
+        Returns:
+            The connection method used to connect to the external device.
+        """
+        with thread_lock:
+            return self._connection
+
+    def set_device(self, device: Device):
+        """Sets the device type of connected device.
+
+        Args:
+            device: the type of the device currently connected to system.
+        """
+        with thread_lock:
+            self._device = device
+
+    def get_device(self) -> Device:
+        """Fetches the connected device's device type.
+
+        Returns:
+            The type of device currently connected to the system.
+        """
+        with thread_lock:
+            return self._device
+    
+    def set_os(self, os: OperatingSystem):
+        """Sets the OS of the connected device.
+
+        Args:
+            os: the operating system of the device currently connected to system.
+        """
+        with thread_lock:
+            self._os = os
+    
+    def get_os(self) -> OperatingSystem:
+        """Fetches the OS of the connected device.
+
+        Returns:
+            The operating system of the device currently connected to system
+        """
+        with thread_lock:
+            return self._os
 
     def to_dictionary(self) -> dict:
         """Converts config table to dictionary.
@@ -131,10 +185,10 @@ class ConfigTable(metaclass=Singleton):
         """
 
         config = {
-            "mode": self._mode,
-            "layout": self._layout,
-            "connection": self._connection,
-            "device": self._device,
-            "os": self._os,
+            "mode": self.get_mode(),
+            "layout": self.get_layout(),
+            "connection": self.get_connection(),
+            "device": self.get_device(),
+            "os": self.get_os(),
         }
         return config
