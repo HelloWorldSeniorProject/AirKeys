@@ -7,9 +7,9 @@ Input Stream : {
 
     - setVideoCaptureAttributes(VideoCapture cap): Bool
 
-    # Returns an array (at least 2) VideoCapture object
+    # Returns an array(size numCameras) of VideoCapture objects.
     # i.e. `return [ caputure1, capture2]`
-    setupCameras(): "[] VideoCapture"
+    setupCameras(Integer numCameras): "[] VideoCapture"
 
     # An array of VideoCapture object, returns an 2D-Array of Arrays. 
     # An array of frames for each passed VideoCapture Object.
