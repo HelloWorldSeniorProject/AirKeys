@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>common.file.file_manager &mdash; Airkeys 2.1.0 documentation</title>
+  <title>common.file.file_manager &mdash; Airkeys 2.1.1 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -138,8 +138,35 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to make necessary directories.</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">raise</span>
 
+    <span class="k">def</span> <span class="nf">_create_file_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">f_data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The implementation of create file.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            f_path : the full path to save file data to.</span>
+<span class="sd">            f_data : the data to save to file.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            True if the operation was a success; false otherwise.</span>
+<span class="sd">            </span>
+<span class="sd">        Note:</span>
+<span class="sd">            If data is of type Numpy Array, the function will use OpenCV&#39;s image write function</span>
+<span class="sd">            function to create a new image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># attempt to create file.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">f_data</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">f_path</span><span class="p">,</span> <span class="n">f_data</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">f_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">f_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to write to </span><span class="si">{</span><span class="n">f_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Succesfully created file </span><span class="si">{</span><span class="n">f_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+        
     <span class="k">def</span> <span class="nf">_create_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">f_data</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a in file and saves in expected location.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a file and saves in expected location.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            f_type : the expected type of file data. Must exactly match a location in _LOCATIONS.</span>
@@ -149,9 +176,6 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            True if the operation was a success; false otherwise.</span>
-<span class="sd">        Note:</span>
-<span class="sd">            If data is of type Numpy Array, the function will use OpenCV&#39;s image write function</span>
-<span class="sd">            function to create a new image.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># verify folder of desired file type exists.</span>
         <span class="k">try</span><span class="p">:</span>
@@ -169,20 +193,8 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Matching filename &#39;</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">&#39; found in &#39;</span><span class="si">{</span><span class="n">type_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="c1"># attempt to create file.</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">f_data</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
-                <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">full_file_path</span><span class="p">,</span> <span class="n">f_data</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">full_file_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">f_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to write to </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Succesfully create file </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_file_impl</span><span class="p">(</span><span class="n">full_file_path</span><span class="p">,</span> <span class="n">f_data</span><span class="p">)</span>
+        
     <span class="k">def</span> <span class="nf">_retrieve_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Finds a file in specified location and returns full file path.</span>
 
@@ -212,16 +224,41 @@
 
         <span class="k">return</span> <span class="n">full_file_path</span>
 
+    <span class="k">def</span> <span class="nf">_get_files_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; The implementation of get files.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            search_dir: the full path of the directory to search for files.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of full file paths for every file in location.</span>
+<span class="sd">            </span>
+<span class="sd">        Note:</span>
+<span class="sd">            Returns None if no files are found in directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># get all files in directory.Exclude non-files.</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">search_dir</span><span class="p">):</span>
+            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">search_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">full_path</span><span class="p">):</span>
+                <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+
+        <span class="c1"># no files in search directory.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No files in directory &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">files</span>
+    
     <span class="k">def</span> <span class="nf">_get_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches all files within a specified location.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            f_type : the file type to search. Must exactly match a location in _LOCATIONS.</span>
-
 <span class="sd">        Returns:</span>
 <span class="sd">            A list of full file paths for every file in location.</span>
-<span class="sd">        Note:</span>
-<span class="sd">            Returns None if no files are found in directory.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">search_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_LOCATIONS</span><span class="p">[</span><span class="n">f_type</span><span class="p">]</span>
@@ -232,18 +269,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected file directory &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">search_dir</span><span class="p">):</span>
-            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">search_dir</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">full_path</span><span class="p">):</span>
-                <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No files in directory &#39;</span><span class="si">{</span><span class="n">search_dir</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="k">return</span> <span class="n">files</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_files_impl</span><span class="p">(</span><span class="n">search_dir</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_read_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetches data from image file.</span>

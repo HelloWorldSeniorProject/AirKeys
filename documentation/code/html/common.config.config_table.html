@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Config Table module &mdash; Airkeys 2.1.0 documentation</title>
+  <title>Config Table module &mdash; Airkeys 2.1.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -103,19 +103,37 @@ access while modifying/retrieving table information.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.getConnection">
-<span class="sig-name descname"><span class="pre">getConnection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.getConnection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.getConnection" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.get_connection">
+<span class="sig-name descname"><span class="pre">get_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="common.types.html#common.types.Connection" title="common.types.Connection"><span class="pre">Connection</span></a></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.get_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.get_connection" title="Permalink to this definition"></a></dt>
+<dd><p>Fetches the current connection method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The connection method used to connect to the external device.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.getDevice">
-<span class="sig-name descname"><span class="pre">getDevice</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.getDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.getDevice" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.get_device">
+<span class="sig-name descname"><span class="pre">get_device</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="common.types.html#common.types.Device" title="common.types.Device"><span class="pre">Device</span></a></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.get_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.get_device" title="Permalink to this definition"></a></dt>
+<dd><p>Fetches the connected device’s device type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The type of device currently connected to the system.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.getKeyboard">
-<span class="sig-name descname"><span class="pre">getKeyboard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.getKeyboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.getKeyboard" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.get_layout">
+<span class="sig-name descname"><span class="pre">get_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.get_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.get_layout" title="Permalink to this definition"></a></dt>
+<dd><p>Fetches the current keyboard layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The identifier of the current keyboard layout.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="common.config.config_table.ConfigTable.get_mode">
@@ -129,19 +147,48 @@ access while modifying/retrieving table information.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.setConnection">
-<span class="sig-name descname"><span class="pre">setConnection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.setConnection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.setConnection" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.get_os">
+<span class="sig-name descname"><span class="pre">get_os</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="common.types.html#common.types.OperatingSystem" title="common.types.OperatingSystem"><span class="pre">OperatingSystem</span></a></span></span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.get_os"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.get_os" title="Permalink to this definition"></a></dt>
+<dd><p>Fetches the OS of the connected device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The operating system of the device currently connected to system</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.setDevice">
-<span class="sig-name descname"><span class="pre">setDevice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.setDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.setDevice" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_connection">
+<span class="sig-name descname"><span class="pre">set_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="common.types.html#common.types.Connection" title="common.types.Connection"><span class="pre">Connection</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_connection" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the system’s connection method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>connection</strong> – the connection method to set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_device">
+<span class="sig-name descname"><span class="pre">set_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="common.types.html#common.types.Device" title="common.types.Device"><span class="pre">Device</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_device" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the device type of connected device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> – the type of the device currently connected to system.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_layout">
-<span class="sig-name descname"><span class="pre">set_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_layout" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">set_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_layout" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the keyboard layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>layout</strong> – the identifier of the layout to set.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_mode">
@@ -150,6 +197,17 @@ access while modifying/retrieving table information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>mode</strong> – the system mode to set.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.config.config_table.ConfigTable.set_os">
+<span class="sig-name descname"><span class="pre">set_os</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">os</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="common.types.html#common.types.OperatingSystem" title="common.types.OperatingSystem"><span class="pre">OperatingSystem</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/common/config/config_table.html#ConfigTable.set_os"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#common.config.config_table.ConfigTable.set_os" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the OS of the connected device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>os</strong> – the operating system of the device currently connected to system.</p>
 </dd>
 </dl>
 </dd></dl>

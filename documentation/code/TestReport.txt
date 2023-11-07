@@ -2,11 +2,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-Requirement Coverage (%)                44.44%                                                                       
+Requirement Coverage (%)                60.53%                                                                       
 
-Number of Requirements Covered          16                                                                           
+Number of Requirements Covered          23                                                                           
 
-Number of Remaining Requirements        20                                                                           
+Number of Remaining Requirements        15                                                                           
 
 
                                     Requirement-to-Test Mapping                                     
@@ -16,9 +16,22 @@ Requirement #       Test Cases
 
 3.1                 Test_ConfigTable.test_singleton                                                 
 
-3.2                 Test_ConfigTable.test_write                                                     
+3.2                 Test_ConfigTable.test_write_config_table                                        
+
+3.3                 Test_ConfigTable.test_write_config_value                                        
+
+3.4                 Test_ConfigTable.test_read_config_value                                         
 
 13.1                Test_FileManager.test_read_image                                                
+
+13.2                Test_FileManager.test_write_image, Test_FileManager.test_write_file             
+
+13.3                Test_FileManager.test_retrieve_file                                             
+
+15.1                Test_FileManager.test_retrieve_file, Test_FileManager.test_write_file           
+                    Test_FileManager.test_get_files                                                 
+
+13.4                Test_FileManager.test_get_files                                                 
 
 2.1                 Test_InternalClock.test_singleton                                               
 
@@ -38,6 +51,8 @@ Requirement #       Test Cases
 
 8.1                 Satisfied by hardware                                                           
 
+15.2                Satisfied through development standards and practices.                          
+
 15.3                Satisfied by visual inspection of functionality provided through standard module
 
 15.4                Satisfied by visual inspection of functionality provided through standard module
@@ -56,10 +71,6 @@ Requirement #       Description
 
 2.3                 The system shall record the time when a key is pressed using the internal clock.
 
-3.3                 The system shall be able to set individual values within the configuration state
-
-3.4                 The system shall be able to read individual values from the configuration state 
-
 3.5                 The system shall maintain an 'inactive state' during diagnostic/calibration     
                     tasks.                                                                          
 
@@ -76,21 +87,12 @@ Requirement #       Description
 8.2                 The system shall be capable of displaying an image upon startup without any user
                     input.                                                                          
 
-13.2                The system shall be capable of writing data to files in jpeg or png format.     
-
 14.1                The system shall be capable of capturing live image (frame) data.               
 
 14.2                The system shall be capable of combining frame data from at least 2 synchronized
                     sources.                                                                        
 
 14.3                The system shall capture a minimum of 20 frames per second per source.          
-
-15.1                The system shall keep a record of any event that results in an error due to file
-                    management. These events shall be considered 'critical'.                        
-
-15.2                The system shall keep a record of any error that will cause the software to     
-                    crash or operate at partial functionality. These errors shall be considered     
-                    'critical'.                                                                     
 
 16.2                The system shall be capable of sending a keyboard interrupt to devices with     
                     Windows-based operating systems, Unix-based operating systems, Android operating

@@ -11,6 +11,7 @@ class Mode(str, Enum):
     """An indicator of the system's current mode."""
 
     Standby = "Standby"
+    Calibration = "Calibration"
     Inactive = "Inactive"
     Active = "Active"
 
