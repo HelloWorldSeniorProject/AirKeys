@@ -5,7 +5,7 @@ Config Table : {
     - keyboard : "KeyboardId"
     - connection : "ConnectionType"
     - device : "DeviceType"
-    - driver: "InputDriver"
+    - os: "OperatingSystem"
 
     setState(SystemState state)
     getState() : "SystemState"
@@ -18,6 +18,9 @@ Config Table : {
 
     setDevice(DeviceType device)
     getDevice() : "DeviceType"
+
+    setOs(OperatingSystem os)
+    getOs() : "Operating System"
 
     toDictionary() : Dictionary
     write(Dictionary config)

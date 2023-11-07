@@ -2,9 +2,11 @@ File Manager : {
     shape : class
 
     - checkFileLocations()
-    - createFile(String fType, String fName, Data f_data): Boolean
+    - createFile(String fType, String fName, Data fData, Boolean overwrite): Boolean
+    - createFileImpl(String fPath, Data fData): Bool
     - retrieveFile(String fType, String fName): String
     - getFiles(String fType): "[]String"
+    - getFilesImpl(String fPath): "[]String"
     - readImage(String f_name): "[]Integer"
     getLayoutFile(String fName): "[]Integer"
     getCalibrationFile(String fName): "[]Integer"
