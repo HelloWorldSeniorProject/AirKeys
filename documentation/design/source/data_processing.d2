@@ -1,0 +1,65 @@
+Data Processing: {
+    shape: class
+
+    # Constants
+    - MAX_POSITIONS: Integer
+
+    # MediaPipe.Solutions.Hands object
+    - hands : Hands
+    
+    # A queue of hand positions.
+    - previousHandPositions : "[][][] Coordinate"
+    - keys : "Dictionary<String, Boundary>"
+
+    # Detects the boundaries of each key in the currently displayed keyboard layout as well as the
+    # key's value. Saves these values and boundaries internally.
+    detectKeys()
+
+    # Accepts frame data as 2D-Array of integers. Returns a 2D-Array of Coordinate Objects. These are simply
+    # objects conataining 'x', 'y', and 'z' fields.
+    detectHands(Array*Integers frame): "[][]Coordinate"
+
+    # Accepts frame data as 2D-Array of integers and Hand Detection results 2D-Array of Coordinate objects.
+    # Returns a frame as a 2D-Array of integers.
+    addHandsToFrame(Array*Integers* frame, Array*Coordinate* detection_results): "[][] Integer"
+
+    # Accepts hand position as 2D-Array of coordinates and saves to internal queue if # saved positions in queue < MAX_POSITIONS;
+    # if not, removes earliest saved position in queue, shifts queue accordingly, and saves newest position data to queue.
+    replaceOldestHandPositon(Array*Coordinate* positions)
+
+    # Runs though all saved hand positions to determine if keystrokes have occured. Returns a list of strings representing the 
+    # keys we believe were typed over the course of all the saved frames. Keystrokes must returned in the order in which the were 
+    # typed.
+    detectKeystokes(): "[] String"
+
+    # Determines if any finger has moved in such a way that is considered acceptable for a keystroke across all saved hand positions.
+    # Returns a list of normalized (0 <= x <= 1) confidence intervals of movement, and final positions of valid keystroke movement 
+    # (i.e. the coordinates of a finger when we think the finger pressed down on a key).
+    - compareFrames(): " []<Float, Coordinate>"
+
+    # Corrects any overlapping key boundaries.
+    - validateKeyBoundaries()
+}
+
+# structs, types, etc..
+Coordinate: {
+    shape: class
+    
+    x : Float
+    y : Float
+    z : Float
+}
+
+# The bounding box of some (psuedo-)physical object.
+Boundary : {
+    shape : class
+
+    - left : Coordinate
+    - right : Coordinate
+    - top : Coordinate
+    - bottom : Coordinate
+
+    # Accepts a Coordinate object and determines if the coordinate is within 
+    # the bounding box. Returns true if so; false otherwise.
+    isIn(Coordinate coord) : Boolean 
+}

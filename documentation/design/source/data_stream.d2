@@ -1,0 +1,39 @@
+Data Stream : {
+    shape : class
+
+    # VideoCapture setup constants
+    - CAP_BUFFER_SIZE: Integer
+    - CAMERA_WIDTH: Integer
+    - CAMER_HEIGHT: Integer
+
+    - setVideoCaptureAttributes(VideoCapture cap): Bool
+
+    # Returns an array(size numCameras) of VideoCapture objects.
+    # i.e. `return [ caputure1, capture2]`
+    setupCameras(Integer numCameras): "[] VideoCapture"
+
+    # An array of VideoCapture object, returns an 2D-Array of Arrays. 
+    # An array of frames for each passed VideoCapture Object.
+    # Each frame is a 2D-Array of integers.
+    # i.e. `return [capture1_frame, capture2_frame]``
+    getFrameData(VideoCapture* captures): "[][][] Integer"
+
+    # Accepts frame data as 2D-Array of integers and displays to standard display.
+    displayFrame(Array*Integers* frame)
+
+    # Accepts file path string specifying where the VideoWriter will save data.
+    createVideoWriter(String savePath): VideoWriter
+
+    # Accepts frame data as 2D-Array of integers and VideoWriter object, then writes frame data to VideoWriter.
+    saveFrameToVideo(Array*Integers* frame, VideoWriter out)
+
+    # Accepts VideoWriter object to be released, thereby finalizing/saving full video.
+    saveVideo(VideoWriter out)
+
+    # Accpets an array of VideoCapture objects and releases each object.
+    teardownCameras(VideoCaptures*)
+    
+    # See here for VideoCapture Object Documentation: https://docs.opencv.org/3.4/d8/dfe/classcv_1_1VideoCapture.html#a473055e77dd7faa4d26d686226b292c1
+}
+
+
