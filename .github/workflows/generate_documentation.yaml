@@ -1,0 +1,55 @@
+name: Generate Source Code Documentation
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  generate:
+    name: Generate and Upload Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js (Workaround)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install devcontainer CLI
+        run: npm install -g @devcontainers/cli
+
+      - name: Start dev container
+        run: devcontainer up --config .devcontainer/action-container/devcontainer.json --workspace-folder .
+
+      - name: Create documentation using Sphinx
+        run: devcontainer exec --config .devcontainer/action-container/devcontainer.json --workspace-folder . ./scripts/shortcut_scripts/create_source_documentation.sh 
+      
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: documentation/code/html
+      
+  deploy:
+    name: Deploy Documentation to Pages Site
+
+    # generate docs before trying to deploy.
+    needs: generate
+    
+    # grant access to repo resources.
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deploy App to Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+ 
+          
+      
