@@ -2,7 +2,7 @@ name: Generate Source Code Documentation
 on:
   push:
     branches:
-      - test
+      - develop
 jobs:
   generate:
     name: Generate and Upload Documentation
