@@ -1,117 +1,106 @@
 import cv2
-import mediapipe as mp
-from time import time
+from typing import List
 
-# mediapipe setup
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
-mphands = mp.solutions.hands
+class DataStream:
+    def __init__(self):
+        """Initializes the data stream with camera settings."""
+        self.CAP_BUFFER_SIZE = 2  # Integer
+        self.CAMERA_WIDTH = 640    # Integer
+        self.CAMERA_HEIGHT = 480   # Integer
 
-# constants
-cap_buffer_size = 2
-cam_width = 640
-cam_height = 480
+    def setup_cameras(self, num_cameras: int) -> List[cv2.VideoCapture]:
+        """
+        Initializes the specified number of cameras and returns their captures.
 
-# fps tracking
-old_frame_t = 0
-new_frame_t = 0
+        Args:
+            num_cameras: The number of cameras to initialize.
 
+        Returns:
+            A list of initialized camera capture objects.
+        """
+        cameras = []
+        for i in range(num_cameras):
+            cap = cv2.VideoCapture(i)
+            if cap.isOpened():
+                cap.set(cv2.CAP_PROP_BUFFERSIZE, self.CAP_BUFFER_SIZE)
+                cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.CAMERA_WIDTH)
+                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.CAMERA_HEIGHT)
+                cameras.append(cap)
+            else:
+                print(f"Failed to set up camera {i}")
+        return cameras
 
-def main(left, right, hands, old_frame_t, new_frame_t):
-    while True:
-        _, lf = left.read()
-        _, rf = right.read()
+    def get_frame_data(self, captures: List[cv2.VideoCapture]) -> List[List[List[int]]]:
+        """
+        Retrieves frames from each camera capture object in a list.
 
-        # Remove mediapipe processing by commenting from here ---->
+        Args:
+            captures: A list of cv2.VideoCapture objects.
 
-        # recolor frame; required for mediapipe proc.
-        lf = cv2.cvtColor(cv2.flip(lf, 1), cv2.COLOR_BGR2RGB)
-        rf = cv2.cvtColor(cv2.flip(rf, 1), cv2.COLOR_BGR2RGB)
+        Returns:
+            A list of frame data from each camera, with each frame being a list of lists of integers.
+        """
+        frames = []
+        for cap in captures:
+            ret, frame = cap.read()
+            if ret:
+                frames.append(frame.tolist())  # Convert to list of lists for JSON serialization
+        return frames
 
-        # detect hands
-        l_res = hands.process(lf)
-        r_res = hands.process(rf)
+    def display_frame(self, frame: List[List[int]]):
+        """
+        Displays a single frame.
 
-        # return to og color to handle display
-        lf = cv2.cvtColor(lf, cv2.COLOR_RGB2BGR)
-        rf = cv2.cvtColor(rf, cv2.COLOR_RGB2BGR)
+        Args:
+            frame: A list of lists of integers representing the frame to display.
+        """
+        # Assumes frame is a list of lists, converts to a numpy array to display
+        frame_array = np.array(frame, dtype=np.uint8)
+        cv2.imshow('Frame', frame_array)
+        cv2.waitKey(1)  # You might need to adjust this for proper display timing
 
-        # add outline to hand
-        if l_res.multi_hand_landmarks and r_res.multi_hand_landmarks:
-            for hand_landmarks in l_res.multi_hand_landmarks:
-                mp_drawing.draw_landmarks(lf, hand_landmarks, mphands.HAND_CONNECTIONS)
-            for hand_landmarks in r_res.multi_hand_landmarks:
-                mp_drawing.draw_landmarks(rf, hand_landmarks, mphands.HAND_CONNECTIONS)
+    def create_video_writer(self, save_path: str) -> cv2.VideoWriter:
+        """
+        Creates a video writer object to save video to a file.
 
-        # to here ------>
+        Args:
+            save_path: The path to save the video file.
 
-        # FPS tracking
-        new_frame_t = time()
-        fps = str(int(1 / (new_frame_t - old_frame_t)))
-        old_frame_t = new_frame_t
+        Returns:
+            A cv2.VideoWriter object.
+        """
+        fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        out = cv2.VideoWriter(save_path, fourcc, 20.0, (self.CAMERA_WIDTH, self.CAMERA_HEIGHT))
+        return out
 
-        # uncomment for cli testing.
-        # print(f"FPS: {fps}")
+    def save_frame_to_video(self, frame: List[List[int]], out: cv2.VideoWriter):
+        """
+        Writes a frame to the video file.
 
-        # add fps counter to left frame.
-        cv2.putText(lf, fps, (7, 70), cv2.FONT_HERSHEY_SIMPLEX, 2, (100, 255, 0), 2, cv2.LINE_AA)
+        Args:
+            frame: A list of lists of integers representing the frame to write to the video.
+            out: The cv2.VideoWriter object to write the frame to.
+        """
+        # Assumes frame is a list of lists, converts to a numpy array to write to video
+        frame_array = np.array(frame, dtype=np.uint8)
+        out.write(frame_array)
 
-        # show frames in separate windows. Purely for setup and debugging. We won't need to show any of
-        # images we capture during actual runtime.
-        cv2.imshow("left", lf)
-        cv2.imshow("right", rf)
+    def save_video(self, out: cv2.VideoWriter):
+        """
+        Finalizes the video file saving process.
 
-        # press q to exit.
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+        Args:
+            out: The cv2.VideoWriter object to finalize.
+        """
+        out.release()
 
+    def teardown_cameras(self, captures: List[cv2.VideoCapture]):
+        """
+        Releases all initialized camera captures and destroys all OpenCV windows.
 
-def setup():
-    def set_video_cap_attrs(cap):
-        # only keep two frames in buffer. Supposedly improves speed.
-        cap.set(cv2.CAP_PROP_BUFFERSIZE, cap_buffer_size)
-
-        # set capture resolution (low-res).
-        cap.set(cv2.CAP_PROP_FRAME_WIDTH, cam_width)
-        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, cam_height)
-
-    # opencv setup
-    left = cv2.VideoCapture(0)
-    right = cv2.VideoCapture(1)
-    set_video_cap_attrs(left)
-    set_video_cap_attrs(right)
-
-    # more mediapipe setup
-    hands = mphands.Hands()
-
-    # verify attributes as expected.
-    def test_video_cap_attrs(cap):
-        res = (
-            int(cap.get(cv2.CAP_PROP_BUFFERSIZE)) == cap_buffer_size
-            and int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)) == cam_width
-            and int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)) == cam_height
-        )
-        return res
-
-    assert (test_video_cap_attrs(left) and test_video_cap_attrs(right)) == True
-
-    return left, right, hands
-
-
-def teardown(left, right):
-    left.release()
-    right.release()
-
-    cv2.destroyAllWindows()
-
-
-def run():
-    left, right, hands = setup()
-
-    main(left, right, hands, old_frame_t, new_frame_t)
-
-    teardown(left, right)
-
-
-if __name__ == "__main__":
-    run()
+        Args:
+            captures: A list of cv2.VideoCapture objects to release.
+        """
+        for cap in captures:
+            cap.release()
+        cv2.destroyAllWindows()
