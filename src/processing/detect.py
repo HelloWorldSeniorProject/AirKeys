@@ -14,7 +14,7 @@ def detect(images, points, isLeft: bool):
         isLeft : boolean representing if the image is from the left camera.
     """
     
-    """Prepare for main process"""
+    # Prepare for main process
     labels = {
         4: "thumb",
         8: "index",
@@ -24,17 +24,17 @@ def detect(images, points, isLeft: bool):
     }
     hand = "left_" if isLeft else "right_"
 
-    """Initialize mediapipe solution for hand pose detection"""
+    # Initialize mediapipe solution for hand pose detection
     hands = mp.solutions.hands.Hands()
 
-    """Main loop"""
+    # Main loop
     while True:
         if len(images) > 1:
-            """Modification for Mediapipe implementation"""
+            # Modification for Mediapipe implementation
             mat = np.copy(images[0]) if isLeft else np.copy(images[1])
             img = cv2.cvtColor(mat, cv2.COLOR_BGR2RGB)
 
-            """Mediapipe implementation"""
+            # Mediapipe implementation
             results = hands.process(img)
             frame = dict()
             if results.multi_hand_landmarks:
@@ -43,11 +43,11 @@ def detect(images, points, isLeft: bool):
                         if idx in [4, 8, 12, 16, 20]:
                             frame[hand + labels[idx]] = Vector(lm.x, lm.y, lm.z)
             
-            """Timestamp (to be implemented)"""
+            # Timestamp (to be implemented)
             # frame["timestamp"] =
 
             points.append(frame)
 
-        """Shutting down"""
+        # Shutting down
         if keyboard.is_pressed('escape'):
             break
