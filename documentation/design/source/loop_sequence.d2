@@ -1,0 +1,16 @@
+Data Processing: {
+    shape: sequence_diagram
+    user: User
+    proc: Process
+    queue: Queue
+    cam: Stereo Camera
+    cal: Calibration
+    user -> cam: Finger Movement/Key Input
+    Main Loop: {
+        cam -> cal: Send Image
+        cal -> queue: Enqueue Vector Tuples
+        queue -> proc: Calculate/Handle Events
+        proc -> user: Send Response Signals
+        proc -> queue: Dequeue Vector Tuples
+    }
+}
