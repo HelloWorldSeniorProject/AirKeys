@@ -202,7 +202,7 @@ class FileManager(metaclass=Singleton):
 
         return self._get_files_impl(search_dir)
 
-    def _read_image(self, f_name: str) -> np.array:
+    def read_image(self, f_name: str) -> np.array:
         """Fetches data from image file.
 
         Args:
@@ -233,7 +233,7 @@ class FileManager(metaclass=Singleton):
             logger.error("Failed to find layout file.")
             return None
 
-        return self._read_image(f_name)
+        return self.read_image(f_name)
 
     def get_calibration_file(self, f_name):
         """Fetches data from specified calibration file.
@@ -250,7 +250,7 @@ class FileManager(metaclass=Singleton):
             logger.error("Failed to find layout file.")
             return None
 
-        return self._read_image(f_name)
+        return self.read_image(f_name)
 
     def read_configuration_file(self) -> dict:
         """Fetches data from configuration file.
