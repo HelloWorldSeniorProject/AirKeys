@@ -5,7 +5,7 @@ class Position:
     class variables, and major instance methods.
     """
     
-    def __init__(self, x: int, z: int):
+    def __init__(self, x: float, z: float):
         """ Initializes the object based on passed x and z coordinates.
         
         Args:
