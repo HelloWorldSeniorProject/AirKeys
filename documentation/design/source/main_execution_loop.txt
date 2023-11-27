@@ -1,34 +1,56 @@
 title Main Execution Loop
 
 participant "Main Process" as Sys
+participant "File Manager" as FM
+participant "Config Table" as Config
 participant "Data Stream" as DS
 participant "Data Processing" as DP
-participant "Config Table" as Config
-participant "File Manager" as FM
-participant "Logger" as Log
 participant "Power Manager" as PM
 participant "SubProcess 1" as P1
 participant "SubProcess 2" as P2
 participant "SubProcess 3" as P3
 participant "Keyboard Manager" as KM
 participant "Connection Manager" as CM
+participant "Internal Clock" as IC
+participant "Logger" as Log
 
-participantspacing 2
+participantspacing 3
 
 [-> Sys: Start
 
-# Initialize all interfaces
+# Initialize all interfaces order is not particular important here. Just trying to make the final image look cohesive.
 Sys-->*Log: Create Main Log
-Sys-->*DS:<<create>>
-DS-->*Log: Create Internal Log
-Sys-->*DP:<<create>>
-DP-->*Log: Create Internal Log
-Sys-->*Config:<<create>>
-Config-->*Log: Create Internal Log
-Sys-->*FM:<<create>>
-FM-->*Log: Create Internal Log
-Sys-->*CM:<<create>>
-CM-->*Log: Create Internal Log
+
+linear
+  Sys-->*FM:<<create>>
+  FM-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*Config:<<create>>
+  Config-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*DS:<<create>>
+  DS-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*DP:<<create>>
+  DP-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*CM:<<create>>
+  CM-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*IC:<<create>>
+  IC-->*Log: Create Internal Log
+linear off
+
 note over Sys: Each instantiated object generates\n an internal log which all aggregate\n upstream to the main log.
 
 
@@ -126,5 +148,3 @@ end
 
 
 Sys->*PM: powerOff()
-
-b
