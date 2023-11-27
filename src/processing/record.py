@@ -11,21 +11,21 @@ def record(mtx, dist, images):
         images: list of numpy matrices to store images
     """
 
-    """Cameras initialization"""
+    # Cameras initialization
     cap1 = cv2.VideoCapture(0)
     cap2 = cv2.VideoCapture(1)
 
-    """Main loop"""
+    # Main loop
     while True:
-        """Record images"""
+        # Record images
         _, img1 = cap1.read()
         _, img2 = cap2.read()
 
-        """Restore images"""
+        # Restore images
         mat1 = cv2.undistort(img1, mtx, dist)
         mat2 = cv2.undistort(img2, mtx, dist)
 
-        """Store images for Detect process"""
+        # Store images for Detect process
         images.append(mat1)
         if len(images) > 2:
             images.pop(0)
@@ -34,10 +34,10 @@ def record(mtx, dist, images):
         if len(images) > 2:
             images.pop(0)
 
-        """Shutting down"""
+        # Shutting down
         if keyboard.is_pressed('escape'):
             break
 
-    """Termination"""
+    # Termination
     cap1.release()
     cap2.release()
