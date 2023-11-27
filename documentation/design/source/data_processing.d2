@@ -11,12 +11,13 @@ Data Processing: {
     - previousHandPositions : "[][][] Coordinate"
     - keys : "Dictionary<String, Boundary>"
 
-    # Detects the boundaries of each key in the currently displayed keyboard layout as well as the
-    # key's value. Saves these values and boundaries internally.
-    detectKeys()
+    # TODO take in frame as arg
+    # Accepts a 2D-Array of frames (each of which is a 2D array of integers) and detects the boundaries of each key 
+    # in the currently displayed keyboard layout as well as the key's value. Saves these values and boundaries internally.
+    detectKeys(Array*Array*Integer* frames)
 
     # Accepts frame data as 2D-Array of integers. Returns a 2D-Array of Coordinate Objects. These are simply
-    # objects conataining 'x', 'y', and 'z' fields.
+    # objects containing 'x', 'y', and 'z' fields.
     detectHands(Array*Integers frame): "[][]Coordinate"
 
     # Accepts frame data as 2D-Array of integers and Hand Detection results 2D-Array of Coordinate objects.
