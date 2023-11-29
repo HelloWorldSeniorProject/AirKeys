@@ -1,7 +1,7 @@
-import threading
+import multiprocessing
 
 # a lock that allows only one thread to access the resource it "locks".
-thread_lock = threading.Lock()
+lock = multiprocessing.Lock()
 
 
 class Singleton(type):
@@ -28,10 +28,14 @@ class Singleton(type):
         Note: Utilizes the double-checked locking method.
         """
         if cls not in cls._instances:  # check for object before locking.
-            with thread_lock:  # lock Singleton class / prevent concurrent access
-                if cls not in cls._instances:
-                    cls._instances[cls] = super(Singleton, cls).__call__(
-                        *args, **kwargs
-                    )  # create instance and store in dict
+            
+            lock.acquire()
+
+            if cls not in cls._instances:
+                cls._instances[cls] = super(Singleton, cls).__call__(
+                    *args, **kwargs
+                )  # create instance and store in dict
+
+            lock.release()
 
         return cls._instances[cls]  # return instance if available/once created

@@ -144,6 +144,7 @@ def compile_requirements_report():
         1.3: "Satisfied by hardware",
         7.1: "Satisfied by hardware",
         8.1: "Satisfied by hardware",
+        8.2: "Satisfied through configuration of hardware. Functionality verified by inspection.",
         15.2: "Satisfied through development standards and practices.",
         15.3: "Satisfied by visual inspection of functionality provided through standard module",
         15.4: "Satisfied by visual inspection of functionality provided through standard module",

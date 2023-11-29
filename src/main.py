@@ -1,6 +1,6 @@
 # Python
 import sys
-from threading import Thread
+
 
 
 # AirKeys Interfaces
@@ -19,7 +19,7 @@ import multiprocessing
 
 logger = get_logger("Main.log")
 
-""" Main program thread. Functions as object Factory & Controller"""
+""" Main process. Functions as object Factory & Controller"""
 
 
 def main():
@@ -28,7 +28,7 @@ def main():
 
     # any failure here is critical. Exit program if so.
     try:
-        
+        logger.info("Initializing System Resources.")
         clock = InternalClock() 
         ct = ConfigTable()
         fm = FileManager()
@@ -36,29 +36,40 @@ def main():
         # TODO: add data processing interface
         # processor = DataProcessor()
         # TODO add connection manager interface
+
+        logger.info("Initialization Complete")
         
         # try to load previous config table and set to calibration mode.
-        ct.write(prev_config=fm.read_configuration_file())
+        prev_config = fm.read_configuration_file()
+        if prev_config == None:
+            logger.info("No previous configuration detected.")
+        else:
+            ct.write(prev_config=prev_config)
 
         # TODO: attempt to connect to external device
+        logger.info(f"Attempting to connect to external device using {ct.get_connection().value}.")
+
+
 
         # setup input and display layout
+        logger.info("Attempting to setup cameras.")
         captures = stream.setup_cameras(num_cameras=2)
+        logger.info("Camera setup complete.")
         
 
-        # TODO: calibrate system with data processing module. Abstract to utility function once done.
+        # TODO: Abstract to utility function once done.
+        logger.info("Entering calibration mode.")
         ct.set_mode(mode=Mode.Calibration)
         stream.display_frame(frame=fm.get_layout_file(f_name=ct.get_layout()))
         calibration_frames = stream.get_frame_data(captures=captures)
-        # 
-
-
-
-
+        # processor.detect_keys(calibration_frames)
+        ct.set_mode(mode=Mode.Active)
+        logger.info("Calibration complete.")
+        
     except Exception as e:
         exit_with_failure(f"Failed to initialize system resources.\n{e}")
 
-    # TODO set threads to begin running setup
+
     while True:
         continue
 
