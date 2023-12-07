@@ -1,0 +1,150 @@
+title Main Execution Loop
+
+participant "Main Process" as Sys
+participant "File Manager" as FM
+participant "Config Table" as Config
+participant "Data Stream" as DS
+participant "Data Processing" as DP
+participant "Power Manager" as PM
+participant "SubProcess 1" as P1
+participant "SubProcess 2" as P2
+participant "SubProcess 3" as P3
+participant "Keyboard Manager" as KM
+participant "Connection Manager" as CM
+participant "Internal Clock" as IC
+participant "Logger" as Log
+
+participantspacing 3
+
+[-> Sys: Start
+
+# Initialize all interfaces order is not particular important here. Just trying to make the final image look cohesive.
+Sys-->*Log: Create Main Log
+
+linear
+  Sys-->*FM:<<create>>
+  FM-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*Config:<<create>>
+  Config-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*DS:<<create>>
+  DS-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*DP:<<create>>
+  DP-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*CM:<<create>>
+  CM-->*Log: Create Internal Log
+linear off
+
+linear
+  Sys-->*IC:<<create>>
+  IC-->*Log: Create Internal Log
+linear off
+
+note over Sys: Each instantiated object generates\n an internal log which all aggregate\n upstream to the main log.
+
+
+# Set previous config, if available
+Sys->FM: readConfigurationFile()
+Sys<-FM: Config or Null as result
+alt Result not Null
+  Sys->Config: write(Config)
+  Config-->Log: "...set config..."
+else Result is Null
+  Sys-->Log: "...config not available..."
+end
+
+# Connect to external device
+Sys->Config: getConnection()
+Sys<-Config: ConnectionType as conn
+Sys->CM: connectDevice(conn)
+Sys-->Log: device connection msg
+
+# Start cameras
+Sys->DS: initializeCameras(numCameras)
+Sys<-DS: VideoCaptures[] as captures
+Sys-->Log: Camera initialiation msg
+
+# Set layout image
+Sys->Config: getLayout()
+Sys<-Config : layout path as layout
+Sys->FM: readImage(layout)
+Sys<-FM: Layout as frame
+Sys->DS: displayFrame(frame)
+Sys-->Log: Layout display msg
+
+# Layout calibration (detect bounding boxes, meta-physical location, etc) 
+Sys->DS: getFrameData(captures)
+Sys<-DS: Frame[] as frames
+Sys->DP: detectKeys(frames) (i.e. calibrate)
+DP-->Log: calibration msg
+
+# Read in frames, run processing (concurrent), and send keystroke if necessary.
+loop shutdown signal
+  
+  Sys->Sys: Create Processes
+  Sys->*P1: <<create>>
+  Sys->*P2: <<create>>
+  Sys->*P3: <<create>>
+  
+  # Cam 1 Input and Processing
+  par SubProcess 1
+    P1->DS: getFrameData(caputures[0])
+    P1<-DS: frame
+    P1->DP: detectHands(frame)
+    P1<-DP: HandPos[][] as pos
+    P1->DP: replaceOldestHandPositon(pos)
+    P1->DP: detectKeystrokes()
+    P1<-DP: (Detected Key <String>, Confidence <Float>)[] as results
+    Sys<-P1: results
+    
+
+  # Cam 2 Input and Processing
+  thread SubProcess 2
+    P2->DS: getFrameData(caputures[1])
+    P2<-DS: frame
+    P2->DP: detectHands(frame)
+    P2<-DP: HandPos[][] as pos
+    P2->DP: replaceOldestHandPositon(pos)
+    P2->DP: detectKeystrokes()
+    P2<-DP: (Detected Key <String>, Confidence <Float>)[] as results
+    Sys<-P2: results
+
+  # UI listener
+  thread Process3
+    loop
+      [--> P3: Listen for UI Requests
+      
+      opt request recieved
+        break out of execution loop, jmp to calibration
+          P3-->Sys: request
+          Sys-->Sys: execute request
+        end
+      end
+    end
+
+  end
+
+  # Send keystrokes to device, if available
+  opt matching results, confidence >= set threshold
+    loop keystroke detected above confidence threshold
+      Sys->KM: createKeyStrokeInterrupt(keystroke)
+      Sys<-KM: Interrupt as interrupt
+      KM->CM: SendInterrupt(interrupt)
+    end
+  end
+  
+end
+
+
+Sys->*PM: powerOff()
