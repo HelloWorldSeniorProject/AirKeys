@@ -1,10 +1,10 @@
-import threading
+import multiprocessing
 from util.logger import get_logger
 from common.types import *
 from common.patterns.singleton import Singleton
 
 
-thread_lock = threading.Lock()
+lock = multiprocessing.Lock()
 logger = get_logger("ConfigTable.log")
 
 
@@ -49,52 +49,57 @@ class ConfigTable(metaclass=Singleton):
         Returns:
             True if operation was successful, false otherwise.
         """
-        with thread_lock:
-            logger.info(f"Attempting to overwrite current config table:\n {vars(self)}")
+        
+        logger.info(f"Attempting to overwrite current config table:\n {vars(self)}")
 
-            if type(prev_config) != dict:
-                logger.error(f"Passed configuration is not of type dictionary. Aborting operation.")
-                return False
+        if type(prev_config) != dict:
+            logger.error(f"Passed configuration is not of type dictionary. Aborting operation.")
+            return False
+        
+        lock.acquire()
 
-            # retrieve values from previous config. Note any missing values.
-            if not (mode := prev_config.get("mode"), None):
-                mode = Mode(self._DEFAULTS["mode"])
-                logger.warning(f"Did not find prev mode, setting default {mode}.")
+        # retrieve values from previous config. Note any missing values.
+        if not (mode := prev_config.get("mode"), None):
+            mode = Mode(self._DEFAULTS["mode"])
+            logger.warning(f"Did not find prev mode, setting default {mode}.")
 
-            if not (layout := prev_config.get("layout"), None):
-                layout = self._DEFAULTS["layout"]
-                logger.warning(f"Did not find prev layout, setting default {layout}.")
+        if not (layout := prev_config.get("layout"), None):
+            layout = self._DEFAULTS["layout"]
+            logger.warning(f"Did not find prev layout, setting default {layout}.")
 
-            if not (connection := prev_config.get("connection"), None):
-                connection = Connection(self._DEFAULTS["connection"])
-                logger.warning(f"Did not find prev connection type, setting default {connection}.")
+        if not (connection := prev_config.get("connection"), None):
+            connection = Connection(self._DEFAULTS["connection"])
+            logger.warning(f"Did not find prev connection type, setting default {connection}.")
 
-            if not (device := prev_config.get("device"), None):
-                device = Device(self._DEFAULTS["device"])
-                logger.warning(f"Did not find prev device type, setting default {device}.")
+        if not (device := prev_config.get("device"), None):
+            device = Device(self._DEFAULTS["device"])
+            logger.warning(f"Did not find prev device type, setting default {device}.")
 
-            if not (os := prev_config.get("os"), None):
-                os = OperatingSystem(self._DEFAULTS["os"])
-                logger.warning(f"Did not find prev operating system, setting default {os}.")
+        if not (os := prev_config.get("os"), None):
+            os = OperatingSystem(self._DEFAULTS["os"])
+            logger.warning(f"Did not find prev operating system, setting default {os}.")
 
-            # set config items.
-            self._mode = mode
-            self._layout = layout
-            self._connection = connection
-            self._device = device
-            self._os = os
+        # set config items.
+        self._mode = mode
+        self._layout = layout
+        self._connection = connection
+        self._device = device
+        self._os = os
 
-            logger.info(f"Write operation was a success. New table:\n {vars(self)}")
-            return True
+        lock.release()
 
+        logger.info(f"Write operation was a success. New table:\n {vars(self)}")
+        return True
+        
     def set_mode(self, mode: Mode):
         """Sets the system's mode.
 
         Args:
             mode : the system mode to set.
         """
-        with thread_lock:
-            self._mode = mode
+        lock.acquire()
+        self._mode = mode
+        lock.release()
 
     def get_mode(self) -> Mode:
         """Fetches the system's mode.
@@ -102,8 +107,10 @@ class ConfigTable(metaclass=Singleton):
         Returns:
             The system mode currently set.
         """
-        with thread_lock:
-            return self._mode
+        lock.acquire()
+        mode = self._mode
+        lock.release()
+        return mode
 
     def set_layout(self, layout: str):
         """Sets the keyboard layout.
@@ -111,8 +118,9 @@ class ConfigTable(metaclass=Singleton):
         Args:
             layout : the identifier of the layout to set.
         """
-        with thread_lock:
-            self._layout = layout
+        lock.acquire()
+        self._layout = layout
+        lock.release()
 
     def get_layout(self) -> str:
         """Fetches the current keyboard layout.
@@ -120,8 +128,10 @@ class ConfigTable(metaclass=Singleton):
         Returns:
             The identifier of the current keyboard layout.
         """
-        with thread_lock:
-            return self._layout
+        lock.acquire()
+        layout = self._layout
+        lock.release()
+        return layout
 
     def set_connection(self, connection: Connection):
         """Sets the system's connection method.
@@ -129,8 +139,9 @@ class ConfigTable(metaclass=Singleton):
         Args:
             connection : the connection method to set.
         """
-        with thread_lock:
-            self._connection = connection
+        lock.acquire()
+        self._connection = connection
+        lock.release()
 
     def get_connection(self) -> Connection:
         """Fetches the current connection method.
@@ -138,8 +149,10 @@ class ConfigTable(metaclass=Singleton):
         Returns:
             The connection method used to connect to the external device.
         """
-        with thread_lock:
-            return self._connection
+        lock.acquire()
+        conn = self._connection
+        lock.release()
+        return conn
 
     def set_device(self, device: Device):
         """Sets the device type of connected device.
@@ -147,8 +160,9 @@ class ConfigTable(metaclass=Singleton):
         Args:
             device: the type of the device currently connected to system.
         """
-        with thread_lock:
-            self._device = device
+        lock.acquire()
+        self._device = device
+        lock.release()
 
     def get_device(self) -> Device:
         """Fetches the connected device's device type.
@@ -156,8 +170,10 @@ class ConfigTable(metaclass=Singleton):
         Returns:
             The type of device currently connected to the system.
         """
-        with thread_lock:
-            return self._device
+        lock.acquire()
+        dev = self._device
+        lock.release()
+        return dev
     
     def set_os(self, os: OperatingSystem):
         """Sets the OS of the connected device.
@@ -165,8 +181,9 @@ class ConfigTable(metaclass=Singleton):
         Args:
             os: the operating system of the device currently connected to system.
         """
-        with thread_lock:
-            self._os = os
+        lock.acquire()
+        self._os = os
+        lock.release()
     
     def get_os(self) -> OperatingSystem:
         """Fetches the OS of the connected device.
@@ -174,8 +191,10 @@ class ConfigTable(metaclass=Singleton):
         Returns:
             The operating system of the device currently connected to system
         """
-        with thread_lock:
-            return self._os
+        lock.acquire()
+        os = self._os
+        lock.release()
+        return os
 
     def to_dictionary(self) -> dict:
         """Converts config table to dictionary.

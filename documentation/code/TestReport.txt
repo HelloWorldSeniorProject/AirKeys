@@ -2,11 +2,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-Requirement Coverage (%)                60.53%                                                                       
+Requirement Coverage (%)                63.16%                                                                       
 
-Number of Requirements Covered          23                                                                           
+Number of Requirements Covered          24                                                                           
 
-Number of Remaining Requirements        15                                                                           
+Number of Remaining Requirements        14                                                                           
 
 
                                     Requirement-to-Test Mapping                                     
@@ -51,6 +51,9 @@ Requirement #       Test Cases
 
 8.1                 Satisfied by hardware                                                           
 
+8.2                 Satisfied through configuration of hardware. Functionality verified by          
+                    inspection.                                                                     
+
 15.2                Satisfied through development standards and practices.                          
 
 15.3                Satisfied by visual inspection of functionality provided through standard module
@@ -83,9 +86,6 @@ Requirement #       Description
                     physical keystoke.                                                              
 
 6.1                 The system shall use the last set connection settings on power cycle.           
-
-8.2                 The system shall be capable of displaying an image upon startup without any user
-                    input.                                                                          
 
 14.1                The system shall be capable of capturing live image (frame) data.               
 
