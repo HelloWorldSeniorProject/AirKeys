@@ -124,7 +124,7 @@ class Test_FileManager:
 
             img_f = os.path.join(TEMP_DIR, "images", f"{img}.png")
 
-            img_data = fm._read_image(img_f)
+            img_data = fm.read_image(img_f)
             cv2.imshow("Test Image", img_data)
 
             cv2.waitKey(0)

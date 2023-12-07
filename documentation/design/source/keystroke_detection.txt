@@ -1,0 +1,69 @@
+title Keystroke Detection
+
+participant "Main Process" as Sys
+participant "Hand Pos Q1" as Q1
+participant "Hand Pos Q2" as Q2
+participant "Data Stream" as DS
+participant "SubProcess 1" as P1
+participant "SubProcess 2" as P2
+participant "Data Processor" as DP
+
+
+
+participantspacing 2
+
+[-->Sys: After resource\n initialization
+
+# create hand queues
+Sys-->*Q1: <<create>>
+Sys-->*Q2: <<create>>
+
+# create sub processes
+Sys-->*P1: <<create>>
+Sys-->*P2: <<create>>
+
+loop
+
+  # get latest frame data
+  Sys->DS: getFrameData(captures)
+  Sys<-DS: Frame[] as frames
+  
+  par SubProcess1
+    # get and save hand position in queue
+    P1->DP: detectHands(frames[0])
+    P1<-DP: HandPosition as pos
+    P1->DP: replaceOldestHandPosition(pos)
+    
+    note over DP: detectedKeys = Empty String
+    # find out if keys have been pressed
+    note over DP: the following logic is encapsulated \nin DataProcessor.detectKeystrokes \nfunction
+    
+    DS-->Q1: get last and second to last frames
+    DS<--Q1: HandPosition[] as h1, h2
+    loop all finger positions in (h1, h2) as(prev, curr)
+      alt prev.x within (curr.x +/- x_threshold)
+        alt prev.height < (curr.height - height_threshold)
+          note over DP: confidence(finger) -= 2
+        else prev.height > (curr.height - height_threshold)
+          note over DP: confidence(finger) += 1
+        end
+      else prev.x not within (curr.x +/- x_threshold)
+        note over DP: confidence(finger) = 0
+      end
+      
+      opt curr.height == surface.height
+        opt abs(confidence(finger)) between low/high confidence limit
+          note over DP: Use calibration locations to find the character at the finger's \ncurrent position. Add character to `detectedKeys` string.
+        end
+      end
+    end  
+    
+    Sys<-P1: detectedKeys
+    
+  thread SubProcess2
+  
+    note over P2: duplicate logic in subprocess 1.
+  
+  end
+  
+end
