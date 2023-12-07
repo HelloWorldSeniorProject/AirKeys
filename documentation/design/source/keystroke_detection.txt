@@ -41,18 +41,18 @@ loop
     DS-->Q1: get last and second to last frames
     DS<--Q1: HandPosition[] as h1, h2
     loop all finger positions in (h1, h2) as(prev, curr)
-      alt prev.x == curr.x
-        alt prev.y < (curr.y - y_threshold)
+      alt prev.x within (curr.x +/- x_threshold)
+        alt prev.height < (curr.height - height_threshold)
           note over DP: confidence(finger) -= 2
-        else prev.y > (curr.y - y_threshold)
+        else prev.height > (curr.height - height_threshold)
           note over DP: confidence(finger) += 1
         end
-      else prev.x != curr.x
+      else prev.x not within (curr.x +/- x_threshold)
         note over DP: confidence(finger) = 0
       end
       
-      opt curr.y == surface.y
-        opt conf_limit_low <= abs(confidence(finger)) <= conf_limit_high
+      opt curr.height == surface.height
+        opt abs(confidence(finger)) between low/high confidence limit
           note over DP: Use calibration locations to find the character at the finger's \ncurrent position. Add character to `detectedKeys` string.
         end
       end
