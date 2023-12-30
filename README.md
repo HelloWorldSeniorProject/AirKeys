@@ -17,7 +17,7 @@ The project has been completed by 4 Computer Science/Software Engineering studen
 
     Malakai Spann   : Technical Lead (Product) / Team Lead / Developer
     Minho Son       : Technical Lead (Data Processing) / Developer
-    Anwuli Ajabor   : Lead Developer (User Interface)
+    Anwuli Ajabor   : Developer (User Interface)
     Kyle Stewart    : Developer (Data Stream)
 
 under the supervision of Dr. Marius Silaghi.
